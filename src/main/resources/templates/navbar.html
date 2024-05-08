@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+
+    <nav th:fragment="navbar">
+        <div class="contenedor-busqueda d-flex justify-content-center">
+            <img src="images/logoPA.png"  alt="logo de la pagina" />
+            <div class="d-flex justify-content-center contenedor-barra">
+                <input class="navbar-busqueda" placeholder="Buscar" />
+                <button class="btn-buscar-navbar"><i class="bi bi-search"></i></button>
+            </div>
+            <div class="contenedor-perfil d-flex align-items-center">
+                <div class="dropdown">
+                    <a class="opcion-verPerfil" th:href="@{/perfil}"><i class="bi bi-person-circle icono-perfil"></i> Nombre </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/}">Cerrar sesion</a></li>
+                    </ul>
+
+                </div>
+            </div>      
+        </div>
+        <div class="opciones-navbar d-flex justify-content-center">
+            <a class="nav-link" th:href="@{/tutorias}">Tutorias</a>
+            <a class="nav-link" th:href="@{/solicitud_tutoria}">Solicitud de tutoria</a>
+            <a class="nav-link" th:href="@{/mis_tutorias}">Mis Tutorias</a>
+            <a class="nav-link" th:href="@{/notificaciones}">Notificaciones (#)</a>
+            <a class="nav-link" th:href="@{/requisitos_tutor}">¿Quieres ser tutor?</a>
+        </div>
+    </nav>
+    
+</body>
+</html>

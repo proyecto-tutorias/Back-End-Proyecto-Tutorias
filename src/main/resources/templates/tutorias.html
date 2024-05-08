@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado Tutorias</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+</head>
+
+<body>
+    <div>
+        <div th:replace="navbar :: navbar"></div>
+        <div class="contenedor-listado-tutorias">
+            <div class="row">
+                <div class="col-lg-2">
+                    <!-- Filtros -->
+                    <h3 class="mb-3 titulo-filtros">Filtros</h3>
+                    <div class="mb-4">
+                        <select class="form-select">
+                            <option selected>-- Materia --</option>
+                            <option value="Matematicas">Matematicas</option>
+                            <option value="Biologia">Biologia</option>
+                            <option value="Quimica">Quimica</option>
+                            <option value="Ingles">Ingles</option>
+                            <option value="Historia">Historia</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select class="form-select">
+                            <option selected>-- Carrera --</option>
+                            <option value="Administracion de empresa">Administracion de Empresas</option>
+                            <option value="TDSOFT">Tecnologia en desarrollo de software</option>
+                            <option value="Ingenieria de Sistemas">Ingenieria de Sistemas</option>
+                            <option value="Ingenieria ambiental">Ingenieria ambiental</option>
+                            <option value="Administracion de empresa">Tecnologia en Gestión de Redes de Computadores y
+                                Seguridad Informática </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-10">
+                    <!-- Listado tutorias -->
+                    <h1 class="titulo-listado-tutoria">Solicitudes de tutorias</h1>
+                    <div class="listado-tutorias">
+                        <div
+                            class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title">Tema #1</h5>
+                                    <p class="card-text mb-0">Tema prueba para solicitar ayuda</p>
+                                    <p class="card-text">Fecha: 06/01/2024</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 esp-card">
+                                    <i class="bi bi-person-circle icono-perfil-card"></i>
+                                    <div>
+                                        <p class="card-text mb-0">Solicitado por: Pedro123</p>
+                                        <p class="card-text">Precio: $7000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title">Tema #2</h5>
+                                    <p class="card-text mb-0">Tema prueba para solicitar ayuda</p>
+                                    <p class="card-text">Fecha: 06/01/2024</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 esp-card">
+                                    <i class="bi bi-person-circle icono-perfil-card"></i>
+                                    <div>
+                                        <p class="card-text mb-0">Solicitado por: Pedro123</p>
+                                        <p class="card-text">Precio: $7000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title">Tema #2</h5>
+                                    <p class="card-text mb-0">Tema prueba para solicitar ayuda</p>
+                                    <p class="card-text">Fecha: 06/01/2024</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 esp-card">
+                                    <i class="bi bi-person-circle icono-perfil-card"></i>
+                                    <div>
+                                        <p class="card-text mb-0">Solicitado por: Pedro123</p>
+                                        <p class="card-text">Precio: $7000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
+                            <div class="card-body">
+                                <div>
+                                    <h5 class="card-title">Tema #2</h5>
+                                    <p class="card-text mb-0">Tema prueba para solicitar ayuda</p>
+                                    <p class="card-text">Fecha: 06/01/2024</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-3 esp-card">
+                                    <i class="bi bi-person-circle icono-perfil-card"></i>
+                                    <div>
+                                        <p class="card-text mb-0">Solicitado por: Pedro123</p>
+                                        <p class="card-text">Precio: $7000</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</body>
+
+</html>
