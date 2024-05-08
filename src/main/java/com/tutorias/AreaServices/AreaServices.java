@@ -4,16 +4,29 @@
  */
 package com.tutorias.AreaServices;
 
+import com.tutorias.UsuarioServices.UsuarioRepositorio;
 import com.tutorias.domain.Area;
 import com.tutorias.domain.Estudiante;
+import com.tutorias.domain.Usuario;
 import java.util.List;
 
 
-public interface AreaServices {
+public class AreaServices {
     
-    public List<Area> listaAreas();
-    public void borrar(Area area);
-    public void insertar(Area area);
-    public Area encontrarArea(Area area);
+    public AreaServices(AreaRepositorio arearep) {
+        this.arearep = arearep;
+    }
+    
+    private AreaRepositorio arearep;
+    
+    public void insertarArea(Area area){
+        arearep.insertar(area);
+    }
+    
+    public List<Area> encontrarAreas(){
+        return arearep.listarAreas();
+    }
+    
+    
     
 }

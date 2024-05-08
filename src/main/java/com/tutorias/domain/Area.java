@@ -19,7 +19,7 @@ public class Area implements Serializable{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long idArea;
+    private int idArea;
     private String descripcion;
     
 }

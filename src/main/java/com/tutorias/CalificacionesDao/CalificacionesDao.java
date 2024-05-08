@@ -4,13 +4,20 @@
  */
 package com.tutorias.CalificacionesDao;
 
+import com.tutorias.domain.Area;
 import com.tutorias.domain.Calificacion;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author DBZve
  */
-public interface CalificacionesDao extends CrudRepository<Calificacion, Long> {
+public interface CalificacionesDao{
+    void insertar(Calificacion calificacion);
+    void elimCalificacion(Calificacion calificacion);
+    Area encontrarCalificacion(Calificacion calificacion);
+    List<Area> listarCalificacion();
+    List<Area> listarCalificacionPorId(int id_tutor);
     
 }

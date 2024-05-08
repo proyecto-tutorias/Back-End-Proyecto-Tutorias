@@ -5,9 +5,17 @@
 package com.tutorias.AreaDao;
 
 import com.tutorias.domain.Area;
+import com.tutorias.domain.Usuario;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface AreaDao extends CrudRepository<Area, Long> {
+public interface AreaDao {
+    
+    void insertar(Area area);
+    void eliminar(Area area);
+    Area encontrarArea(Area area);
+    List<Area> listarAreas();
+    
     
 }
