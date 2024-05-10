@@ -55,75 +55,26 @@
                 <div class="col-lg-10">
                     <!-- Listado tutorias -->
                     <h1 class="titulo-listado-tutoria">Solicitudes de tutorias</h1>
-                    <div class="listado-tutorias">
+                    <div th:if="${tutorias != null and !tutorias.empty}"> 
                         <div
                             class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
-                            <div class="card-body">
+                            <div class="card-body" th:each="tutoria, iterador: ${tutorias}">
                                 <div>
-                                    <h5 class="card-title">Tema #1</h5>
-                                    <p class="card-text mb-0">Tema prueba para solicitar ayuda</p>
-                                    <p class="card-text">Fecha: 06/01/2024</p>
+                                    <h5 class="card-title" th:text="${tutoria.titulo}"></h5>
+                                    <p class="card-text mb-0" th:text="${tutoria.descripcion}"></p>
+                                    <p class="card-text">Fecha <span th:text="${tutoria.fechaLimite}"></span></p>
                                 </div>
                                 <div class="d-flex align-items-center gap-3 esp-card">
                                     <i class="bi bi-person-circle icono-perfil-card"></i>
                                     <div>
-                                        <p class="card-text mb-0">Solicitado por: Pedro123</p>
+                                        <p class="card-text mb-0">Solicitado por: <span th:text="${usututorias[iterador.index].nombre}"></span></p>
                                         <p class="card-text">Precio: $7000</p>
-                                    </div>
+                                    </div> 
                                 </div>
                             </div>
                         </div>
-                        <div
-                            class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
-                            <div class="card-body">
-                                <div>
-                                    <h5 class="card-title">Tema #2</h5>
-                                    <p class="card-text mb-0">Tema prueba para solicitar ayuda</p>
-                                    <p class="card-text">Fecha: 06/01/2024</p>
-                                </div>
-                                <div class="d-flex align-items-center gap-3 esp-card">
-                                    <i class="bi bi-person-circle icono-perfil-card"></i>
-                                    <div>
-                                        <p class="card-text mb-0">Solicitado por: Pedro123</p>
-                                        <p class="card-text">Precio: $7000</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
-                            <div class="card-body">
-                                <div>
-                                    <h5 class="card-title">Tema #2</h5>
-                                    <p class="card-text mb-0">Tema prueba para solicitar ayuda</p>
-                                    <p class="card-text">Fecha: 06/01/2024</p>
-                                </div>
-                                <div class="d-flex align-items-center gap-3 esp-card">
-                                    <i class="bi bi-person-circle icono-perfil-card"></i>
-                                    <div>
-                                        <p class="card-text mb-0">Solicitado por: Pedro123</p>
-                                        <p class="card-text">Precio: $7000</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div
-                            class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
-                            <div class="card-body">
-                                <div>
-                                    <h5 class="card-title">Tema #2</h5>
-                                    <p class="card-text mb-0">Tema prueba para solicitar ayuda</p>
-                                    <p class="card-text">Fecha: 06/01/2024</p>
-                                </div>
-                                <div class="d-flex align-items-center gap-3 esp-card">
-                                    <i class="bi bi-person-circle icono-perfil-card"></i>
-                                    <div>
-                                        <p class="card-text mb-0">Solicitado por: Pedro123</p>
-                                        <p class="card-text">Precio: $7000</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       
+                       
                     </div>
                 </div>
             </div>

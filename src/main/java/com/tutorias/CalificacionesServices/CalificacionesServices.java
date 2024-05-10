@@ -4,15 +4,32 @@
  */
 package com.tutorias.CalificacionesServices;
 
+
 import com.tutorias.domain.Calificacion;
 import java.util.List;
 
 
-public interface CalificacionesServices {
+public class CalificacionesServices {
     
-    public List<Calificacion> listaCalificaciones();
-    public void borrar(Calificacion calificacion);
-    public void insertar(Calificacion calificacion);
-    public Calificacion encontrarCalificacion(Calificacion calificacion);
+    public CalificacionesServices(CalificacionesRepositorio calirep) {
+        this.calirep = calirep;
+    }
+    
+    private CalificacionesRepositorio calirep;
+    
+    public void insertarCalificacion(Calificacion calificacion){
+        calirep.insertar(calificacion);
+    }
+    
+    public Calificacion encontrarCalificacion(int id){
+        return calirep.encontrarCalificacion(id);
+    }
+    
+    public List<Calificacion> listarCalificaciones(){
+        return calirep.listarCalificaciones();
+    }
+    
+    
+    
     
 }

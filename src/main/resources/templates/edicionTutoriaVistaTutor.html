@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Edicion tutoria</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <link href="./css/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div>
+        <div id="navbar-contenedor"></div>
+        <div class="contenedor-vista-info-tutoria">
+            <h1 class="titulo-info-tutoria">Edición tutoria</h1>
+            <div class="contenedor-informacion-tutoria">
+                <div class="row">
+                    <div class="col-1">
+                        <i class="bi bi-person-circle icono-verPerfil"></i>
+                    </div>
+
+                    <div class="col-11">
+                        <p><b>Nombre tutor:</b> Ramiro Ferrer</p>
+                        <p><b>Carrera:</b> Ingeniera en sistemas</p>
+                        <p><b>Semestre: </b> 7</p>
+                        <p><b>Calificacion del tutor: </b>4.5</p>
+                        <div class="mb-3">
+                            <label for="input-plataforma" class="form-label">Plataforma</label>
+                            <div>
+                                <select class="input-edit">
+                                    <option value="">Seleccione una plataforma</option>
+                                    <option value="Google meet">Google meet</option>
+                                    <option value="Microsoft teams">Microsoft teams</option>
+                                    <option value="Zoom">Zoom</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="input-url" class="form-label">Link de la reunion</label>
+                            <div>
+                                <input type="text" class="input-edit" placeholder="Ingrese el link de la reunion">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center gap-4">
+                    <a href="misTutorias.html" class="boton-volver">
+                        Volver
+                    </a>
+
+                    <a href="tutoriasAsignadas.html" class="boton-volver">
+                        Guardar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

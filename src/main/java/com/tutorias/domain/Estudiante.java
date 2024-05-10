@@ -9,16 +9,13 @@ import java.io.Serializable;
 
 
 
-@Entity
-@Table(name = "estudiante")
-public class Estudiante extends Usuario implements Serializable{
+
+public class Estudiante extends Usuario{
     
         
-    private static final long serialVersionUID = 1L;
+
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long idEstudiante;
+    private int idEstudiante;
 
     public Estudiante() {
     }
@@ -26,12 +23,12 @@ public class Estudiante extends Usuario implements Serializable{
     
     
 
-    public Estudiante(Long idEstudiante, Long idUsuario, String tipo, String nombre, String apellido, int codigoEstudiante, String contraseña, String login, int idCarrera) {
+    public Estudiante(int idEstudiante, int idUsuario, String tipo, String nombre, String apellido, int codigoEstudiante, String contraseña, String login, int idCarrera) {
         super(idUsuario, tipo, nombre, apellido, codigoEstudiante, contraseña, login, idCarrera);
         this.idEstudiante = idEstudiante;
     }
 
-    public Estudiante(Long idEstudiante) {
+    public Estudiante(int idEstudiante) {
         this.idEstudiante = idEstudiante;
     }
 
@@ -41,14 +38,14 @@ public class Estudiante extends Usuario implements Serializable{
     /**
      * @return the idEstudiante
      */
-    public Long getIdEstudiante() {
+    public int getIdEstudiante() {
         return idEstudiante;
     }
 
     /**
      * @param idEstudiante the idEstudiante to set
      */
-    public void setIdEstudiante(Long idEstudiante) {
+    public void setIdEstudiante(int idEstudiante) {
         this.idEstudiante = idEstudiante;
     }
     

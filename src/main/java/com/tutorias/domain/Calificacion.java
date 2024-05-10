@@ -19,7 +19,7 @@ public class Calificacion implements Serializable{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long idCalificacion;
+    private int idCalificacion;
     private Double puntaje;
     private String comentario;
 

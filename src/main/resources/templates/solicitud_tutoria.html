@@ -25,55 +25,48 @@
     <div>
         <div th:replace="navbar :: navbar"></div>
         <div class="contenedor-formulario-solicitud">
+            <form th:action="@{/insertarTutoria}" method="post" th:object="${tutoria}">
             <div class="formulario">
-                <h2>Solicitud de Tutoría</h2>
-                <div>
-                    <label for="input-NombreTutoria" class="form-label">Nombre de Tutoria</label>
-                    <input type="text" placeholder="Digite título de tutoría" required>
-                </div>
-                <div>
-                    <label for="input-Descripcion" class="form-label">Descripcion</label>
-                    <textarea placeholder="Digite descripción" required></textarea>
-                </div>
-                <div>
-                    <label for="input-Carrera" class="form-label">Carrera</label>
-                    <select required>
-                        <option value="">Seleccione carrera</option>
-                        <option value="Administracion de empresa">Administracion de Empresas</option>
-                        <option value="TDSOFT">Tecnologia en desarrollo de software</option>
-                        <option value="Ingenieria de Sistemas">Ingenieria de Sistemas</option>
-                        <option value="Ingenieria ambiental">Ingenieria ambiental</option>
-                        <option value="Administracion de empresa">Tecnologia en Gestión de Redes de Computadores y
-                            Seguridad Informática </option>
-                    </select>
-                </div>
-                <div>
-                    <label for="input-Area" class="form-label">Area</label>
-                    <select required>
-                        <option value="">Seleccione el área</option>
-                        <option value="Matematicas">Matematicas</option>
-                        <option value="Ingles">Ingles</option>
-                        <option value="Castellano">Castellano</option>
-                        <option value="Quimica">Quimica</option>
-                        <option value="Ingles">Fisica</option>
-                        <option value="Filosofia">Filosofia</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="input-Precio" class="form-label">Precio</label>
-                    <input type="text" placeholder="Digite su precio" required>
-                </div>
-                <div>
-                    <label for="input-FechaLimite" class="form-label">Fecha Limite</label>
+                
+                    <h2>Solicitud de Tutoría</h2>
                     <div>
-                        <input type="date" class="input-fecha">
+                        <label for="input-NombreTutoria" class="form-label">Nombre de Tutoria</label>
+                        <input type="text" placeholder="Digite título de tutoría" th:field="*{titulo}">
                     </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button>Agregar</button>
-                </div>
+                    <div>
+                        <label for="input-Descripcion" class="form-label">Descripcion</label>
+                        <textarea placeholder="Digite descripción" th:field="*{descripcion}"></textarea>
+                    </div>
+                    <div>
+                        <label for="input-Carrera" class="form-label">Carrera</label>
+                        <select th:field="*{idCarrera}">
+                            <option th:each="carrera : ${carreras}" th:value="${carrera.idCarrera}" th:text="${carrera.descripcion}"></option>
+                          
+                        </select>
+                    </div>
+                    <div>
+                        <label for="input-Area" class="form-label">Area</label>
+                        <select th:field="*{idArea}">
+                            <option th:each="area : ${areas}" th:value="${area.idArea}" th:text="${area.descripcion}"></option>
+                          
+                        </select>
+                    </div>
+                    <div>
+                        <label for="input-Precio" class="form-label">Precio</label>
+                        <input type="text" placeholder="Digite su precio" th:field="*{precio}">
+                    </div>
+                    <div>
+                        <label for="input-FechaLimite" class="form-label">Fecha Limite</label>
+                        <div>
+                            <input type="date" class="input-fecha" th:field="*{fechaLimite}">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button>Agregar</button>
+                    </div>
+                
             </div>
-
+            </form>
         </div>
     </div>
 

@@ -8,15 +8,13 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 
-@Entity
-@Table(name = "tutor")
-public class Tutor extends Usuario implements Serializable{
-    
-    private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long idTutor;
+public class Tutor extends Usuario{
+    
+
+
+
+    private int idTutor;
     private Double promedioPuntaje;
     private int idRango;
     private int idEspecialidad;
@@ -26,33 +24,33 @@ public class Tutor extends Usuario implements Serializable{
     public Tutor() {
     }
 
-    public Tutor(Long idTutor, Double promedioPuntaje, int idRango, int idEspecialidad) {
+    public Tutor(int idTutor, Double promedioPuntaje, int idRango, int idEspecialidad) {
         this.idTutor = idTutor;
         this.promedioPuntaje = promedioPuntaje;
         this.idRango = idRango;
         this.idEspecialidad = idEspecialidad;
     }
 
-    public Tutor(Long idTutor, Double promedioPuntaje, int idRango, int idEspecialidad, Long idUsuario, String tipo, String nombre, String apellido, int codigoEstudiante, String contraseña, String login, int idCarrera) {
+    public Tutor(int idTutor, Double promedioPuntaje, int idRango, int idEspecialidad, int idUsuario, String tipo, String nombre, String apellido, int codigoEstudiante, String contraseña, String login, int idCarrera) {
         super(idUsuario, tipo, nombre, apellido, codigoEstudiante, contraseña, login, idCarrera);
         this.idTutor = idTutor;
         this.promedioPuntaje = promedioPuntaje;
         this.idRango = idRango;
-        this.idEspecialidad = idEspecialidad;
+        this.idEspecialidad = idEspecialidad; 
     }
 
    
     /**
      * @return the idTutor
      */
-    public Long getIdTutor() {
+    public int getIdTutor() {
         return idTutor;
     }
 
     /**
      * @param idTutor the idTutor to set
      */
-    public void setIdTutor(Long idTutor) {
+    public void setIdTutor(int idTutor) {
         this.idTutor = idTutor;
     }
 

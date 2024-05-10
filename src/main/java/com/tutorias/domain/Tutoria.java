@@ -9,15 +9,13 @@ import java.io.Serializable;
 
 
 
-@Entity
-@Table(name = "tutorias")
-public class Tutoria implements Serializable{
-    private static final long serialVersionUID = 1L;
+
+public class Tutoria {
+
     
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long idTutoria;
+
+    private int idTutoria;
     private String titulo;
     private String descripcion;
     private String fechaLimite;
@@ -25,11 +23,13 @@ public class Tutoria implements Serializable{
     private int idEstado;
     private int idEstudiante;
     private int idArea;
+    private int activo;
+    private int idCarrera;
 
     public Tutoria() {
     }
 
-    public Tutoria(Long idTutoria, String titulo, String descripcion, String fechaLimite, Double precio, int idEstado, int idEstudiante, int idArea) {
+    public Tutoria(int idTutoria, String titulo, String descripcion, String fechaLimite, Double precio, int idEstado, int idEstudiante, int idArea) {
         this.idTutoria = idTutoria;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -45,14 +45,14 @@ public class Tutoria implements Serializable{
     /**
      * @return the idTutoria
      */
-    public Long getIdTutoria() {
+    public int getIdTutoria() {
         return idTutoria;
     }
 
     /**
      * @param idTutoria the idTutoria to set
      */
-    public void setIdTutoria(Long idTutoria) {
+    public void setIdTutoria(int idTutoria) {
         this.idTutoria = idTutoria;
     }
 
@@ -152,5 +152,33 @@ public class Tutoria implements Serializable{
      */
     public void setIdEstudiante(int idEstudiante) {
         this.idEstudiante = idEstudiante;
+    }
+
+    /**
+     * @return the activo
+     */
+    public int getActivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(int activo) {
+        this.activo = activo;
+    }
+
+    /**
+     * @return the idCarrera
+     */
+    public int getIdCarrera() {
+        return idCarrera;
+    }
+
+    /**
+     * @param idCarrera the idCarrera to set
+     */
+    public void setIdCarrera(int idCarrera) {
+        this.idCarrera = idCarrera;
     }
 }

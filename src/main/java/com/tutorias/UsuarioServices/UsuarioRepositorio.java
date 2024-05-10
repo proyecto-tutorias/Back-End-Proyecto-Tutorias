@@ -8,6 +8,7 @@ import com.tutorias.UsuarioDao.UsuarioDao;
 import com.tutorias.domain.Usuario;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,15 +24,16 @@ public class UsuarioRepositorio implements UsuarioDao{
 
     @Override
     public void insertar(Usuario usuario) {
-        jdbcTemplate.update("INSERT INTO usuario(tipo_usuario, nombre, apellido,codigo_estudiante, password, login, id_carrera)" + 
-                "VALUES (?,?,?,?,?,?,?)" ,
+        jdbcTemplate.update("INSERT INTO usuario(tipo_usuario, nombre, apellido,codigo_estudiante, password, login, id_carrera, activo)" + 
+                "VALUES (?,?,?,?,?,?,?,?)" ,
                 usuario.getTipo_usuario() ,
                 usuario.getNombre(), 
                 usuario.getApellido() ,
                 usuario.getCodigo_estudiante(), 
                 usuario.getPassword(), 
                 usuario.getLogin(),
-                usuario.getId_carrera());
+                usuario.getId_carrera(),
+                usuario.getActivo());
     }
 
     @Override
@@ -40,20 +42,37 @@ public class UsuarioRepositorio implements UsuarioDao{
     }
 
     @Override
-    public Usuario encontrarUsuario(Usuario usuario) {
-        jdbcTemplate.queryForObject("SELECT * FROM usuario WHERE login=?", new UsuarioLoad(), usuario.getId_usuario());
-        return usuario;
+    public Usuario encontrarUsuario(int id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM usuario WHERE id_usuario=?", new UsuarioLoad(), id);
+     
     }
 
     @Override
-    public Usuario encontrarUsuarioporLogin(Usuario usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Usuario encontrarUsuarioporLogin(String login, String password){
+        try{
+            return jdbcTemplate.queryForObject("SELECT * FROM usuario WHERE login=? AND password=?", new UsuarioLoad(), login, password);
+            
+        }catch(EmptyResultDataAccessException e){
+            return null;
+        }
+   
     }
 
     @Override
     public List<Usuario> listarUsuarios() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return jdbcTemplate.query("SELECT * FROM usuario", new UsuarioLoad()); 
     }
+    
+    @Override
+    public void desactivarUsuario(int id){
+        jdbcTemplate.update("UPDATE usuario SET activo = 0 WHERE id_usuario=?",id);
+    }
+    
+    @Override
+    public void activarUsuario(int id){
+        jdbcTemplate.update("UPDATE usuario SET activo = 1 WHERE id_usuario=?",id);
+    }
+    
     
     
     

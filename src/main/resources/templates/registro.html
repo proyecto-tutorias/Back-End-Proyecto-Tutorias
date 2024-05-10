@@ -23,7 +23,7 @@
         <div class="contenedor-formulario-Registro">
             <form th:action="@{/insertarUsuario}" method="post" th:object="${usuario}">
                 <div class="elementos-top-registro">
-                    <a href="inicioSesion.html" class="boton-volver-inicio"><i class="bi bi-arrow-left"></i></a>
+                    <a th:href="@{/}" class="boton-volver-inicio"><i class="bi bi-arrow-left"></i></a>
                     <h1 class="titulo-inicio">Registro</h1>
                 </div>
                 <div class="row">

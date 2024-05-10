@@ -28,15 +28,10 @@ public class CalificacionesRepositorio implements CalificacionesDao{
 
     @Override
     public void insertar(Calificacion calificacion) {
-        jdbcTemplate.update("INSERT INTO usuario(tipo_usuario, nombre, apellido,codigo_estudiante, password, login, id_carrera)" + 
-                "VALUES (?,?,?,?,?,?,?)" ,
-                usuario.getTipo_usuario() ,
-                usuario.getNombre(), 
-                usuario.getApellido() ,
-                usuario.getCodigo_estudiante(), 
-                usuario.getPassword(), 
-                usuario.getLogin(),
-                usuario.getId_carrera());
+        jdbcTemplate.update("INSERT INTO calificaciones(puntaje, comentario)" + 
+                "VALUES (?,?)" ,
+                calificacion.getPuntaje() ,
+                calificacion.getComentario());
     }
 
     @Override
@@ -45,19 +40,16 @@ public class CalificacionesRepositorio implements CalificacionesDao{
     }
 
     @Override
-    public Area encontrarCalificacion(Calificacion calificacion) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Calificacion encontrarCalificacion(int id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM calificaciones WHERE id_calificacion=?", new CalificacionesLoad(), id);
     }
 
     @Override
-    public List<Area> listarCalificacion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Calificacion> listarCalificaciones() {
+        return jdbcTemplate.query("SELECT * FROM calificaciones", new CalificacionesLoad());
     }
 
-    @Override
-    public List<Area> listarCalificacionPorId(int id_tutor) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
     
    
 }

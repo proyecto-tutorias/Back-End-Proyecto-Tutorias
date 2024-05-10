@@ -36,14 +36,14 @@ public class AreaRepositorio implements AreaDao{
         jdbcTemplate.update("DELETE FROM areas WHERE id_area=?", area.getIdArea());    }
 
     @Override
-    public Area encontrarArea(Area area) {
-        jdbcTemplate.queryForObject("SELECT * FROM areas WHERE id_area=?", new AreaLoad(), area.getIdArea());
-        return area;    
+    public Area encontrarArea(int id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM areas WHERE id_area=?", new AreaLoad(), id);
+       
     }
 
     @Override
     public List<Area> listarAreas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return jdbcTemplate.query("SELECT * FROM areas", new AreaLoad());
     }
     
     

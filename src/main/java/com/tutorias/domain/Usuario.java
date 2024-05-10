@@ -12,16 +12,12 @@ import java.util.List;
 
 
 
+public class Usuario{
 
-@Entity
-@Table(name = "usuario")
-public class Usuario implements Serializable{
 
-    private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id_usuario;
+
+    private int id_usuario;
     
 
     private String tipo_usuario;
@@ -43,12 +39,14 @@ public class Usuario implements Serializable{
     
 
     private int id_carrera;
+    
+    private int activo;
 
 
     public Usuario() {
     }
 
-    public Usuario(Long id_usuario, String tipo_usuario, String nombre, String apellido, int codigo_estudiante, String password, String login, int id_carrera) {
+    public Usuario(int id_usuario, String tipo_usuario, String nombre, String apellido, int codigo_estudiante, String password, String login, int id_carrera) {
         this.id_usuario = id_usuario;
         this.tipo_usuario = tipo_usuario;
         this.nombre = nombre;
@@ -62,14 +60,14 @@ public class Usuario implements Serializable{
     /**
      * @return the id_usuario
      */
-    public Long getId_usuario() {
+    public int getId_usuario() {
         return id_usuario;
     }
 
     /**
      * @param id_usuario the id_usuario to set
      */
-    public void setId_usuario(Long id_usuario) {
+    public void setId_usuario(int id_usuario) {
         this.id_usuario = id_usuario;
     }
 
@@ -169,6 +167,20 @@ public class Usuario implements Serializable{
      */
     public void setId_carrera(int id_carrera) {
         this.id_carrera = id_carrera;
+    }
+
+    /**
+     * @return the activo
+     */
+    public int getActivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(int activo) {
+        this.activo = activo;
     }
     
     

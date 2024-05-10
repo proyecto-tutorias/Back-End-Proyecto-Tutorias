@@ -4,15 +4,31 @@
  */
 package com.tutorias.CarrerasServices;
 
+
 import com.tutorias.domain.Carrera;
 import java.util.List;
 
 
-public interface CarrerasServices {
+public class CarrerasServices {
     
-    public List<Carrera> listaCarreras();
-    public void borrar(Carrera carrera);
-    public void insertar(Carrera carrera);
-    public Carrera encontrarCarrera(Carrera carrera);
+    public CarrerasServices(CarrerasRepositorio carrep) {
+        this.carrep = carrep;
+    }
+    
+    private CarrerasRepositorio carrep;
+    
+    
+    public void insertarCarrera(Carrera carrera){
+        carrep.insertar(carrera);
+    }
+    
+    public void eliminarCarrera(int id){
+        carrep.eliminar(id);
+    }
+    
+    public List<Carrera> listarCarreras(){
+        return carrep.listarCarreras();
+    }
+    
     
 }

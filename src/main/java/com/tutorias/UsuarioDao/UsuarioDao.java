@@ -15,9 +15,12 @@ public interface UsuarioDao {
     
     void insertar(Usuario usuario);
     void eliminar(Usuario usuario);
-    Usuario encontrarUsuario(Usuario usuario);
-    Usuario encontrarUsuarioporLogin(Usuario usuario);
+    Usuario encontrarUsuario(int id);
+    Usuario encontrarUsuarioporLogin(String login, String password);
     List<Usuario> listarUsuarios();
+    void desactivarUsuario(int id);
+    void activarUsuario(int id);
+    
     
     
     

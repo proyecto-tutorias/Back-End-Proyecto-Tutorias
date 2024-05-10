@@ -5,9 +5,16 @@
 package com.tutorias.CarrerasDao;
 
 import com.tutorias.domain.Carrera;
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
 
-public interface CarrerasDao extends CrudRepository<Carrera, Long> {
+
+
+public interface CarrerasDao {
+    
+    void insertar(Carrera carrera);
+    void eliminar(int id);
+    List<Carrera> listarCarreras();
+    Carrera encontrarCarrera(int id);
     
 }

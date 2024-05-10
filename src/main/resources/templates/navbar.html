@@ -12,7 +12,7 @@
             </div>
             <div class="contenedor-perfil d-flex align-items-center">
                 <div class="dropdown">
-                    <a class="opcion-verPerfil" th:href="@{/perfil}"><i class="bi bi-person-circle icono-perfil"></i> Nombre </a>
+                    <a class="opcion-verPerfil" th:href="@{/perfil}"><i class="bi bi-person-circle icono-perfil"></i> <span th:text="${ususesion.nombre}"></span></a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/}">Cerrar sesion</a></li>
                     </ul>
@@ -22,10 +22,12 @@
         </div>
         <div class="opciones-navbar d-flex justify-content-center">
             <a class="nav-link" th:href="@{/tutorias}">Tutorias</a>
-            <a class="nav-link" th:href="@{/solicitud_tutoria}">Solicitud de tutoria</a>
-            <a class="nav-link" th:href="@{/mis_tutorias}">Mis Tutorias</a>
-            <a class="nav-link" th:href="@{/notificaciones}">Notificaciones (#)</a>
-            <a class="nav-link" th:href="@{/requisitos_tutor}">¿Quieres ser tutor?</a>
+            <a class="nav-link" th:href="@{/solicitud_tutoria}" th:if="${ususesion.tipo_usuario != 'admin'}">Solicitud de tutoria</a>
+            <a class="nav-link" th:href="@{/mis_tutorias}" th:if="${ususesion.tipo_usuario != 'admin'}">Mis Tutorias</a>
+            <a class="nav-link" th:href="@{/tutorias_asignadas}" th:if="${tutorsesion != null}">Tutorias Asignadas</a>
+            <a class="nav-link" th:href="@{/notificaciones}" th:if="${ususesion.tipo_usuario != 'admin'}">Notificaciones (#)</a>
+            <a class="nav-link" th:href="@{/requisitos_tutor}" th:if="${ususesion.tipo_usuario != 'admin'}">¿Quieres ser tutor?</a>
+            <a class="nav-link" th:href="@{/lista_usuarios}" th:if="${ususesion.tipo_usuario == 'admin'}">Lista de Usuarios</a>
         </div>
     </nav>
     

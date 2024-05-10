@@ -14,7 +14,7 @@ public interface AreaDao {
     
     void insertar(Area area);
     void eliminar(Area area);
-    Area encontrarArea(Area area);
+    Area encontrarArea(int id);
     List<Area> listarAreas();
     
     

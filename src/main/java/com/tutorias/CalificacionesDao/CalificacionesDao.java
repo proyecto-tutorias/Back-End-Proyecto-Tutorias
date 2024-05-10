@@ -16,8 +16,8 @@ import org.springframework.data.repository.CrudRepository;
 public interface CalificacionesDao{
     void insertar(Calificacion calificacion);
     void elimCalificacion(Calificacion calificacion);
-    Area encontrarCalificacion(Calificacion calificacion);
-    List<Area> listarCalificacion();
-    List<Area> listarCalificacionPorId(int id_tutor);
+    Calificacion encontrarCalificacion(int id);
+    List<Calificacion> listarCalificaciones();
+
     
 }

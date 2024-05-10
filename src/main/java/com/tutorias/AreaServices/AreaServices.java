@@ -23,7 +23,11 @@ public class AreaServices {
         arearep.insertar(area);
     }
     
-    public List<Area> encontrarAreas(){
+    public Area encontrarAreas(int id){
+        return arearep.encontrarArea(id);
+    }
+    
+    public List<Area> listarAreas(){
         return arearep.listarAreas();
     }
     
