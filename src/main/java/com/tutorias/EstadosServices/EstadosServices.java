@@ -8,11 +8,23 @@ import com.tutorias.domain.Estado;
 import java.util.List;
 
 
-public interface EstadosServices {
+public class EstadosServices {
     
-    public List<Estado> listaEstados();
-    public void borrar(Estado estado);
-    public void insertar(Estado estado);
-    public Estado encontrarEstado(Estado estado);
+    public EstadosServices(EstadosRepositorio estarep) {
+        this.estarep = estarep;
+    }
+    
+    private EstadosRepositorio estarep;
+    
+    public List<Estado> listarEstados(){
+        return estarep.listar();
+    }
+    
+    public void insertarEstado(Estado estado){
+        estarep.insertar(estado);
+    }
+    public void eliminarEstado(Estado estado){
+        estarep.eliminar(estado);
+    }
     
 }

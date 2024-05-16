@@ -41,6 +41,8 @@ public class Usuario{
     private int id_carrera;
     
     private int activo;
+    
+    private int semestre;
 
 
     public Usuario() {
@@ -181,6 +183,20 @@ public class Usuario{
      */
     public void setActivo(int activo) {
         this.activo = activo;
+    }
+
+    /**
+     * @return the semestre
+     */
+    public int getSemestre() {
+        return semestre;
+    }
+
+    /**
+     * @param semestre the semestre to set
+     */
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
     }
     
     

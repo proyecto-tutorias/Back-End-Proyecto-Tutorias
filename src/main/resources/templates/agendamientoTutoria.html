@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -23,54 +23,56 @@
 
 <body class="bg-dark-subtle">
     <div>
-        <div id="navbar-contenedor"></div>
+        <div th:replace="navbar :: navbar"></div>
         <div class="contenedor-vista-agendamiento">
-            <div class="bg-white contenedor-agendamiento">
-                <h1 class="titulo-vista">Agendar tutoria</h1>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="mb-4">
-                            <label for="input-FechaLimite" class="form-label">Fecha de tutoria</label>
-                            <div>
-                                <input type="date" class="input-fecha-agendamiento">
+            <form th:action="@{/agregarAgendamiento}" th:object="${agentuto}" method="post" id="agendamientoform">
+                <div class="bg-white contenedor-agendamiento">
+                    <h1 class="titulo-vista">Agendar tutoria</h1>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-4">
+                                <label for="input-FechaLimite" class="form-label">Fecha de tutoria</label>
+                                <div>
+                                    <input type="date" th:field="*{fechaAgendamiento}" class="input-fecha-agendamiento">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="mb-4">
-                            <label for="input-datos" class="form-label">Datos adicionales</label>
-                            <div>
-                                <textarea placeholder="Digite descripción" class="input-datos-agendamiento"></textarea>
+                            <div class="mb-4">
+                                <label for="input-datos" class="form-label">Datos adicionales</label>
+                                <div>
+                                    <textarea placeholder="Digite descripción" th:field="*{datos_adicionales}" class="input-datos-agendamiento"></textarea>
+                                </div>
                             </div>
+
+                            <a class="boton-finalizar-citacion" onclick="document.getElementById('agendamientoform').submit()">
+                                Finalizar citación
+                            </a>
                         </div>
 
-                        <a href="#" class="boton-finalizar-citacion">
-                            Finalizar citación
-                        </a>
-                    </div>
-
-                    <div class="col-1">
-                        <hr />
-                    </div>
-
-                    <div class="col-5">
-                        <div >
-                            <p><b>Información de tutoria</b></p>
-                            <b class="mb-0">Tutoria 1</b>
-                            <p class="mb-0">Tutoria prueba para pedir ayuda</p>
-                            <p class="mb-5"><b>Precio: </b>$7000</p>
+                        <div class="col-1">
+                            <hr />
                         </div>
 
-                        <div>
-                            <p><b>Información del tutor</b></p>
-                            <p class="mb-0"><b>Nombre: </b>Kristal</p>
-                            <p class="mb-0"><b>Apellido: </b>Vanega</p>
-                            <p class="mb-0"><b>Carrera: </b>Psicologia</p>
-                            <p><b>Calificación: </b>5.0</p>
+                        <div class="col-5">
+                            <div >
+                                <p><b>Información de tutoria</b></p>
+                                <b class="mb-0" th:text="${tutoriaSeleccionada.titulo}"></b>
+                                <p class="mb-0" th:text="${tutoriaSeleccionada.descripcion}"></p>
+                                <p class="mb-5"><b>Precio: <span th:text="${tutoriaSeleccionada.precio}"></span> </b ></p>
+                            </div>
 
+                            <div>
+                                <p><b>Información del tutor</b></p>
+                                <p class="mb-0"><b>Nombre: </b> <span th:text="${tutor.nombre}"></span></p>
+                                <p class="mb-0"><b>Apellido: </b><span th:text="${tutor.apellido}"></span></p>
+                                <p class="mb-0"><b>Carrera: </b><span th:text="${carrera}"></span></p>
+                                <p><b>Calificación: </b><span th:text="${tutor.promedioPuntaje}"></span></p>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>

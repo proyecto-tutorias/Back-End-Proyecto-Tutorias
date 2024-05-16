@@ -4,12 +4,24 @@
  */
 package com.tutorias.config;
 
+import com.tutorias.AgendamientoTutoriaServices.AgendamientoTutoriaRepositorio;
+import com.tutorias.AgendamientoTutoriaServices.AgendamientoTutoriaServices;
 import com.tutorias.AreaServices.AreaRepositorio;
 import com.tutorias.AreaServices.AreaServices;
+import com.tutorias.CalificacionesServices.CalificacionesRepositorio;
+import com.tutorias.CalificacionesServices.CalificacionesServices;
 import com.tutorias.CarrerasServices.CarrerasRepositorio;
 import com.tutorias.CarrerasServices.CarrerasServices;
+import com.tutorias.EstadosServices.EstadosRepositorio;
+import com.tutorias.EstadosServices.EstadosServices;
 import com.tutorias.EstudianteServices.EstudianteRepositorio;
 import com.tutorias.EstudianteServices.EstudianteServices;
+import com.tutorias.NotificacionesServices.NotificacionesRepositorio;
+import com.tutorias.NotificacionesServices.NotificacionesServices;
+import com.tutorias.PlataformasServices.PlataformasRepositorio;
+import com.tutorias.PlataformasServices.PlataformasServices;
+import com.tutorias.RangosServices.RangosRepositorio;
+import com.tutorias.RangosServices.RangosServices;
 import com.tutorias.TutorServices.TutorRepositorio;
 import com.tutorias.TutorServices.TutorServices;
 import com.tutorias.TutoriasServices.TutoriasRepositorio;
@@ -55,6 +67,34 @@ public class AppConfig {
     @Bean
     public CarrerasServices carreser(CarrerasRepositorio carrep){
         return new CarrerasServices(carrep);
+    }
+    
+    @Bean
+    public EstadosServices estaser(EstadosRepositorio estarep){
+        return new EstadosServices(estarep);
+    }
+    
+    @Bean
+    public NotificacionesServices notiser(NotificacionesRepositorio notirep){
+        return new NotificacionesServices(notirep);
+    }
+    @Bean
+    public AgendamientoTutoriaServices agentutoser(AgendamientoTutoriaRepositorio agentutorep){
+        return new AgendamientoTutoriaServices(agentutorep);
+    }
+    
+    @Bean
+    public PlataformasServices plataser(PlataformasRepositorio platarep){
+        return new PlataformasServices(platarep);
+    }
+    @Bean
+    public CalificacionesServices caliser(CalificacionesRepositorio calirep){
+        return new CalificacionesServices(calirep);
+    }
+    
+    @Bean
+    public RangosServices ranser(RangosRepositorio ranrep){
+        return new RangosServices(ranrep);
     }
     
 }

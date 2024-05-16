@@ -40,7 +40,7 @@
                         </div>
                         <div class="mb-3 contenedor-input-formulario">
                             <label for="input-semestre" class="form-label">Semestre</label>
-                            <select class="form-select" th:field='*{id_usuario}'>
+                            <select class="form-select" th:field='*{semestre}'>
                                 <option th:value="1">1</option>
                                 <option th:value="2">2</option>
                                 <option th:value="3">3</option>
@@ -68,12 +68,8 @@
                         </div>
                         <div class="mb-3 contenedor-input-formulario">
                             <label for="input-carrera" class="form-label">Carrera</label>
-                            <select class="form-select" th:field="*{id_carrera}">
-                                <option th:value="1">Administracion de Empresas</option>
-                                <option th:value="2">Tecnologia en desarrollo de software</option>
-                                <option th:value="3">Ingenieria de Sistemas</option>
-                                <option th:value="4">Ingenieria ambiental</option>
-                                <option th:value="5">Tecnologia en Gestión de Redes de Computadores y Seguridad Informática </option>
+                            <select th:field="*{id_carrera}">
+                                <option th:each="carrera : ${carreras}" th:value="${carrera.idCarrera}" th:text="${carrera.descripcion}"></option>
                             </select>
                         </div>
                         <div class="mb-3 contenedor-input-formulario">

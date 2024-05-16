@@ -4,22 +4,24 @@
 <body>
 
     <nav th:fragment="navbar">
-        <div class="contenedor-busqueda d-flex justify-content-center">
-            <img src="images/logoPA.png"  alt="logo de la pagina" />
-            <div class="d-flex justify-content-center contenedor-barra">
-                <input class="navbar-busqueda" placeholder="Buscar" />
-                <button class="btn-buscar-navbar"><i class="bi bi-search"></i></button>
-            </div>
-            <div class="contenedor-perfil d-flex align-items-center">
-                <div class="dropdown">
-                    <a class="opcion-verPerfil" th:href="@{/perfil}"><i class="bi bi-person-circle icono-perfil"></i> <span th:text="${ususesion.nombre}"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/}">Cerrar sesion</a></li>
-                    </ul>
-
+        <form method="post" th:action='@{/busqueda}' th:object='${parametros}'>
+            <div class="contenedor-busqueda d-flex justify-content-center">
+                <img src="images/logoPA.png"  alt="logo de la pagina" />
+                <div class="d-flex justify-content-center contenedor-barra">
+                    <input class="navbar-busqueda" placeholder="Buscar" th:field='*{busqueda}' />
+                    <button class="btn-buscar-navbar"><i class="bi bi-search"></i></button>
                 </div>
-            </div>      
-        </div>
+                <div class="contenedor-perfil d-flex align-items-center">
+                    <div class="dropdown">
+                        <a class="opcion-verPerfil" th:href="@{/perfil}"><i class="bi bi-person-circle icono-perfil"></i> <span th:text="${ususesion.nombre}"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/}">Cerrar sesion</a></li>
+                        </ul>
+
+                    </div>
+                </div>      
+            </div>
+        </form>
         <div class="opciones-navbar d-flex justify-content-center">
             <a class="nav-link" th:href="@{/tutorias}">Tutorias</a>
             <a class="nav-link" th:href="@{/solicitud_tutoria}" th:if="${ususesion.tipo_usuario != 'admin'}">Solicitud de tutoria</a>

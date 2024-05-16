@@ -8,11 +8,27 @@ import com.tutorias.domain.PlataformaReunion;
 import java.util.List;
 
 
-public interface PlataformasServices {
+public class PlataformasServices {
     
-    public List<PlataformaReunion> listaPlataformas();
-    public void borrar(PlataformaReunion plataformas);
-    public void insertar(PlataformaReunion plataformas);
-    public PlataformaReunion encontrarPlataforma(PlataformaReunion plataformas);
+    public PlataformasServices(PlataformasRepositorio platarep) {
+      this.platarep = platarep;
+    }
+    private PlataformasRepositorio platarep;
+      
+      
+    
+    public PlataformaReunion encontrarPlataforma(int id){
+        return platarep.encontrar(id);
+    }
+    
+    public List<PlataformaReunion> listarPlataformas(){
+        return platarep.listar();
+    }
+    
+    public void insertar(PlataformaReunion plareu){
+        platarep.insertar(plareu);
+    }
+    
+    
     
 }

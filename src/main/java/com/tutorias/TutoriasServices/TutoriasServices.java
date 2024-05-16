@@ -37,5 +37,16 @@ public class TutoriasServices {
         return tutoriasrep.encontrar(id);
     }
     
+    public List<Tutoria> listarMisTutorias(int id){
+        return tutoriasrep.listarMisTutorias(id);
+    }
+    public List<Tutoria> listarTutoriasAsignadas(int id){
+        return tutoriasrep.listarTutoriasAsignadas(id);
+    }
+    
+    public void cambiarEstado(int estado, int id){
+        tutoriasrep.cambiarEstado(estado, id);
+    }
+    
     
 }

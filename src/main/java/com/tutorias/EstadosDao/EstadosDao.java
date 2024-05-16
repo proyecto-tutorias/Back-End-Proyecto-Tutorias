@@ -5,12 +5,17 @@
 package com.tutorias.EstadosDao;
 
 import com.tutorias.domain.Estado;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author DBZve
  */
-public interface EstadosDao extends CrudRepository<Estado, Long> {
+public interface EstadosDao {
+    
+    List<Estado> listar();
+    void insertar(Estado estado);
+    void eliminar(Estado estado);
     
 }

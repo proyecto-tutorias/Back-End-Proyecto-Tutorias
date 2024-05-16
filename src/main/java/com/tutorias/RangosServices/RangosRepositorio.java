@@ -8,36 +8,31 @@ import com.tutorias.RangosDao.RangosDao;
 import com.tutorias.domain.Rango;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-public class RangosServicesImp implements RangosServices{
+@Repository
+public class RangosRepositorio implements RangosDao{
+    
+    private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private RangosDao rangosDao;
-    
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<Rango> listaRangos() {
-        return (List<Rango>)rangosDao.findAll();
+    public RangosRepositorio(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
+
     @Override
-    public void borrar(Rango rango) {
-        rangosDao.delete(rango);
+    public List<Rango> listarRangos() {
+        return jdbcTemplate.query("SELECT * FROM rangos", new RangosLoad());
     }
 
     @Override
     public void insertar(Rango rango) {
-        rangosDao.save(rango);
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Rango encontrarRango(Rango rango) {
-       return rangosDao.findById(rango.getIdRango()).orElse(null);
-    }
+    
     
 }

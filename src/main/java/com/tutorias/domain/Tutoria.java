@@ -25,6 +25,7 @@ public class Tutoria {
     private int idArea;
     private int activo;
     private int idCarrera;
+    private int postulacion_disponible;
 
     public Tutoria() {
     }
@@ -180,5 +181,19 @@ public class Tutoria {
      */
     public void setIdCarrera(int idCarrera) {
         this.idCarrera = idCarrera;
+    }
+
+    /**
+     * @return the postulacion_disponible
+     */
+    public int getPostulacion_disponible() {
+        return postulacion_disponible;
+    }
+
+    /**
+     * @param postulacion_disponible the postulacion_disponible to set
+     */
+    public void setPostulacion_disponible(int postulacion_disponible) {
+        this.postulacion_disponible = postulacion_disponible;
     }
 }

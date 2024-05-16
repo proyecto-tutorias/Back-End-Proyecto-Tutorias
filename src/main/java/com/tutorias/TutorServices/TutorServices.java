@@ -31,6 +31,10 @@ public class TutorServices {
         return tutorep.encontarTutor(id);
     }
     
+    public void insertarPromedio(double prom, int id){
+        tutorep.insertarPromedio(prom, id);
+    }
+    
     
     
 }

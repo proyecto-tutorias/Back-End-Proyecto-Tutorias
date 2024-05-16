@@ -5,9 +5,14 @@
 package com.tutorias.RangosDao;
 
 import com.tutorias.domain.Rango;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface RangosDao extends CrudRepository<Rango, Long> {
+public interface RangosDao {
+    
+    List<Rango> listarRangos();
+    void insertar(Rango rango);
+    
     
 }

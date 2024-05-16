@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://thymeleaf.org">
 
 <head>
     <title>Edicion tutoria</title>
@@ -24,46 +24,45 @@
         <div id="navbar-contenedor"></div>
         <div class="contenedor-vista-info-tutoria">
             <h1 class="titulo-info-tutoria">Edición tutoria</h1>
-            <div class="contenedor-informacion-tutoria">
-                <div class="row">
-                    <div class="col-1">
-                        <i class="bi bi-person-circle icono-verPerfil"></i>
-                    </div>
+            <form th:object="${agentuto}" method="post" th:action="@{/tutor_edicion?id={id}(id=${id})}" id="edicionTuto">
+                <div class="contenedor-informacion-tutoria">
+                    <div class="row">
+                        <div class="col-1">
+                            <i class="bi bi-person-circle icono-verPerfil"></i>
+                        </div>
 
-                    <div class="col-11">
-                        <p><b>Nombre tutor:</b> Ramiro Ferrer</p>
-                        <p><b>Carrera:</b> Ingeniera en sistemas</p>
-                        <p><b>Semestre: </b> 7</p>
-                        <p><b>Calificacion del tutor: </b>4.5</p>
-                        <div class="mb-3">
-                            <label for="input-plataforma" class="form-label">Plataforma</label>
-                            <div>
-                                <select class="input-edit">
-                                    <option value="">Seleccione una plataforma</option>
-                                    <option value="Google meet">Google meet</option>
-                                    <option value="Microsoft teams">Microsoft teams</option>
-                                    <option value="Zoom">Zoom</option>
-                                </select>
+                        <div class="col-11">
+                            <p><b>Nombre tutor:</b> <span th:text="${tutorsesion.nombre}"></span></p>
+                            <p><b>Carrera:</b> <span th:text="${carreras[tutorsesion.id_carrera - 1].descripcion}"></span></p>
+                            <p><b>Semestre: </b> <span th:text="${tutorsesion.semestre}"></span></p>
+                            <p><b>Calificacion del tutor: </b> <span th:text="${tutorsesion.promedioPuntaje}"></span></p>
+                            <div class="mb-3">
+                                <label for="input-plataforma" class="form-label">Plataforma</label>
+                                <div>
+                                    <select class="input-edit" th:field="*{idPlataformaReunion}">
+                                        <option th:each="plataforma : ${plataformas}" th:value="${plataforma.idPlataformaReunion}" th:text="${plataforma.descripcion}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="input-url" class="form-label">Link de la reunion</label>
+                                <div>
+                                    <input type="text" class="input-edit" placeholder="Ingrese el link de la reunion" th:field="*{URLReunion}">
+                                </div>
                             </div>
                         </div>
-                        <div class="mb-4">
-                            <label for="input-url" class="form-label">Link de la reunion</label>
-                            <div>
-                                <input type="text" class="input-edit" placeholder="Ingrese el link de la reunion">
-                            </div>
-                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center gap-4">
+                        <a class="boton-volver">
+                            Volver
+                        </a>
+
+                        <a onclick="document.getElementById('edicionTuto').submit();" class="boton-volver">
+                            Guardar
+                        </a>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center gap-4">
-                    <a href="misTutorias.html" class="boton-volver">
-                        Volver
-                    </a>
-
-                    <a href="tutoriasAsignadas.html" class="boton-volver">
-                        Guardar
-                    </a>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>

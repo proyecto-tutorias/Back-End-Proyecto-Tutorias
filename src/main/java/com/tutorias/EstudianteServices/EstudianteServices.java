@@ -20,8 +20,8 @@ public class EstudianteServices {
     
     private EstudianteRepositorio esturep;
     
-    public void insertarTutoria(Estudiante estudiante){
-        esturep.insertar(estudiante);
+    public void insertarEstudiante(int id){
+        esturep.insertar(id);
     }
     
     public List<Estudiante> listarTutorias(){

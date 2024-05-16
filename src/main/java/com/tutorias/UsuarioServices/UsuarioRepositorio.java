@@ -24,7 +24,7 @@ public class UsuarioRepositorio implements UsuarioDao{
 
     @Override
     public void insertar(Usuario usuario) {
-        jdbcTemplate.update("INSERT INTO usuario(tipo_usuario, nombre, apellido,codigo_estudiante, password, login, id_carrera, activo)" + 
+        jdbcTemplate.update("INSERT INTO usuario(tipo_usuario, nombre, apellido,codigo_estudiante, password, login, id_carrera, activo, semestre)" + 
                 "VALUES (?,?,?,?,?,?,?,?)" ,
                 usuario.getTipo_usuario() ,
                 usuario.getNombre(), 
@@ -33,7 +33,8 @@ public class UsuarioRepositorio implements UsuarioDao{
                 usuario.getPassword(), 
                 usuario.getLogin(),
                 usuario.getId_carrera(),
-                usuario.getActivo());
+                usuario.getActivo(),
+                usuario.getSemestre());
     }
 
     @Override

@@ -8,21 +8,21 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 
-@Entity
-@Table(name = "notificaciones")
-public class Notificacion implements Serializable{
 
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long idNotificacion;
+public class Notificacion{
+
+
+
+    private int idNotificacion;
     
     private String descripcion;
     private int id_Tutor;
     private int id_Tutoria;
-
-    public Notificacion(Long idNotificacion, String descripcion, int id_Tutor, int id_Tutoria) {
+    private int activo;
+    private int id_tipo_notificacion;
+    private int id_destinatario;
+    
+    public Notificacion(int idNotificacion, String descripcion, int id_Tutor, int id_Tutoria) {
         this.idNotificacion = idNotificacion;
         this.descripcion = descripcion;
         this.id_Tutor = id_Tutor;
@@ -36,14 +36,14 @@ public class Notificacion implements Serializable{
     /**
      * @return the idNotificacion
      */
-    public Long getIdNotificacion() {
+    public int getIdNotificacion() {
         return idNotificacion;
     }
 
     /**
      * @param idNotificacion the idNotificacion to set
      */
-    public void setIdNotificacion(Long idNotificacion) {
+    public void setIdNotificacion(int idNotificacion) {
         this.idNotificacion = idNotificacion;
     }
 
@@ -87,6 +87,48 @@ public class Notificacion implements Serializable{
      */
     public void setId_Tutoria(int id_Tutoria) {
         this.id_Tutoria = id_Tutoria;
+    }
+
+    /**
+     * @return the activo
+     */
+    public int getActivo() {
+        return activo;
+    }
+
+    /**
+     * @param activo the activo to set
+     */
+    public void setActivo(int activo) {
+        this.activo = activo;
+    }
+
+    /**
+     * @return the id_tipo_notificacion
+     */
+    public int getId_tipo_notificacion() {
+        return id_tipo_notificacion;
+    }
+
+    /**
+     * @param id_tipo_notificacion the id_tipo_notificacion to set
+     */
+    public void setId_tipo_notificacion(int id_tipo_notificacion) {
+        this.id_tipo_notificacion = id_tipo_notificacion;
+    }
+
+    /**
+     * @return the id_destinatario
+     */
+    public int getId_destinatario() {
+        return id_destinatario;
+    }
+
+    /**
+     * @param id_destinatario the id_destinatario to set
+     */
+    public void setId_destinatario(int id_destinatario) {
+        this.id_destinatario = id_destinatario;
     }
 
 }

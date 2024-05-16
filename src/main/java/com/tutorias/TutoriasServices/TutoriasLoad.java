@@ -28,6 +28,7 @@ public class TutoriasLoad implements RowMapper<Tutoria>{
         tutoria.setActivo(rs.getInt("activo"));
         tutoria.setIdEstado(rs.getInt("id_estado"));
         tutoria.setIdCarrera(rs.getInt("id_carrera"));
+        tutoria.setPostulacion_disponible(1);
          
 
         return tutoria;

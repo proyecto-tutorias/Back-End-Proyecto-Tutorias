@@ -58,7 +58,14 @@ public class TutorRepositorio implements TutorDao{
     public List<Tutor> listarTutores() {
         return jdbcTemplate.query("SELECT * FROM tutor", new TutorLoad());
     }
-
+    
+    @Override
+    public void insertarPromedio(double prom, int id){
+        String sentencia = "update tutor set prom_puntaje ="+ prom +" where id_tutor = "+ id;
+        
+        jdbcTemplate.update(sentencia);
+        
+    }
     
     
     

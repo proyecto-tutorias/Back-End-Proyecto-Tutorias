@@ -64,13 +64,22 @@
                                     <p class="card-text mb-0" th:text="${tutoria.descripcion}"></p>
                                     <p class="card-text">Fecha <span th:text="${tutoria.fechaLimite}"></span></p>
                                 </div>
-                                <div class="d-flex align-items-center gap-3 esp-card">
-                                    <i class="bi bi-person-circle icono-perfil-card"></i>
+                                <form method="post" th:action="@{agregar_notificacion?id={id}(id=${tutoria.idTutoria})}" th:id="${tutoria.idTutoria}" class="d-flex align-items-center gap-3 esp-card flex-row-reverse">
+                               
                                     <div>
                                         <p class="card-text mb-0">Solicitado por: <span th:text="${usututorias[iterador.index].nombre}"></span></p>
-                                        <p class="card-text">Precio: $7000</p>
+                                        <p class="card-text">Precio: <span th:text="${tutoria.precio}"></span></p>
                                     </div> 
-                                </div>
+                                    
+                                    <div>
+                                        <a th:if="${tutorsesion != null && tutoria.postulacion_disponible == 1 && tutorsesion.login != usututorias[iterador.index].login}" class="text-black" th:onclick="|document.getElementById('${tutoria.idTutoria}').submit()|"><i
+                                                class="bi bi-check-circle-fill icono-perfil-card"></i></a>
+                                        <i class="bi bi-person-circle icono-perfil-card"></i>
+                                    </div>
+                                    
+                                    
+                              
+                                </form>
                             </div>
                         </div>
                        
@@ -81,5 +90,6 @@
         </div>
     </div>  
 </body>
+
 
 </html>

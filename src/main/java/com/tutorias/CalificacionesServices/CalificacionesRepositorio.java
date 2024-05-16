@@ -28,8 +28,9 @@ public class CalificacionesRepositorio implements CalificacionesDao{
 
     @Override
     public void insertar(Calificacion calificacion) {
-        jdbcTemplate.update("INSERT INTO calificaciones(puntaje, comentario)" + 
-                "VALUES (?,?)" ,
+        jdbcTemplate.update("INSERT INTO calificaciones(id_calificacion,puntaje, comentario)" + 
+                "VALUES (?,?,?)" ,
+                calificacion.getIdCalificacion(),
                 calificacion.getPuntaje() ,
                 calificacion.getComentario());
     }
@@ -48,6 +49,8 @@ public class CalificacionesRepositorio implements CalificacionesDao{
     public List<Calificacion> listarCalificaciones() {
         return jdbcTemplate.query("SELECT * FROM calificaciones", new CalificacionesLoad());
     }
+    
+    
 
     
     

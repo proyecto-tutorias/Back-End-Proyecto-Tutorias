@@ -15,7 +15,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface EstudianteDao {
     
-    void insertar(Estudiante estudiante);
+    void insertar(int id);
     List<Estudiante> listarEstudiantes();
     
     

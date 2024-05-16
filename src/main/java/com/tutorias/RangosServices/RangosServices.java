@@ -8,11 +8,16 @@ import com.tutorias.domain.Rango;
 import java.util.List;
 
 
-public interface RangosServices {
+public class RangosServices {
     
-    public List<Rango> listaRangos();
-    public void borrar(Rango rango);
-    public void insertar(Rango rango);
-    public Rango encontrarRango(Rango rango);
+    public RangosServices(RangosRepositorio ranrep) {
+        this.ranrep = ranrep;
+    }
+    
+    private RangosRepositorio ranrep;
+    
+    public List<Rango> listarRangos(){
+        return ranrep.listarRangos();
+    }
     
 }

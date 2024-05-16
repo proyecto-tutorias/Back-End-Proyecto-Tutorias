@@ -7,23 +7,16 @@ package com.tutorias.domain;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "plataformasreunion")
-public class PlataformaReunion implements Serializable{
 
-    
-    private static final long serialVersionUID = 1L;
-    
-    
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)    
-    private Long idPlataformaReunion;
+public class PlataformaReunion {
+
+    private int idPlataformaReunion;
     private String descripcion;
 
     public PlataformaReunion() {
     }
 
-    public PlataformaReunion(Long idPlataformaReunion, String descripcion) {
+    public PlataformaReunion(int idPlataformaReunion, String descripcion) {
         this.idPlataformaReunion = idPlataformaReunion;
         this.descripcion = descripcion;
     }
@@ -33,14 +26,14 @@ public class PlataformaReunion implements Serializable{
     /**
      * @return the idPlataformaReunion
      */
-    public Long IdPlataformaReunion() {
+    public int getIdPlataformaReunion() {
         return idPlataformaReunion;
     }
 
     /**
      * @param idPlataformaReunion the idPlataformaReunion to set
      */
-    public void setIdPlataformaReunion(Long idPlataformaReunion) {
+    public void setIdPlataformaReunion(int idPlataformaReunion) {
         this.idPlataformaReunion = idPlataformaReunion;
     }
 

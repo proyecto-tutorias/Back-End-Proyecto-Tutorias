@@ -19,6 +19,6 @@ public interface TutorDao {
     void desactivarTutor(int id);
     void activarTutor(int id);
     List<Tutor> listarTutores();
-    
+    void insertarPromedio(double prom, int id);
     
 }

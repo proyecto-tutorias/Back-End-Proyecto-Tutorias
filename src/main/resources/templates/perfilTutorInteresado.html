@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -23,21 +23,21 @@
 
 <body>
     <div>
-        <div id="navbar-contenedor"></div>
+        <div th:replace="navbar :: navbar"></div>
         <div class="contenedor-miperfil">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex gap-2 align-items-center">
                     <i class="bi bi-person-circle icono-verPerfil"></i>
-                    <p class="mb-0 texto-nombre-perfil">Stephany Martinez</p>
+                    <p class="mb-0 texto-nombre-perfil" th:text="${tutor.nombre} + ' ' + ${tutor.apellido}"></p>
                 </div>
             </div>
 
             <div class="informacion-usuario mb-4">
-                <p><b>Codigo estudiante: </b> 00000052273</p>
-                <p><b>Carrera: </b>Ingenieria Electronica</p>
-                <p><b>Semestre: </b>8</p>
-                <p><b>Calificación: </b>4.5</p>
-                <p><b>Rango: </b>Tutor-Matematicas</p>
+                <p><b>Codigo estudiante: </b> <span th:text="${tutor.codigo_estudiante}"></span></p>
+                <p><b>Carrera: </b> <span th:text="${carreras[tutor.id_carrera - 1].descripcion}"></span></p>
+                <p><b>Semestre: </b> <span th:text="${tutor.semestre}"></span></p>
+                <p><b>Calificación: </b> <span th:text="${tutor.promedioPuntaje}"></span></p>
+                <p><b>Rango: </b> <span th:text="${rangos[tutor.idRango - 1].descripcion}"></span></p>
                 <p><b>Comentarios: </b></p>
                 <table class="table rounded">
                     <thead>
@@ -48,32 +48,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Matematica</td>
-                            <td>Excelente explicacion, domina la tematica</td>
-                            <td>4.5</td>
+                        <tr th:each="calificacion, iterador : ${calificaciones}">
+                            <td th:text="${areas[tutorias[iterador.index].idArea - 1].descripcion}"></td>
+                            <td th:text="${calificacion.comentario}"></td>
+                            <td th:text="${calificacion.puntaje}"></td>
                         </tr>
-                        <tr>
-                            <td>Naturales</td>
-                            <td>Parecia no interesarle dedicarse a esto</td>
-                            <td>1.0</td>
-                        </tr>
-                        <tr>
-                            <td>Fisica</td>
-                            <td>Necesita tener mas confianza consigo mismo</td>
-                            <td>3.5</td>
-                        </tr>
-                        <tr>
-                            <td>Castellano</td>
-                            <td>Me encanta su forma de redactar y explicar</td>
-                            <td>5.0</td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
 
             <div class="d-flex justify-content-center">
-                <a href="notificaciones.html" class="boton-volver">
+                <a th:href='@{/notificaciones}' class="boton-volver">
                     Volver
                 </a>
             </div>

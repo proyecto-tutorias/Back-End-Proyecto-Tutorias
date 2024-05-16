@@ -26,7 +26,8 @@ public class UsuarioLoad implements RowMapper<Usuario>{
         usuario.setPassword(rs.getString("password"));
         usuario.setTipo_usuario(rs.getString("tipo_usuario"));
         usuario.setId_usuario(rs.getInt("id_usuario")); 
-        usuario.setActivo(rs.getInt("activo")); 
+        usuario.setActivo(rs.getInt("activo"));
+        usuario.setSemestre(rs.getInt("semestre"));
 
         return usuario;
     }

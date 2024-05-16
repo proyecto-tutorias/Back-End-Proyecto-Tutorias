@@ -6,13 +6,13 @@ body {
     overflow-y: auto;
 }
 
-.imagen-fondo{
+.imagen-fondo {
     background-image: url(../images/fondo.jpg);
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.contenedor-vista{
+.contenedor-vista {
     background-color: white;
     height: 100%;
 }
@@ -49,6 +49,30 @@ body {
     padding: 7px 12px;
     border-radius: 50%;
     transition: 0.5s ease-in-out;
+}
+
+.boton-volver {
+    background-color: #EBE2A1;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    padding: 5px 32px;
+    text-decoration: none;
+    color: black;
+}
+
+.boton-notificaciones {
+    background-color: #EBE2A1;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    padding: 3px 16px;
+}
+
+.boton-notificaciones:hover {
+    background-color: #cec791;
 }
 
 /* CSS formulario inicio sesion */
@@ -143,7 +167,7 @@ nav {
 
 .contenedor-busqueda {
     gap: 16px;
-    
+
 }
 
 .btn-buscar-navbar {
@@ -187,12 +211,12 @@ nav {
 
 
 
-.dropdown-menu{
+.dropdown-menu {
     border-style: none;
 
 }
 
-.dropdown-menu a{
+.dropdown-menu a {
     font-size: small;
 }
 
@@ -226,7 +250,7 @@ nav {
     height: 100%;
 }
 
-.contenedor-listado-notificaciones{
+.contenedor-listado-notificaciones {
     padding: 72px 72px 0px 72px;
 }
 
@@ -236,39 +260,25 @@ nav {
     font-weight: bold;
 }
 
-.boton-verPerfil-notificacion {
-    background-color: #EBE2A1;
-    height: 35px;
-    border-radius: 10px;
-    border: none;
-    font-weight: bold;
-    padding: 0px 32px;
-}
-
-.boton-verPerfil-notificacion:hover{
-    color: white;
-    background-color: #c2b86f;
-}
-
 /*CSS vista mi perfil*/
 
-.icono-verPerfil{
+.icono-verPerfil {
     font-size: 4rem;
 }
 
-.texto-nombre-perfil{
+.texto-nombre-perfil {
     font-weight: bold;
     font-size: 1.4rem;
 }
 
-.informacion-usuario{
+.informacion-usuario {
     background-color: #F6F6F6;
     border-radius: 20px;
     padding: 20px;
 }
 
-.contenedor-miperfil{
-    padding: 72px 180px 0px 180px;
+.contenedor-miperfil {
+    padding: 72px 180px 72px 180px;
 }
 
 /*Media query*/
@@ -304,15 +314,15 @@ nav {
 
 /* CSS de cards */
 
-.border-start{
-    border-color: #EBE2A1!important;
+.border-start {
+    border-color: #EBE2A1 !important;
 }
 
-.card{
+.card {
     background-color: #F6F6F6;
 }
 
-.esp-card{
+.esp-card {
     padding-right: 20px;
 }
 
@@ -322,26 +332,26 @@ nav {
     padding: 72px 72px 64px 72px;
 }
 
-.cnt h1{
+.cnt h1 {
     padding-bottom: 15px;
 }
 
 .cnt {
-    padding: 0 200px 0 200px ;
+    padding: 0 200px 0 200px;
 }
 
 .dropdown:hover>.dropdown-menu {
     display: block;
 }
-  
+
 .dropdown>.dropdown-toggle:active {
-    
+
     pointer-events: none;
 }
 
 /* CSS solicitud_tutoria formulario */
 
-.contenedor-formulario-solicitud{
+.contenedor-formulario-solicitud {
     padding: 72px 0px;
 }
 
@@ -360,7 +370,7 @@ nav {
     font-size: 2rem;
     height: 45px;
     font-weight: bold;
-    
+
 }
 
 .formulario input,
@@ -374,7 +384,7 @@ nav {
 }
 
 .formulario button {
-    
+
     background-color: #EBE2A1;
     text-align: center;
     width: 200px;
@@ -391,13 +401,151 @@ nav {
 
 .formulario button:hover {
     color: white;
-    background-color: #c2b86f;
+    background-color: #c2b86f;
 }
 
-.contenedor-barra{
+.contenedor-barra {
     padding-top: 13px;
 }
 
-.contenedor-perfil{
+.contenedor-perfil {
     padding-top: 5px;
+}
+
+/* CSS titulos vistas */
+
+.titulo-vista {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* CSS informacion Tutoria*/
+
+.titulo-info-tutoria {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.contenedor-informacion-tutoria {
+    background-color: #F6F6F6;
+    border-radius: 20px;
+    padding: 50px 50px 30px 60px;
+}
+
+.contenedor-vista-info-tutoria {
+    padding: 72px 72px 72px 72px;
+}
+
+/* CSS agendamiento tutoria*/
+
+.contenedor-vista-agendamiento {
+    padding: 75px;
+}
+
+.contenedor-agendamiento{
+    padding: 50px 50px 80px 50px;
+    border-radius: 20px;
+}
+
+.col-1 hr {
+    height: 100%;
+    margin: 0;
+    border: none;
+    width: 0;
+    border-left: 4px solid #e0cd3a;
+}
+
+.input-fecha-agendamiento{
+    width: 80%;
+    height: 2.2rem;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.input-datos-agendamiento{
+    width: 80%;
+    border-radius: 5px;
+    padding: 0px 10px;
+}
+
+.boton-finalizar-citacion{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    background-color: #EBE2A1;
+    padding: 7px 25px;
+    border-radius: 10px;
+}
+
+/* CSS inputs-vistas-edicion */
+
+.input-edit{
+    width: 300px;
+    height: 2.2rem;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+
+/* CSS calificar usuario*/
+
+.modal-body{
+    padding: 40px 80px;
+}
+
+.modal-body .stars{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.modal-body .stars a{
+    font-size: 40px;
+    transition: .3s;
+    color: #ccc;
+
+}
+
+.modal-body .stars a.active{
+    color: gold;
+}
+
+/* CSS estrellas */
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
 }

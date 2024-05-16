@@ -8,6 +8,7 @@ import com.tutorias.TutoriasDao.TutoriasDao;
 import com.tutorias.domain.Tutoria;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,13 @@ public class TutoriasRepositorio implements TutoriasDao{
         jdbcTemplate.update("INSERT INTO tutorias(titulo,descripcion,fecha_limite,precio,id_estado,id_estudiante,id_area,activo,id_carrera)" + 
                       "VALUES (?,?,?,?,?,?,?,?,?)" ,
                       tutoria.getTitulo() ,
-                      tutoria.getTitulo(),
+                      tutoria.getDescripcion(),
                       tutoria.getFechaLimite(),
                       tutoria.getPrecio(), 
                       tutoria.getIdEstado(),
                       tutoria.getIdEstudiante(),
                       tutoria.getIdArea(),
-                      tutoria.getIdArea(),
+                      tutoria.getActivo(),
                       tutoria.getIdCarrera());    
     }
 
@@ -55,6 +56,32 @@ public class TutoriasRepositorio implements TutoriasDao{
     public Tutoria encontrar(int id){
         return jdbcTemplate.queryForObject("SELECT * FROM tutorias WHERE id_tutoria=?", new TutoriasLoad(), id);
     }
+    
+    @Override
+    public List<Tutoria> listarMisTutorias(int id){
+        try{
+            return jdbcTemplate.query("SELECT * FROM tutorias WHERE id_estudiante=?", new TutoriasLoad(), id);
+        }catch(EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+   
+    @Override
+    public List<Tutoria> listarTutoriasAsignadas(int id){
+        try{
+            return jdbcTemplate.query("SELECT * FROM tutorias WHERE id_tutor=?", new TutoriasLoad(), id);
+        }catch(EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+    
+    @Override
+    public void cambiarEstado(int estado, int id){
+        jdbcTemplate.update("UPDATE tutorias SET id_estado=? WHERE id_tutoria=?", estado, id);
+    }
+   
+   
+    
 
     
     

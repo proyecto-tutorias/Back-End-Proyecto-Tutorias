@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://thymeleaf.org">
 
 <head>
     <title>Tutorias asignadas</title>
@@ -21,58 +21,40 @@
 
 <body>
     <div>
-        <div id="navbar-contenedor"></div>
+        <div th:replace="navbar :: navbar"></div>
         <div>
             <div class="contenedor-listado-tutorias">
                 <div class="row">
                     <div class="col-lg-12">
                         <!-- Listado tutorias -->
                         <h1 class="titulo-listado-tutoria">Tutorias asignadas</h1>
-                        <div class="listado-tutorias">
+                        <div class="listado-tutorias" th:if="${tutoasignadas != null and !tutoasignadas.empty}">
                             <div class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
-                                <div class="card-body">
+                                <div class="card-body" th:each="tutoasignada, iterador : ${tutoasignadas}">
                                     <div>
-                                        <h5 class="card-title">Tema #1</h5>
-                                        <p class="card-text mb-0">Fecha: 01/01/2024</p>
-                                        <p class="card-text">Plataforma: no asignada</p>
+                                        <h5 class="card-title" th:text="${tutorias[iterador.index].titulo}">Tema #1</h5>
+                                        <p class="card-text mb-0">Fecha: <span th:text="${tutoasignada.fechaAgendamiento}"></span></p>
+                                        <p class="card-text">Plataforma: <span th:text="${plataformas[iterador.index].descripcion}"></span></p>
+                                        <p class="card-text">Estado: <span th:text="${estados[tutorias[iterador.index].idEstado - 1].descripcion}"></span></p>
                                     </div>
                                     <div class="d-flex align-items-center gap-3 esp-card">
                                         <div class="d-flex gap-4">
-                                            <a href="edicionTutoriaVistaTutor.html" class="text-black"><i class="bi bi-info-circle-fill icono-perfil-card"></i></a>
+                                            <a th:if="tutorias[iterador.index].idEstado == 3" th:href="@{/edicion_vista_tutor?id={id}(id=${tutoasignada.idAgendamiento})}" class="text-black"><i class="bi bi-info-circle-fill icono-perfil-card"></i></a>
                                             <i class="bi bi-person-circle icono-perfil-card"></i>
                                         </div>
                                         <div>
-                                            <p class="card-text mb-0">Solicitado por: Pedro123</p>
-                                            <p class="card-text">Precio: $7000</p>
+                                            <p class="card-text mb-0">Solicitado por: <span th:text="${usuarios[iterador.index].login}"></span></p>
+                                            <p class="card-text">Precio: <span th:text="${tutorias[iterador.index].precio}"></span></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
-                                <div class="card-body">
-                                    <div>
-                                        <h5 class="card-title">Tema #2</h5>
-                                        <p class="card-text mb-0">Fecha: 01/01/2024</p>
-                                        <p class="card-text">Plataforma: Google meet</p>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-3 esp-card">
-                                        <div class="d-flex gap-4">
-                                            <a href="edicionTutoriaVistaTutor.html" class="text-black"><i class="bi bi-info-circle-fill icono-perfil-card"></i></a>
-                                            <i class="bi bi-person-circle icono-perfil-card"></i>
-                                        </div>
-                                        <div>
-                                            <p class="card-text mb-0">Solicitado por: Pedro123</p>
-                                            <p class="card-text">Precio: $7000</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+   
 </body>
 
 </html>

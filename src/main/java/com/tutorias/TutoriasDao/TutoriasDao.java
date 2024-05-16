@@ -19,6 +19,9 @@ public interface TutoriasDao {
     void desactivar(int id);
     List<Tutoria> listarTutorias();
     Tutoria encontrar(int id);
-    
+    List<Tutoria> listarMisTutorias(int id);
+    List<Tutoria> listarTutoriasAsignadas(int id);
+    void cambiarEstado(int estado, int id);
+
     
 }

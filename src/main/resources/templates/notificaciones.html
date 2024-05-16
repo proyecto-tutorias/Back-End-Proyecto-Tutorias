@@ -26,27 +26,24 @@
         <div th:replace="navbar :: navbar"></div>
         <div class="contenedor-listado-notificaciones">
             <h1 class="titutlo-listado-notifiaciones">Notificaciones</h1>
-            <div class="listado-notificaciones">
+            <div class="listado-notificaciones" th:if='${notificaciones != null and !notificaciones.empty}'>
                 <!-- Card de notificacion con boton de ver perfil -->
-                <div class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
+                <div class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5" th:each='notificacion : ${notificaciones}'>
                     <div class="card-body">
                         <div class="d-flex align-items-center">
-                            <p class="card-text mb-0">Has recibido una respuesta al “Tema prueba”, de parte del usuario Pedro321.</p>
+                            <p class="card-text mb-0" th:text='${notificacion.descripcion}'></p>
                         </div>
-                        <div class="d-flex align-items-center gap-3">
-                            <input type="submit" value="Ver perfil" class="boton-verPerfil-notificacion"/>
+                        <div class="d-flex align-items-center gap-3" th:if='${notificacion.id_tipo_notificacion == 1}'>
+                            <a th:href="@{/agendar_tutoria?id={id}(id=${notificacion.idNotificacion})}" class="boton-notificaciones">Aceptar</a>
+                            <form method="post" th:action="@{/rechazar?id={id}(id=${notificacion.idNotificacion})}" id="rechazar">
+                                <a class="boton-notificaciones" onclick="document.getElementById('rechazar').submit();">Rechazar</a>
+                            </form>
+                            <a th:href="@{/perfil_interesado?id={id}(id=${notificacion.idNotificacion})}" class="boton-notificaciones">Ver perfil</a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Card de notificacion de solo informacion -->
-                <div class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <p class="card-text mb-0">El usuario JuanVazquez2 ha aceptado que tu seas su tutor en el Tema “Tema prueba”.</p>
-                        </div>
-                    </div>
-                </div>
+                
+               
             </div>
         </div>
     </div>

@@ -4,22 +4,18 @@
  */
 package com.tutorias.domain;
 
-import jakarta.persistence.*;
-import java.io.Serializable;
 
-@Entity
-@Table(name = "rangos")
-public class Rango implements Serializable {
+public class Rango {
 
-    private Long idRango;
+    private int idRango;
     private String descripcion;
     
-    private static final long serialVersionUID = 1L;
+
 
     public Rango() {
     }
 
-    public Rango(Long idRango, String descripcion) {
+    public Rango(int idRango, String descripcion) {
         this.idRango = idRango;
         this.descripcion = descripcion;
     }
@@ -28,14 +24,14 @@ public class Rango implements Serializable {
     /**
      * @return the idRango
      */
-    public Long getIdRango() {
+    public int getIdRango() {
         return idRango;
     }
 
     /**
      * @param idRango the idRango to set
      */
-    public void setIdRango(Long idRango) {
+    public void setIdRango(int idRango) {
         this.idRango = idRango;
     }
 

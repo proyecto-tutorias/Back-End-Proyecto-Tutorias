@@ -27,10 +27,10 @@ public class EstudianteRepositorio implements EstudianteDao{
     }
 
     @Override
-    public void insertar(Estudiante estudiante) {
+    public void insertar(int id) {
         jdbcTemplate.update("INSERT INTO estudiante(id_estudiante)" + 
                        "VALUES (?)" ,
-                       estudiante.getIdEstudiante());
+                       id);
     }
 
 
