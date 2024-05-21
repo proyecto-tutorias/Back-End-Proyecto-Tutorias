@@ -33,21 +33,17 @@
                         <div class="d-flex align-items-center">
                             <p class="card-text mb-0" th:text='${notificacion.descripcion}'></p>
                         </div>
-                        <div class="d-flex align-items-center gap-3" th:if='${notificacion.id_tipo_notificacion == 1}'>
+                        <div class="d-flex align-items-center gap-3 contenedor-opciones-notificacion" th:if='${notificacion.id_tipo_notificacion == 1}'>
                             <a th:href="@{/agendar_tutoria?id={id}&tipo={tipo}(id=${notificacion.idNotificacion}, tipo='notificacion_insertar')}" class="boton-notificaciones">Aceptar</a>
                             <form method="post" th:action="@{/rechazar?id={id}(id=${notificacion.idNotificacion})}" id="rechazar">
                                 <a class="boton-notificaciones" onclick="document.getElementById('rechazar').submit();">Rechazar</a>
                             </form>
-                            <a th:href="@{/perfil_interesado?id={id}(id=${notificacion.idNotificacion})}" class="boton-notificaciones">Ver perfil</a>
+                            <a th:href="@{/perfil_interesado?id={id}(id=${notificacion.idNotificacion})}" class="boton-notificaciones w-100">Ver perfil</a>
                         </div>
                     </div>
                 </div>
-                
-               
             </div>
         </div>
     </div>
 </body>
-
-
 </html>

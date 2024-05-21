@@ -17,6 +17,10 @@ body {
     height: 100%;
 }
 
+.color-proyecto{
+    background-color: #EBE2A1;
+}
+
 /* CSS botones*/
 
 .boton-inicio-sesion {
@@ -156,7 +160,7 @@ form {
     font-weight: bold;
 }
 
-nav {
+.estilo-nav {
     background-color: #EBE2A1;
     padding: 16px 40px 16px 40px;
     height: 145px;
@@ -167,7 +171,8 @@ nav {
 
 .contenedor-busqueda {
     gap: 16px;
-
+    display: flex;
+    justify-content: center;
 }
 
 .btn-buscar-navbar {
@@ -208,8 +213,6 @@ nav {
     align-items: center;
     gap: 5px;
 }
-
-
 
 .dropdown-menu {
     border-style: none;
@@ -254,6 +257,11 @@ nav {
     padding: 72px 72px 0px 72px;
 }
 
+.listado-notificaciones{
+    display: flex;
+    flex-direction: column-reverse;
+}
+
 .titutlo-listado-notifiaciones {
     font-size: 2rem;
     margin-bottom: 30px;
@@ -283,34 +291,10 @@ nav {
 
 /*Media query*/
 
-@media (max-width: 990px) {
-
-    .contenedor-formulario-Registro {
-        width: 400px;
-        overflow: hidden;
-        overflow-y: auto;
-    }
-
-    .row {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .contenedor-input-formulario {
-        width: 300px;
-    }
-
-    .input-formulario {
-        width: 300px;
-    }
-
-    .boton-volver-inicio {
-        display: none;
-    }
+.contenedor-filtros{
+    display: flex;
+    flex-direction: column;
 }
-
 
 /* CSS de cards */
 
@@ -345,7 +329,6 @@ nav {
 }
 
 .dropdown>.dropdown-toggle:active {
-
     pointer-events: none;
 }
 
@@ -441,6 +424,7 @@ nav {
 /* CSS agendamiento tutoria*/
 
 .contenedor-vista-agendamiento {
+    width:100%;
     padding: 75px;
 }
 
@@ -536,11 +520,11 @@ nav {
     content: '★ ';
 }
 .rate > input:checked ~ label {
-    color: #ffc700;    
+    color: #ffc700;
 }
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
+    color: #deb217;
 }
 .rate > input:checked + label:hover,
 .rate > input:checked + label:hover ~ label,
@@ -552,4 +536,116 @@ nav {
 
 .error{
     color:red;
+}
+
+@media (max-width: 990px) {
+
+    .contenedor-formulario-Registro {
+        width: 400px;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .contenedor-input-formulario {
+        width: 300px;
+    }
+
+    .input-formulario {
+        width: 300px;
+    }
+
+    .boton-volver-inicio {
+        display: none;
+    }
+
+    .opciones-navbar{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .estilo-nav{
+        height: auto;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .navbar-collapse{
+        align-items: start;
+    }
+
+    .contenedor-busqueda{
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contenedor-busqueda img{
+        display: none;
+    }
+
+    .navbar-busqueda{
+        width: auto;
+    }
+
+    .contenedor-listado-tutorias{
+        padding: 0px 16px 0px 16px;
+    }
+
+    .contenedor-filtros{
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .cnt{
+        padding: 10px;
+    }
+
+    .contenedor-quieres-ser-tuto{
+        padding: 10px;
+    }
+
+    .contenedor-opciones-notificacion{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .card-body{
+        gap: 16px;
+    }
+
+    .contenedor-miperfil{
+        padding: 16px;
+    }
+
+    .contenedor-listado-notificaciones{
+        padding: 24px;
+    }
+
+    .contenedor-quieres-ser-tutor{
+        padding: 24px;
+    }
+
+    .formulario{
+        width: auto;
+    }
+
+    .formulario button{
+        width: auto;
+    }
+    
+    .formulario h2{
+        margin-bottom: 48px;
+    }
+    
+    .contenedor-formulario-solicitud{
+        padding: 40px 16px;
+    }
 }
