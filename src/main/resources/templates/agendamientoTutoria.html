@@ -28,8 +28,8 @@
                 <form th:action="@{/agregarAgendamiento}" th:object="${agentuto}" method="post" id="agendamientoform">
                     <div class="bg-white contenedor-agendamiento">
                         <h1 class="titulo-vista">Agendar tutoria</h1>
-                        <div class="row">
-                            <div class="col-6">
+                        <div class="row formulario-agendamiento">
+                            <div class="col-lg-6 col-xs-12">
                                 <div class="mb-4">
                                     <label for="input-FechaLimite" class="form-label">Fecha de tutoria</label>
                                     <div>
@@ -53,7 +53,7 @@
                                 <hr />
                             </div>
 
-                            <div class="col-5">
+                            <div class="col-lg-5 col-xs-12">
                                 <div >
                                     <p><b>Información de tutoria</b></p>
                                     <b class="mb-0" th:text="${tutoriaSeleccionada.titulo}"></b>

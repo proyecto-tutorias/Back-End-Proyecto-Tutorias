@@ -415,6 +415,7 @@ form {
     background-color: #F6F6F6;
     border-radius: 20px;
     padding: 50px 50px 30px 60px;
+    width: 100%;
 }
 
 .contenedor-vista-info-tutoria {
@@ -540,10 +541,52 @@ form {
 
 @media (max-width: 990px) {
 
+    .contenedor-vista-info-tutoria{
+        padding: 40px 16px;
+    }
+
+    .contenedor-informacion-tutoria{
+        padding: 8px 8px;
+    }
+
+    .col-1{
+        padding: 0px;
+    }
+
+    .input-edit{
+        width: 300px;
+    }
+
+    .contenedor-vista-agendamiento{
+        padding: 24px;
+    }
+
+    .contenedor-vista-agendamiento row col-1{
+        display:none;
+    }
+
+    .contenedor-agendamiento{
+        padding: 36px 28px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contenedor-agendamiento .row{
+        flex-direction: column-reverse;
+    }
+
+    .contenedor-formulario-inicioSesion {
+        width: 400px;
+        overflow: hidden;
+        overflow-y: auto;
+        height: 500px;
+    }
+
     .contenedor-formulario-Registro {
         width: 400px;
         overflow: hidden;
         overflow-y: auto;
+        height: 500px;
     }
 
     .row {
@@ -640,11 +683,11 @@ form {
     .formulario button{
         width: auto;
     }
-    
+
     .formulario h2{
         margin-bottom: 48px;
     }
-    
+
     .contenedor-formulario-solicitud{
         padding: 40px 16px;
     }
