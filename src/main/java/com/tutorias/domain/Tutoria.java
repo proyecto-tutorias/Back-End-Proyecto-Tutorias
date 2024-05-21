@@ -5,6 +5,10 @@
 package com.tutorias.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 
 
@@ -16,9 +20,18 @@ public class Tutoria {
     
 
     private int idTutoria;
+    
+    @NotEmpty
+    @Size(min = 4, max=200, message="Debe ser de 4 a 200 caracteres")
     private String titulo;
+    @NotEmpty
+    @Size(min = 4, max=200, message="Debe ser de 4 a 200 caracteres")
     private String descripcion;
+    @NotEmpty
     private String fechaLimite;
+    
+    @NotNull
+    @Min(value = 100, message="El precio debe ser de al menos $100")
     private Double precio;
     private int idEstado;
     private int idEstudiante;

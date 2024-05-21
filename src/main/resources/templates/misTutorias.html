@@ -44,7 +44,7 @@
                                             <a class="text-black"><i class="bi bi-pencil-square icono-perfil-card"></i></a>
                                         </div>
                                         <div th:case="2">
-                                            <a class="text-black" th:href="@{/agendar_tutoria?id={id}(id=${mi_tutoria.idTutoria})}"><i class="bi bi-calendar-event-fill icono-perfil-card"></i></a>
+                                            <a class="text-black" th:href="@{/agendar_tutoria?id={id}&tipo={tipo}(id=${mi_tutoria.idTutoria}, tipo='tutoria')}"><i class="bi bi-calendar-event-fill icono-perfil-card"></i></a>
                                         </div>
                                         <div th:case="3">
                                             <a class="text-black" data-bs-toggle="modal" data-bs-target="#calificar" ><i

@@ -32,10 +32,12 @@
                     <div>
                         <label for="input-NombreTutoria" class="form-label">Nombre de Tutoria</label>
                         <input type="text" placeholder="Digite título de tutoría" th:field="*{titulo}">
+                        <p th:if="${#fields.hasErrors('titulo')}" th:errorclass="error" th:errors="*{titulo}" />
                     </div>
                     <div>
                         <label for="input-Descripcion" class="form-label">Descripcion</label>
                         <textarea placeholder="Digite descripción" th:field="*{descripcion}"></textarea>
+                        <p th:if="${#fields.hasErrors('descripcion')}" th:errorclass="error" th:errors="*{descripcion}" />
                     </div>
                     <div>
                         <label for="input-Carrera" class="form-label">Carrera</label>
@@ -54,12 +56,14 @@
                     <div>
                         <label for="input-Precio" class="form-label">Precio</label>
                         <input type="text" placeholder="Digite su precio" th:field="*{precio}">
+                        <p th:if="${#fields.hasErrors('precio')}" th:errorclass="error" th:errors="*{precio}" />
                     </div>
                     <div>
                         <label for="input-FechaLimite" class="form-label">Fecha Limite</label>
                         <div>
                             <input type="date" class="input-fecha" th:field="*{fechaLimite}">
                         </div>
+                        <p th:if="${errorFecha}" class="error"/>
                     </div>
                     <div class="d-flex justify-content-center">
                         <button>Agregar</button>

@@ -36,12 +36,10 @@ public class AgendamientoTutoriaRepositorio implements AgendamientoTutoriaDao{
 
     @Override
     public void insertar(AgendamientoTutoria agentuto) {
-        jdbcTemplate.update("INSERT INTO agendamientotutoria(id_agendamiento,fecha_agendamiento,activo, datos_adicionales)" +
-                "VALUES(?,?,?,?)", 
+        jdbcTemplate.update("INSERT INTO agendamientotutoria(id_agendamiento,activo)" +
+                "VALUES(?,?)", 
                 agentuto.getIdAgendamiento(),
-                agentuto.getFechaAgendamiento(),
-                agentuto.getActivo(),
-                agentuto.getDatos_adicionales());
+                agentuto.getActivo());
                 
     }
 
@@ -66,6 +64,13 @@ public class AgendamientoTutoriaRepositorio implements AgendamientoTutoriaDao{
         
         jdbcTemplate.update(sentencia);
         
+    }
+    
+    @Override
+    public void insertarFecha(AgendamientoTutoria agentuto){
+        String sentencia ="update agendamientotutoria set datos_adicionales='"+ agentuto.getDatos_adicionales()+ "', fecha_agendamiento='"+agentuto.getFechaAgendamiento()+"' where id_agendamiento="+ agentuto.getIdAgendamiento();
+        
+        jdbcTemplate.update(sentencia);
     }
     
 

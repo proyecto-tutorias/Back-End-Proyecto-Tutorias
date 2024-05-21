@@ -19,6 +19,7 @@ public interface AgendamientoTutoriaDao {
     AgendamientoTutoria encontrar(int id);
     List<AgendamientoTutoria> listar();
     void insertarDatosReunion(AgendamientoTutoria agentuto);
+    void insertarFecha(AgendamientoTutoria agentuto);
     
     
 }

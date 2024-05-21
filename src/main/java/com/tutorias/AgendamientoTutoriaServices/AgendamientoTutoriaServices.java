@@ -45,7 +45,9 @@ public class AgendamientoTutoriaServices {
         agenturep.insertarDatosReunion(agentuto);
     }
     
-    
+    public void insertarFecha(AgendamientoTutoria agentuto){
+        agenturep.insertarFecha(agentuto);
+    }
 
     
     

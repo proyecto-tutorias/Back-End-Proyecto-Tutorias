@@ -30,7 +30,14 @@ import com.tutorias.domain.Tutor;
 import com.tutorias.domain.Tutoria;
 import com.tutorias.domain.Usuario;
 import jakarta.validation.Valid;
+import static java.lang.String.format;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +121,8 @@ public class ControladorRest {
     List<AgendamientoTutoria> tutoriasAsignadas = new ArrayList<>();
     List<PlataformaReunion> plataformas;
     List<Tutoria> tutoriasCopia;
+    
+    int agen_id;
     
     Parametros parametros = new Parametros();
     boolean filtroBusqueda = false;
@@ -665,9 +674,40 @@ public class ControladorRest {
         return "registro";
     }
     @GetMapping("/agendar_tutoria")
-    public String agendarTutoria(@RequestParam int id, Model modelo){
+    public String agendarTutoria(@RequestParam int id, @RequestParam String tipo,Model modelo){
+        
         AgendamientoTutoria agentuto = new AgendamientoTutoria();
-        notificacionActual = notiser.encontrarNotificacion(id);
+        if(tipo.equals("notificacion_insertar")){
+            notificacionActual = notiser.encontrarNotificacion(id);
+            agentuto.setIdAgendamiento(id);
+            agentutoser.insertar(agentuto);
+        }
+        if(tipo.equals("notificacion")){
+            agen_id = id;
+            notificacionActual = notiser.encontrarNotificacion(id);
+            
+        }
+        else{
+            List<Notificacion> noti = notiser.encontrarPorTutoria(id);
+            List<AgendamientoTutoria> ag = agentutoser.listar();
+            
+            for(Notificacion n : noti){
+                
+                for(AgendamientoTutoria a : ag){
+                    if(a.getIdAgendamiento() == n.getIdNotificacion()){
+                        notificacionActual = n;
+                    }
+                }
+                
+            }
+            agen_id = notificacionActual.getIdNotificacion();
+           
+            
+            
+        }
+        
+      
+        
         tutoriaSeleccionada = tutoriaser.encontrarTutoria(notificacionActual.getId_Tutoria());
         Tutor tutor = infoTutor(notificacionActual.getId_Tutor());
         
@@ -678,7 +718,7 @@ public class ControladorRest {
         modelo.addAttribute("tutoriaSeleccionada", tutoriaSeleccionada);
         modelo.addAttribute("tutor", tutor);
         modelo.addAttribute("carrera", carrera);
-        modelo.addAttribute("tutorsesion", tutorsesion);
+        modelo.addAttribute("tutorsesion",tutorsesion);
         modelo.addAttribute("parametros",parametros );
         return "agendamientoTutoria";
     }
@@ -712,15 +752,14 @@ public class ControladorRest {
     @PostMapping("agregarAgendamiento")
     public String agregarAgendamiento(AgendamientoTutoria agentuto){
         if(!(agentuto.getFechaAgendamiento().equals("")) && !(agentuto.getDatos_adicionales().equals(""))){
-            agentuto.setActivo(1);
-            agentuto.setIdAgendamiento(notificacionActual.getIdNotificacion());
-            agentutoser.insertar(agentuto);
+            agentuto.setIdAgendamiento(agen_id);
+            agentutoser.insertarFecha(agentuto);
             notiser.desactivarNotificacion(notificacionActual.getIdNotificacion());
             notiser.insertarNotificacion(agregarNotificacionInformacion(notificacionActual));
             tutoriaser.cambiarEstado(3, notificacionActual.getId_Tutoria());
             return "redirect:/notificaciones";
         }
-        return "redirect:/agendar_tutoria?id=" + notificacionActual.getIdNotificacion();
+        return "redirect:/agendar_tutoria?id=" + notificacionActual.getIdNotificacion() + "&tipo=notificacion";
         
     }
     
@@ -863,7 +902,37 @@ public class ControladorRest {
     }
     
     @PostMapping("/insertarTutoria")
-    public String insertarTutoria(Tutoria tutoria){
+    public String insertarTutoria(@Valid Tutoria tutoria, BindingResult resultado, Model modelo) throws ParseException{
+        
+        carreras = carreser.listarCarreras();
+        areas = areaser.listarAreas();
+        modelo.addAttribute("areas",areas);
+        modelo.addAttribute("carreras",carreras);
+        modelo.addAttribute("ususesion", ususesion);
+        modelo.addAttribute("parametros",parametros );
+        modelo.addAttribute("tutorsesion", tutorsesion);
+        
+        
+        if(resultado.hasErrors()){
+            return "solicitud_tutoria";
+        }
+        
+        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date date = formato.parse(tutoria.getFechaLimite());
+        
+        Instant da = date.toInstant();
+        Instant fechaActual = ZonedDateTime.now().toInstant();
+        
+
+             
+        
+        if(da.isBefore(fechaActual)){
+            modelo.addAttribute("errorFecha", "Fecha no puede ser antes de la fecha actual");
+            return "solicitud_tutoria";
+        }
+        
+        
         tutoria.setIdEstado(1);
         tutoria.setActivo(1);
         tutoria.setPostulacion_disponible(1);
