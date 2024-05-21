@@ -6,9 +6,14 @@ package com.tutorias.domain;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
 
 
 
@@ -16,33 +21,41 @@ public class Usuario{
 
 
     
-
+   
     private int id_usuario;
     
 
     private String tipo_usuario;
     
-
+    @NotEmpty(message="El campo nombre no puede estar vacio")
+    @Size(min = 4, max=200, message="Debe ser de 4 a 200 caracteres")
     private String nombre;
     
-
+    @NotEmpty(message="El campo apellido no puede estar vacio")
+    @Size(min = 4, max=200, message="Debe ser de 4 a 200 caracteres")
     private String apellido;
     
-
+    @NotNull(message="El campo codigo estudiante no puede estar vacio")
+    @Min(value = 50000, message="Digite codigo estudiantil valido sin ceros")
     private int codigo_estudiante;
     
-   
+    @NotEmpty(message="El campo contraseña no puede estar vacio")
+    @Size(min = 4, max=200, message="Debe ser de 4 a 200 caracteres")
     private String password;
     
-
+    @NotEmpty(message="El campo login no puede estar vacio")
+    @Size(min = 4, max=200, message="Debe ser de 4 a 200 caracteres")
     private String login;
     
-
+    
     private int id_carrera;
     
     private int activo;
     
     private int semestre;
+    
+    @Size(min = 4, max=200)
+    private String repPassword;
 
 
     public Usuario() {
@@ -197,6 +210,20 @@ public class Usuario{
      */
     public void setSemestre(int semestre) {
         this.semestre = semestre;
+    }
+
+    /**
+     * @return the repPassword
+     */
+    public String getRepPassword() {
+        return repPassword;
+    }
+
+    /**
+     * @param repPassword the repPassword to set
+     */
+    public void setRepPassword(String repPassword) {
+        this.repPassword = repPassword;
     }
     
     

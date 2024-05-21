@@ -1,95 +1,154 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado Tutorias</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Listado Tutorias</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-    <link href="css/style.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <link href="css/style.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
-</head>
+    </head>
 
-<body>
-    <div>
-        <div th:replace="navbar :: navbar"></div>
-        <div class="contenedor-listado-tutorias">
-            <div class="row">
-                <div class="col-lg-2">
-                    <!-- Filtros -->
-                    <h3 class="mb-3 titulo-filtros">Filtros</h3>
-                    <div class="mb-4">
-                        <select class="form-select">
-                            <option selected>-- Materia --</option>
-                            <option value="Matematicas">Matematicas</option>
-                            <option value="Biologia">Biologia</option>
-                            <option value="Quimica">Quimica</option>
-                            <option value="Ingles">Ingles</option>
-                            <option value="Historia">Historia</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select class="form-select">
-                            <option selected>-- Carrera --</option>
-                            <option value="Administracion de empresa">Administracion de Empresas</option>
-                            <option value="TDSOFT">Tecnologia en desarrollo de software</option>
-                            <option value="Ingenieria de Sistemas">Ingenieria de Sistemas</option>
-                            <option value="Ingenieria ambiental">Ingenieria ambiental</option>
-                            <option value="Administracion de empresa">Tecnologia en Gestión de Redes de Computadores y
-                                Seguridad Informática </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-lg-10">
-                    <!-- Listado tutorias -->
-                    <h1 class="titulo-listado-tutoria">Solicitudes de tutorias</h1>
-                    <div th:if="${tutorias != null and !tutorias.empty}"> 
-                        <div
-                            class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
-                            <div class="card-body" th:each="tutoria, iterador: ${tutorias}">
-                                <div>
-                                    <h5 class="card-title" th:text="${tutoria.titulo}"></h5>
-                                    <p class="card-text mb-0" th:text="${tutoria.descripcion}"></p>
-                                    <p class="card-text">Fecha <span th:text="${tutoria.fechaLimite}"></span></p>
-                                </div>
-                                <form method="post" th:action="@{agregar_notificacion?id={id}(id=${tutoria.idTutoria})}" th:id="${tutoria.idTutoria}" class="d-flex align-items-center gap-3 esp-card flex-row-reverse">
-                               
-                                    <div>
-                                        <p class="card-text mb-0">Solicitado por: <span th:text="${usututorias[iterador.index].nombre}"></span></p>
-                                        <p class="card-text">Precio: <span th:text="${tutoria.precio}"></span></p>
-                                    </div> 
-                                    
-                                    <div>
-                                        <a th:if="${tutorsesion != null && tutoria.postulacion_disponible == 1 && tutorsesion.login != usututorias[iterador.index].login}" class="text-black" th:onclick="|document.getElementById('${tutoria.idTutoria}').submit()|"><i
-                                                class="bi bi-check-circle-fill icono-perfil-card"></i></a>
-                                        <i class="bi bi-person-circle icono-perfil-card"></i>
-                                    </div>
-                                    
-                                    
-                              
-                                </form>
+    <body>
+        <div>
+            <div th:replace="navbar :: navbar"></div>
+            <div class="contenedor-listado-tutorias">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <form method="post" th:object="${parametros}" th:action="@{/filtrado}" id="filtros">
+                            <!-- Filtros -->
+                            <h3 class="mb-3 titulo-filtros">Filtros</h3>
+                            <div class="mb-4">
+                                <select th:field="*{idArea}" onchange="actualizar()" id="areas">
+                                    <option selected th:value="0">Todas</option>
+                                    <option th:each="area : ${areas}" th:value="${area.idArea}" th:text="${area.descripcion}"></option>
+                                </select>
                             </div>
+                            <div>
+                                <select th:field="*{idCarrera}" th:required="true" onchange="actualizar()" id="carreras">
+                                    <option selected th:value="0" >Todas</option>
+                                    <option th:each="carrera : ${carreras}" th:value="${carrera.idCarrera}" th:text="${carrera.descripcion}"></option>
+                                </select>
+                            </div>
+                            
+                        </form>
+                    </div>
+                    <script>
+                         function actualizar(){  
+                            
+                            var carrera 
+                            
+                            var valores = {
+                                idArea : $( "#areas option:selected" ).val(),
+                                idCarrera : $( "#carreras option:selected" ).val()
+                            }
+                            $.ajax({
+                                url: "http://localhost:8080/filtrado",
+                                type : "POST",
+                                data : valores,
+                                cache: false,
+                                timeout: 600000,
+                                encode: true,
+                                success: function() {
+                                    fetch('refrescarTutorias').then(function (response) {
+                                        return response.text();
+                                    }).then(function (html) {
+                                        console.log(html);
+                                         $('#tutorias-lista').html(html);
+                                    }).catch(function (err) {
+                                        console.warn('Something went wrong.', err);
+                                    });
+                                }
+                                //processData: false,
+                                //contentType: false,
+                                
+                            });
+                            
+
+                        }
+
+                    </script>
+
+                    <div class="col-lg-10" id="tutorias-lista">
+                        <!-- Listado tutorias -->
+                        <h1 class="titulo-listado-tutoria">Solicitudes de tutorias</h1>
+                        <div th:if="${tutorias != null and !tutorias.empty}" > 
+                            <div
+                                class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5" th:each="tutoria, iterador: ${tutorias}">
+                                <div class="card-body" >    
+                                    <div>
+                                        <h5 class="card-title" th:text="${tutoria.titulo}"></h5>
+                                        <p class="card-text mb-0" th:text="${tutoria.descripcion}"></p>
+                                        <p class="card-text">Fecha <span th:text="${tutoria.fechaLimite}"></span></p>
+                                    </div>
+                                   
+                                        <div class="d-flex align-items-center gap-3 esp-card">
+                                            <a th:if="${tutorsesion != null && tutoria.postulacion_disponible == 1 && tutorsesion.login != usututorias[iterador.index].login}" class="text-black" data-bs-toggle="modal" th:attr="data-bs-target='#' + ${tutoria.idTutoria}" ><i
+                                                    class="bi bi-check-circle-fill icono-perfil-card"></i></a>
+                                            <i class="bi bi-person-circle icono-perfil-card"></i>
+                                            <div>
+                                                <p class="card-text mb-0">Solicitado por: <span th:text="${usututorias[iterador.index].nombre}"></span></p>
+                                                <p class="card-text">Precio: <span th:text="${tutoria.precio}"></span></p>
+                                            </div>
+                                        </div> 
+
+                                        
+
+                                         
+
+                                    
+                                         
+
+
+                                </div>
+                                <div class="modal fade" th:id="${tutoria.idTutoria}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <form method="post" th:action="@{agregar_notificacion?id={id}(id=${tutoria.idTutoria})}" th:id="${tutoria.idTutoria} + 'form'">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">¿Desea aceptar la tutoria <span th:text="${tutoria.titulo}"></span> ?</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div>
+                                                            <div>
+                                                                <p class="card-text mb-0">Solicitado por: <span th:text="${usututorias[iterador.index].nombre}"></span></p>
+                                                                <p class="card-text">Precio: <span th:text="${tutoria.precio}"></span></p>
+                                                            </div> 
+                                                            <div class="d-flex justify-content-center">
+                                                                <a th:onclick="|document.getElementById('${tutoria.idTutoria}' + 'form').submit()|" class="boton-volver text-black">
+                                                                    Aceptar
+                                                                </a>
+                                                                <a class="boton-volver text-black" data-bs-dismiss="modal">
+                                                                    Rechazar
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>   
+                            </div>
+
+
                         </div>
-                       
-                       
                     </div>
                 </div>
             </div>
-        </div>
-    </div>  
-</body>
+        </div>  
+    </body>
 
 
 </html>

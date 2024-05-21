@@ -25,7 +25,7 @@ public class UsuarioRepositorio implements UsuarioDao{
     @Override
     public void insertar(Usuario usuario) {
         jdbcTemplate.update("INSERT INTO usuario(tipo_usuario, nombre, apellido,codigo_estudiante, password, login, id_carrera, activo, semestre)" + 
-                "VALUES (?,?,?,?,?,?,?,?)" ,
+                "VALUES (?,?,?,?,?,?,?,?,?)" ,
                 usuario.getTipo_usuario() ,
                 usuario.getNombre(), 
                 usuario.getApellido() ,

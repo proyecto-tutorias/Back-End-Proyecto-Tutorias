@@ -31,4 +31,9 @@ public class CarrerasServices {
     }
     
     
+    public Carrera encontrarCarrera(int id){
+        return carrep.encontrarCarrera(id);
+    }
+    
+    
 }

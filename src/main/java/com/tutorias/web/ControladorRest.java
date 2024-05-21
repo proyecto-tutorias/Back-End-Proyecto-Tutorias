@@ -29,17 +29,23 @@ import com.tutorias.domain.Rango;
 import com.tutorias.domain.Tutor;
 import com.tutorias.domain.Tutoria;
 import com.tutorias.domain.Usuario;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -91,7 +97,12 @@ public class ControladorRest {
     
     Usuario ususesion;
     Tutor tutorsesion;
+    
+    
     List<Tutoria> tutorias;
+    
+    List<Integer> semestres = new ArrayList<>();
+    
     List<Area> areas;
     List<Carrera> carreras;
     List<Estado> estados;
@@ -102,6 +113,7 @@ public class ControladorRest {
     Notificacion notificacionActual;
     List<AgendamientoTutoria> tutoriasAsignadas = new ArrayList<>();
     List<PlataformaReunion> plataformas;
+    List<Tutoria> tutoriasCopia;
     
     Parametros parametros = new Parametros();
     boolean filtroBusqueda = false;
@@ -114,6 +126,7 @@ public class ControladorRest {
     int aprobacion = 1;
     int informacion = 2;
     
+    int semestreRegistro = 0;
   
     
     @GetMapping("/")
@@ -240,6 +253,45 @@ public class ControladorRest {
         
     }
     
+    @GetMapping("/informacion_tutoria")
+    public String informacionTutoria(@RequestParam int id, Model modelo){
+        modelo.addAttribute("ususesion", ususesion);
+        modelo.addAttribute("tutorsesion", tutorsesion);
+        modelo.addAttribute("parametros",parametros );
+        
+        
+        List<Notificacion> noti = notiser.encontrarPorTutoria(id);
+        List<AgendamientoTutoria> agentuto = agentutoser.listar();
+        AgendamientoTutoria agenActual = new AgendamientoTutoria();
+        Notificacion notiActual = new Notificacion();
+        plataformas = plataser.listarPlataformas();
+        carreras = carreser.listarCarreras();
+      
+                
+        for(Notificacion n : noti){
+            for(AgendamientoTutoria ag : agentuto){
+                if(ag.getIdAgendamiento() == n.getIdNotificacion()){
+                    agenActual = ag;
+                    notiActual = n;
+                }
+            }
+        }
+        
+        Usuario usu = ususer.encontrarUsuario(notiActual.getId_Tutor());
+        Tutor tutor = tutoser.encontrarTutor(usu.getId_usuario());
+        tutor.setNombre(usu.getNombre());
+        tutor.setApellido(usu.getApellido());
+        tutor.setSemestre(usu.getSemestre());
+        tutor.setId_carrera(usu.getId_carrera());
+        
+        modelo.addAttribute("tutor" ,tutor);
+        modelo.addAttribute("carreras" ,carreras);
+        modelo.addAttribute("plataformas" ,plataformas);
+        modelo.addAttribute("agendamiento" ,agenActual);
+        
+        return "informacionTutoria";
+    }
+    
     @GetMapping("/solicitud_tutoria")
     public String solicitud_tutoria(Model modelo, Tutoria tutoria){
         carreras = carreser.listarCarreras();
@@ -247,15 +299,21 @@ public class ControladorRest {
         modelo.addAttribute("areas",areas);
         modelo.addAttribute("carreras",carreras);
         modelo.addAttribute("ususesion", ususesion);
+        modelo.addAttribute("parametros",parametros );
+        modelo.addAttribute("tutorsesion", tutorsesion);
         return "solicitud_tutoria";
     }
     
     @GetMapping("/tutorias")
     public String tutorias(Model modelo){
         
+        carreras = carreser.listarCarreras();
+        areas = areaser.listarAreas();
+        
         usuariosConTutorias = new ArrayList<>();
         if(filtroBusqueda == false){
             tutorias = tutoriaser.listarTutorias();
+            tutoriasCopia = tutoriaser.listarTutorias();
         }
         else{
             filtroBusqueda = false;
@@ -282,6 +340,8 @@ public class ControladorRest {
         modelo.addAttribute("tutorias",tutorias );
         modelo.addAttribute("parametros",parametros );
         modelo.addAttribute("tutorsesion", tutorsesion);
+        modelo.addAttribute("carreras", carreras);
+        modelo.addAttribute("areas", areas);
         
         return "tutorias";
     }
@@ -304,6 +364,85 @@ public class ControladorRest {
         notiser.insertarNotificacion(noti);
         
         return "redirect:/notificaciones";
+    }
+    
+    @PostMapping("/filtrado")
+    public @ResponseBody ResponseEntity filtrado(@RequestParam(value="idCarrera") int carrera,@RequestParam(value="idArea")int area ){
+        
+        ResponseEntity respuesta=null;
+        
+        
+        
+        if(area == 0 && carrera == 0){
+            tutorias = tutoriaser.listarTutorias();   
+        }
+        
+        if(area != 0 && carrera == 0){ 
+            tutorias = tutoriaser.listarTutorias();
+            List<Tutoria> elimTuto = new ArrayList();
+            
+            for(Tutoria tutoria : tutorias){
+                if(tutoria.getIdArea() != area){
+                    elimTuto.add(tutoria);
+                }
+            }
+            
+            tutorias.removeAll(elimTuto);
+            
+        }
+        if(area == 0 && carrera != 0){
+            tutorias = tutoriaser.listarTutorias();
+            List<Tutoria> elimTuto = new ArrayList();
+            
+            for(Tutoria tutoria : tutorias){
+                if(tutoria.getIdCarrera() != carrera){
+                    elimTuto.add(tutoria);
+                }
+            }
+                tutorias.removeAll(elimTuto);
+            
+            
+        }
+        if(area != 0 && carrera != 0){
+            tutorias = tutoriaser.listarTutorias();
+            List<Tutoria> elimTuto = new ArrayList();
+            
+            for(Tutoria tutoria : tutorias){
+                if(tutoria.getIdArea() != area && tutoria.getIdCarrera() != carrera){
+                    elimTuto.add(tutoria);
+                }
+                if(tutoria.getIdArea() == area && tutoria.getIdCarrera() != carrera){
+                    elimTuto.add(tutoria);
+                }
+                if(tutoria.getIdArea() != area && tutoria.getIdCarrera() == carrera){
+                    elimTuto.add(tutoria);
+                }
+            }
+                tutorias.removeAll(elimTuto);
+        }
+        
+        
+        
+        respuesta= new ResponseEntity(HttpStatus.OK);
+        
+        return respuesta;
+    }
+    
+    
+    @GetMapping("refrescarTutorias")
+    public String refrescarTutorias(Model modelo){
+        
+        
+        modelo.addAttribute("usututorias", usuariosConTutorias);
+        modelo.addAttribute("ususesion",ususesion );
+        modelo.addAttribute("tutorsesion",tutorsesion );
+        modelo.addAttribute("tutorias",tutorias );
+        modelo.addAttribute("parametros",parametros );
+        modelo.addAttribute("tutorsesion", tutorsesion);
+        modelo.addAttribute("carreras", carreras);
+        modelo.addAttribute("areas", areas);
+        
+        return "tutoriasFrag :: tutorias";
     }
     
     @GetMapping("/perfil_interesado")
@@ -403,9 +542,59 @@ public class ControladorRest {
     
     @GetMapping("/perfil")
     public String perfil(Model modelo){
+        carreras = carreser.listarCarreras();
+        
+        if(tutorsesion != null){
+            List<AgendamientoTutoria> agendamiento = agentutoser.listar();
+            notificaciones = notiser.listarNotificaciones();
+            List<Calificacion> calificaciones = caliser.listarCalificaciones();
+            List<Notificacion> notiTutor = new ArrayList<>();
+            List<Calificacion> caliTutor = new ArrayList<>();
+
+            List<Tutoria> tutorias = tutoriaser.listarTutorias();
+            List<Tutoria> tutoriaTutor = new ArrayList<>();
+            areas = areaser.listarAreas();
+            carreras = carreser.listarCarreras();
+            List<Rango> rangos = ranser.listarRangos();
+
+            for(Notificacion n: notificaciones){
+                for(AgendamientoTutoria ag : agendamiento){
+                    if(ag.getIdAgendamiento() == n.getIdNotificacion() && n.getId_Tutor() == tutorsesion.getIdTutor()){
+                        notiTutor.add(n);
+
+                        for(Calificacion c: calificaciones){
+                            if(c.getIdCalificacion() == ag.getIdAgendamiento()){
+                                caliTutor.add(c);
+                            }
+                        }
+                    }
+                }
+            }
+
+            for(Notificacion n: notiTutor){
+                for(Tutoria t : tutorias){
+                    if(t.getIdTutoria() == n.getId_Tutoria()){
+                        tutoriaTutor.add(t);
+                    }
+                }
+            }
+            
+            
+
+            modelo.addAttribute("notificaciones", notiTutor);
+            modelo.addAttribute("calificaciones", caliTutor);
+            modelo.addAttribute("tutorias", tutoriaTutor);
+            modelo.addAttribute("rangos", rangos);
+
+
+
+        }
+        
         modelo.addAttribute("ususesion", ususesion);
         modelo.addAttribute("parametros",parametros );
         modelo.addAttribute("tutorsesion", tutorsesion);
+        modelo.addAttribute("carreras", carreras);
+        modelo.addAttribute("areas", areas);
         return "miPerfil";
     }
     @GetMapping("/lista_usuarios")
@@ -551,39 +740,116 @@ public class ControladorRest {
     
     
     @PostMapping("/insertarUsuario")
-    public String insertarUsuario(Usuario usuario){
+    public String insertarUsuario(@Valid Usuario usuario, BindingResult resultado, Model modelo){
+        modelo.addAttribute("carreras", carreras);
         
-        usuario.setActivo(1);
-        usuario.setTipo_usuario("usuario");
-        ususer.insertarUsuario(usuario);
-        ususesion = ususer.encontrarUsuarioporLogin(usuario.getLogin(), usuario.getPassword());
-        estuser.insertarEstudiante(ususesion.getId_usuario());
-        return "redirect:/tutorias";
-    }
-    @PostMapping("/comprobarUsuario")
-    public String comprobarUsuario(Usuario usuario){
         
-        if(!(usuario.getLogin().equals("")) && !(usuario.getPassword().equals(""))){
-            ususesion = ususer.encontrarUsuarioporLogin(usuario.getLogin(), usuario.getPassword());
-            if(ususesion != null && ususesion.getActivo() == 1){
-                tutorsesion = tutoser.encontrarTutor(ususesion.getId_usuario());
-                
-                if(tutorsesion != null){
-                    tutorsesion.setNombre(ususesion.getNombre());
-                    tutorsesion.setApellido(ususesion.getApellido());
-                    tutorsesion.setLogin(ususesion.getLogin());
-                    tutorsesion.setSemestre(ususesion.getSemestre());
-                    tutorsesion.setId_carrera(ususesion.getId_carrera());
-                    //tutoriasAsignadas = tutoriaser.listarTutoriasAsignadas(ususesion.getId_usuario());
-                }
-                
-                return "redirect:/tutorias";
-            }
+        
+        if(!(usuario.getPassword().equals(usuario.getRepPassword()))){
+            modelo.addAttribute("errorContraseña", "Confirmar que las contraseñas coincidan");
+            return "registro";
             
         }
         
+        if(resultado.hasErrors()){
+            return "registro";
+        }
+        
+        while(semestreRegistro == 0){
+            if(semestreRegistro != 0){
+                break;
+            }
+        }
+        
+        usuario.setActivo(1);
+        usuario.setTipo_usuario("usuario");
+        usuario.setSemestre(semestreRegistro);
+        ususer.insertarUsuario(usuario);
+        ususesion = ususer.encontrarUsuarioporLogin(usuario.getLogin(), usuario.getPassword());
+        estuser.insertarEstudiante(ususesion.getId_usuario());
+        
+        
+        return "redirect:/tutorias";
+    }
+    
+    
+    @PostMapping("/obtenerCarrera")
+    public @ResponseBody ResponseEntity obtenerCarrera(@RequestParam(value="idCarrera") int id_carrera){
+        
+        Carrera carrera = carreser.encontrarCarrera(id_carrera);
+        
+        semestres = new ArrayList<>();
+        
+        for(int i = carrera.getMinSemestre(); i<= carrera.getMaxSemestre(); i++){
+            semestres.add(i);
+        }
+        
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    
+    @PostMapping("/obtenerSemestre")
+    public @ResponseBody ResponseEntity obtenerSemestre(@RequestParam(value="semestre") int semestre){
+        
+        semestreRegistro = semestre;
+        
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    
+    
+    
+    
+    
+    @GetMapping("/listaSemestre")
+    public String listaSemestre(Model modelo){
+        modelo.addAttribute("semestres", semestres);
+        return "semestreFrag :: listaSemestre";
+        
+    }
+    
+    
+    @PostMapping("/comprobarUsuario")
+    public String comprobarUsuario(@Valid Usuario usuario, BindingResult resultado, Model modelo){
+        
+      
+        
+        if(resultado.getFieldErrorCount("login") > 0 && resultado.getFieldErrorCount("password") > 0){
+            return "inicioSesion";
+        }
+      
+        if(resultado.getFieldErrorCount("login") == 0 && resultado.getFieldErrorCount("password") > 0){
+            return "inicioSesion";
+        }
+      
+        if(resultado.getFieldErrorCount("login") > 0 && resultado.getFieldErrorCount("password") == 0){
+            return "inicioSesion";
+        }
+      
+        ususesion = ususer.encontrarUsuarioporLogin(usuario.getLogin(), usuario.getPassword());
+        
+        if(ususesion == null){
+            modelo.addAttribute("errorSesion", "Usuario o Contraseña invalido");
+            return "inicioSesion";
+        }
+        
+        if(ususesion != null && ususesion.getActivo() == 1){
+            tutorsesion = tutoser.encontrarTutor(ususesion.getId_usuario());
 
-        return "redirect:/";
+            if(tutorsesion != null){
+                tutorsesion.setNombre(ususesion.getNombre());
+                tutorsesion.setApellido(ususesion.getApellido());
+                tutorsesion.setLogin(ususesion.getLogin());
+                tutorsesion.setSemestre(ususesion.getSemestre());
+                tutorsesion.setId_carrera(ususesion.getId_carrera());
+                //tutoriasAsignadas = tutoriaser.listarTutoriasAsignadas(ususesion.getId_usuario());
+            }
+
+
+        }
+        return "redirect:/tutorias";
+        
+        
+
+       
     }
 
     public void getUsuariosConTutorias(){

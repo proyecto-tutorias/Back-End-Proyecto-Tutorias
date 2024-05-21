@@ -88,7 +88,7 @@ body {
 
 .contenedor-formulario-Registro {
     background-color: white;
-    height: 600px;
+
     width: 1200px;
     border-radius: 10px;
     text-align: center;
@@ -548,4 +548,8 @@ nav {
 .rate > input:checked ~ label:hover ~ label,
 .rate > label:hover ~ input:checked ~ label {
     color: #c59b08;
+}
+
+.error{
+    color:red;
 }

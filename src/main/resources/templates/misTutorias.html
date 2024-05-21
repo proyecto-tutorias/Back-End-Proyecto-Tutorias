@@ -49,7 +49,7 @@
                                         <div th:case="3">
                                             <a class="text-black" data-bs-toggle="modal" data-bs-target="#calificar" ><i
                                             class="bi bi-check-circle-fill icono-perfil-card"></i></a>
-                                            <a href="informacionTutoria.html" class="text-black"><i
+                                            <a th:href="@{/informacion_tutoria?id={id}(id=${mi_tutoria.idTutoria})}" class="text-black"><i
                                                     class="bi bi-info-circle-fill icono-perfil-card"></i></a>
                                             <div class="modal fade" id="calificar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                                 <form th:action="@{/calificar_tutor?id={id}(id=${mi_tutoria.idTutoria})}" method="post" th:object="${calificacion}" id="califitutor">

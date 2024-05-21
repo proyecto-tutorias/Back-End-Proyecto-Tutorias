@@ -27,11 +27,14 @@
                 <div class="mb-3 contenedor-input-formulario">
                     <label for="input-usuario" class="form-label">Usuario</label>
                     <input type="text" class="form-control input-formulario" id="input-usuario" placeholder="Digite su usuario" th:field="*{login}">
+                    <p th:if="${#fields.hasErrors('login')}" th:errorclass="error" th:errors="*{login}" />
                 </div>
                 <div class="mb-3 contenedor-input-formulario">
                     <label for="input-contraseña" class="form-label">Contraseña</label>
                     <input type="password" class="form-control input-formulario" id="input-contraseña" placeholder="Digite su contraseña" th:field="*{password}">
+                    <p class="d-flex" th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
                 </div>
+                <p th:if="${errorSesion}" th:text="${errorSesion}" class="error"/>
                 <input type="submit" value="Iniciar Sesión" class="boton-inicio-sesion"/>
                 <p>Si no tiene una cuenta, <a th:href="@{/registro}">Registro</a></p>
             </form>

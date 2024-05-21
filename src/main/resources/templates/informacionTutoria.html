@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Información Tutoria</title>
@@ -21,7 +21,7 @@
 
 <body>
     <div>
-        <div id="navbar-contenedor"></div>
+        <div th:replace="navbar :: navbar"></div>
         <div class="contenedor-vista-info-tutoria">
             <h1 class="titulo-info-tutoria">Información tutoria</h1>
             <div class="contenedor-informacion-tutoria">
@@ -31,16 +31,16 @@
                     </div>
 
                     <div class="col-11">
-                        <p><b>Nombre tutor:</b> Ramiro Ferrer</p>
-                        <p><b>Carrera:</b> Ingeniera en sistemas</p>
-                        <p><b>Semestre: </b> 7</p>
-                        <p><b>Calificacion del tutor: </b>4.5</p>
-                        <p><b>Plataforma: </b>Meet</p>
-                        <p><b>Link: </b><a href="#">https://meet.google.com/sey-cwrn-wss</a></p>
+                        <p><b>Nombre tutor:</b> <span th:text="${tutor.nombre} + ' ' + ${tutor.apellido}"></span></p>
+                        <p><b>Carrera:</b> <span th:text='${carreras[tutor.id_carrera - 1].descripcion}'></span></p>
+                        <p><b>Semestre: </b> <span th:text='${tutor.semestre}'></span></p>
+                        <p><b>Calificacion del tutor: </b><span th:text='${tutor.promedioPuntaje}'></span></p>
+                        <p><b>Plataforma: </b><span th:text='${plataformas[agendamiento.idPlataformaReunion - 1].descripcion}' th:if='${agendamiento.idPlataformaReunion != 0}'></span><span th:if='${agendamiento.idPlataformaReunion == 0}'>No asignado</span></p>
+                        <p><b>Link: </b><a th:text='${agendamiento.URLReunion}'></a><span th:if="${agendamiento.URLReunion == null}">No asignado</span></p>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <a href="misTutorias.html" class="boton-volver">
+                    <a th:href="@{/mis_tutorias}" class="boton-volver">
                         Volver
                     </a>
                 </div>
