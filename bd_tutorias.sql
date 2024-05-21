@@ -23,16 +23,17 @@ DROP TABLE IF EXISTS `agendamientotutoria`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `agendamientotutoria` (
-  `idAgendamiento` int NOT NULL AUTO_INCREMENT,
-  `URLReunion` text,
-  `FechaAgendamiento` varchar(200) DEFAULT NULL,
-  `idPlataformaReunion` int DEFAULT NULL,
+  `id_agendamiento` int NOT NULL AUTO_INCREMENT,
+  `url_reunion` text,
+  `fecha_agendamiento` varchar(200) DEFAULT NULL,
+  `id_plataforma_reunion` int DEFAULT NULL,
   `activo` int DEFAULT NULL,
-  PRIMARY KEY (`idAgendamiento`),
-  KEY `idPlataformaReunion` (`idPlataformaReunion`),
-  CONSTRAINT `agendamientotutoria_ibfk_1` FOREIGN KEY (`idAgendamiento`) REFERENCES `notificaciones` (`idNotificacion`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `agendamientotutoria_ibfk_2` FOREIGN KEY (`idPlataformaReunion`) REFERENCES `plataformasreunion` (`idPlataformaReunion`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `datos_adicionales` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id_agendamiento`),
+  KEY `agendamientotutoria_ibfk_2` (`id_plataforma_reunion`),
+  CONSTRAINT `agendamientotutoria_ibfk_1` FOREIGN KEY (`id_agendamiento`) REFERENCES `notificaciones` (`id_notificacion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `agendamientotutoria_ibfk_2` FOREIGN KEY (`id_plataforma_reunion`) REFERENCES `plataformasreunion` (`id_plataforma_reunion`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +42,7 @@ CREATE TABLE `agendamientotutoria` (
 
 LOCK TABLES `agendamientotutoria` WRITE;
 /*!40000 ALTER TABLE `agendamientotutoria` DISABLE KEYS */;
+INSERT INTO `agendamientotutoria` VALUES (13,'www','2024-05-24',1,1,'lo mas pronto posible'),(19,NULL,'2024-05-18',NULL,1,'dsds'),(21,NULL,'2024-05-18',NULL,1,'fdfd');
 /*!40000 ALTER TABLE `agendamientotutoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,8 +82,8 @@ CREATE TABLE `calificaciones` (
   `puntaje` double DEFAULT NULL,
   `comentario` text,
   PRIMARY KEY (`id_calificacion`),
-  CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`id_calificacion`) REFERENCES `agendamientotutoria` (`idAgendamiento`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`id_calificacion`) REFERENCES `agendamientotutoria` (`id_agendamiento`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,6 +92,7 @@ CREATE TABLE `calificaciones` (
 
 LOCK TABLES `calificaciones` WRITE;
 /*!40000 ALTER TABLE `calificaciones` DISABLE KEYS */;
+INSERT INTO `calificaciones` VALUES (13,3,'a'),(19,3,'dada'),(21,5,'holap');
 /*!40000 ALTER TABLE `calificaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,6 +120,30 @@ LOCK TABLES `carreras` WRITE;
 /*!40000 ALTER TABLE `carreras` DISABLE KEYS */;
 INSERT INTO `carreras` VALUES (1,'Ingenieria civil',1,10),(2,'Gestion ambiental industrial',1,6),(3,'Tecnologia en desarrollo de software',1,6),(4,'Psicologia',1,10),(5,'Trabajo social',1,9);
 /*!40000 ALTER TABLE `carreras` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `destinatario`
+--
+
+DROP TABLE IF EXISTS `destinatario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `destinatario` (
+  `id_destinatario` int NOT NULL,
+  `descripcion` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id_destinatario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `destinatario`
+--
+
+LOCK TABLES `destinatario` WRITE;
+/*!40000 ALTER TABLE `destinatario` DISABLE KEYS */;
+INSERT INTO `destinatario` VALUES (1,'tutor'),(2,'estudiante');
+/*!40000 ALTER TABLE `destinatario` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -186,7 +213,7 @@ CREATE TABLE `estudiante` (
 
 LOCK TABLES `estudiante` WRITE;
 /*!40000 ALTER TABLE `estudiante` DISABLE KEYS */;
-INSERT INTO `estudiante` VALUES (19);
+INSERT INTO `estudiante` VALUES (19),(22),(24),(25),(26);
 /*!40000 ALTER TABLE `estudiante` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,20 +225,23 @@ DROP TABLE IF EXISTS `notificaciones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notificaciones` (
-  `idNotificacion` int NOT NULL AUTO_INCREMENT,
+  `id_notificacion` int NOT NULL AUTO_INCREMENT,
   `descripcion` text,
-  `idTutor` int DEFAULT NULL,
-  `idTutoria` int DEFAULT NULL,
+  `id_tutor` int DEFAULT NULL,
+  `id_tutoria` int DEFAULT NULL,
   `activo` int DEFAULT NULL,
   `id_tipo_notificacion` int DEFAULT NULL,
-  PRIMARY KEY (`idNotificacion`),
-  KEY `idTutor` (`idTutor`),
-  KEY `idTutoria` (`idTutoria`),
+  `id_destinatario` int DEFAULT NULL,
+  PRIMARY KEY (`id_notificacion`),
   KEY `id_tipo_notificacion` (`id_tipo_notificacion`),
-  CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`idTutor`) REFERENCES `tutor` (`id_tutor`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `notificaciones_ibfk_2` FOREIGN KEY (`idTutoria`) REFERENCES `tutorias` (`id_tutoria`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `notificaciones_ibfk_3` FOREIGN KEY (`id_tipo_notificacion`) REFERENCES `tiponotificacion` (`id_tipo_notificacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `notificaciones_ibfk_1` (`id_tutor`),
+  KEY `notificaciones_ibfk_2` (`id_tutoria`),
+  KEY `id_destinatario` (`id_destinatario`),
+  CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`id_tutor`) REFERENCES `tutor` (`id_tutor`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `notificaciones_ibfk_2` FOREIGN KEY (`id_tutoria`) REFERENCES `tutorias` (`id_tutoria`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `notificaciones_ibfk_3` FOREIGN KEY (`id_tipo_notificacion`) REFERENCES `tiponotificacion` (`id_tipo_notificacion`),
+  CONSTRAINT `notificaciones_ibfk_4` FOREIGN KEY (`id_destinatario`) REFERENCES `destinatario` (`id_destinatario`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,6 +250,7 @@ CREATE TABLE `notificaciones` (
 
 LOCK TABLES `notificaciones` WRITE;
 /*!40000 ALTER TABLE `notificaciones` DISABLE KEYS */;
+INSERT INTO `notificaciones` VALUES (13,'Has recibido una respuesta al Biologia #1de parte del tutor Alejandro',19,10,0,1,2),(16,'El estudiante migue ha aceptado que seas su tutor en el la tutoria \'Biologia #1\'.',19,10,1,2,1),(17,'Has recibido una respuesta al Prueba 12 de parte del tutor Alejandro',19,11,0,1,2),(18,'Tu postulacion a la tutoria Prueba 12 ha sido rechazada',19,11,1,2,1),(19,'Has recibido una respuesta al Tutoria 1 de parte del tutor Alejandro',19,12,0,1,2),(20,'El estudiante jair ha aceptado que seas su tutor en el la tutoria \'Tutoria 1\'.',19,12,1,2,1),(21,'Has recibido una respuesta al Matematica51 de parte del tutor Alejandro',19,13,0,1,2),(22,'El estudiante migue ha aceptado que seas su tutor en el la tutoria \'Matematica51\'.',19,13,1,2,1),(23,'Has recibido una respuesta al Pala de parte del tutor Alejandro',19,14,1,1,2);
 /*!40000 ALTER TABLE `notificaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,9 +262,9 @@ DROP TABLE IF EXISTS `plataformasreunion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `plataformasreunion` (
-  `idPlataformaReunion` int NOT NULL AUTO_INCREMENT,
+  `id_plataforma_reunion` int NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`idPlataformaReunion`)
+  PRIMARY KEY (`id_plataforma_reunion`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -255,9 +286,9 @@ DROP TABLE IF EXISTS `rangos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `rangos` (
-  `idRango` int NOT NULL AUTO_INCREMENT,
+  `id_rango` int NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`idRango`)
+  PRIMARY KEY (`id_rango`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -291,6 +322,7 @@ CREATE TABLE `tiponotificacion` (
 
 LOCK TABLES `tiponotificacion` WRITE;
 /*!40000 ALTER TABLE `tiponotificacion` DISABLE KEYS */;
+INSERT INTO `tiponotificacion` VALUES (1,'aprobacion'),(2,'informacion');
 /*!40000 ALTER TABLE `tiponotificacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -310,7 +342,7 @@ CREATE TABLE `tutor` (
   PRIMARY KEY (`id_tutor`),
   KEY `tutor_ibfk_2` (`id_rango`),
   KEY `tutor_ibfk_3` (`id_especialidad`),
-  CONSTRAINT `tutor_ibfk_2` FOREIGN KEY (`id_rango`) REFERENCES `rangos` (`idRango`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `tutor_ibfk_2` FOREIGN KEY (`id_rango`) REFERENCES `rangos` (`id_rango`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tutor_ibfk_3` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`idEspecialidad`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -321,7 +353,7 @@ CREATE TABLE `tutor` (
 
 LOCK TABLES `tutor` WRITE;
 /*!40000 ALTER TABLE `tutor` DISABLE KEYS */;
-INSERT INTO `tutor` VALUES (19,0,1,1,1);
+INSERT INTO `tutor` VALUES (19,3.6666666666666665,1,1,1);
 /*!40000 ALTER TABLE `tutor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -352,7 +384,7 @@ CREATE TABLE `tutorias` (
   CONSTRAINT `tutorias_ibfk_2` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tutorias_ibfk_3` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id_area`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tutorias_ibfk_4` FOREIGN KEY (`id_carrera`) REFERENCES `carreras` (`id_carrera`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,7 +393,7 @@ CREATE TABLE `tutorias` (
 
 LOCK TABLES `tutorias` WRITE;
 /*!40000 ALTER TABLE `tutorias` DISABLE KEYS */;
-INSERT INTO `tutorias` VALUES (5,'prueba','cosa prueba','2020-08-10',1000,1,19,1,1,1),(8,'Matematica','Matematica','2024-05-29',5000,1,19,1,1,1),(9,'Ingles','Ingles','2024-05-27',4000,1,19,3,3,4);
+INSERT INTO `tutorias` VALUES (5,'prueba','cosa prueba','2020-08-10',1000,2,19,1,1,1),(8,'Matematica','Matematica','2024-05-29',5000,1,19,1,1,1),(9,'Ingles','Ingles','2024-05-27',4000,1,19,3,3,4),(10,'Biologia #1','Biologia #1','2024-05-15',5000,4,22,4,1,4),(11,'Prueba 12','ha','2024-05-31',220,1,22,4,1,3),(12,'Tutoria 1','dfgdgf','2024-05-30',500,4,24,3,1,2),(13,'Matematica51','fsfdsf','2024-05-31',4000,4,22,1,1,2),(14,'Pala','dsdsd','2024-05-31',313,1,22,4,1,4),(15,'DQDF','ewewe','2024-05-29',56666,1,22,6,1,3);
 /*!40000 ALTER TABLE `tutorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -382,10 +414,11 @@ CREATE TABLE `usuario` (
   `login` varchar(200) DEFAULT NULL,
   `id_carrera` int DEFAULT NULL,
   `activo` int DEFAULT NULL,
+  `semestre` int DEFAULT NULL,
   PRIMARY KEY (`id_usuario`),
   KEY `usuario_ibfk_1` (`id_carrera`),
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_carrera`) REFERENCES `carreras` (`id_carrera`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -394,7 +427,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (19,'usuario','Alejandro','Gonzalez',12,'123','alejo',2,1),(21,'admin','leonardo','vergara',5854,'leon','leo',1,0);
+INSERT INTO `usuario` VALUES (19,'usuario','Alejandro','Gonzalez',12,'1234','alejo',2,1,1),(21,'admin','leonardo','vergara',5854,'leon','leo',1,0,1),(22,'usuario','Miguel','Fernandez',121515,'123','migue',4,1,1),(24,'usuario','Jair','Fernandez',565,'123','jair',1,1,3),(26,'usuario','camilo','suarez',52369,'hola','camilo123',3,1,2);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -407,4 +440,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-09 22:48:30
+-- Dump completed on 2024-05-20 20:03:01
