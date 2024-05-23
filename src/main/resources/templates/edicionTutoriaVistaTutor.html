@@ -16,12 +16,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="script.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script src="./js/cargarNavbar.js"></script>
 </head>
 
 <body>
     <div>
-        <div id="navbar-contenedor"></div>
+        <div id="navbar"></div>
         <div class="contenedor-vista-info-tutoria">
             <h1 class="titulo-info-tutoria">Edición tutoria</h1>
             <form th:object="${agentuto}" method="post" th:action="@{/tutor_edicion?id={id}(id=${id})}" id="edicionTuto">
@@ -53,7 +54,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center gap-4">
-                        <a class="boton-volver">
+                        <a class="boton-volver" th:href="@{/tutorias_asignadas}">
                             Volver
                         </a>
 

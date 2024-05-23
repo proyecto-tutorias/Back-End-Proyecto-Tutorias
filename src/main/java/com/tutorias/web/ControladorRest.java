@@ -36,11 +36,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -611,6 +614,27 @@ public class ControladorRest {
         modelo.addAttribute("ususesion", ususesion);
         modelo.addAttribute("tutorsesion", tutorsesion);
         modelo.addAttribute("parametros",parametros );
+        
+        List<Usuario> usuarios = ususer.listarUsuarios();
+        List<String> tipo = new ArrayList<>();
+        carreras = carreser.listarCarreras();
+        
+        for(Usuario usuario : usuarios){
+            Tutor tutor = tutoser.encontrarTutor(usuario.getId_usuario());
+            if(tutor == null){
+                tipo.add("Estudiante");
+            }
+            else{
+                tipo.add("Tutor");
+            }
+            
+        }
+        
+        modelo.addAttribute("usuarios", usuarios);
+        modelo.addAttribute("carreras", carreras);
+        modelo.addAttribute("tipo", tipo);
+        
+        
         return "listadoUsuarios";
     }
     @GetMapping("/tutorias_asignadas")
@@ -666,6 +690,15 @@ public class ControladorRest {
         
     }
     
+    @PostMapping("/desactivarUsuario")
+    public @ResponseBody ResponseEntity desactivarUsuario(@RequestParam(value="id") int id){
+        
+        ususer.desactivarUsuario(id);
+        
+        return new ResponseEntity(HttpStatus.OK);
+        
+    }
+    
     
     @GetMapping("/registro")
     public String registro(Usuario usuario, Model modelo){
@@ -673,38 +706,29 @@ public class ControladorRest {
         modelo.addAttribute("carreras", carreras);
         return "registro";
     }
-    @GetMapping("/agendar_tutoria")
-    public String agendarTutoria(@RequestParam int id, @RequestParam String tipo,Model modelo){
+    @GetMapping("/agendamiento")
+    public String agendamiento(@RequestParam int id,Model modelo){
         
         AgendamientoTutoria agentuto = new AgendamientoTutoria();
-        if(tipo.equals("notificacion_insertar")){
-            notificacionActual = notiser.encontrarNotificacion(id);
-            agentuto.setIdAgendamiento(id);
-            agentutoser.insertar(agentuto);
-        }
-        if(tipo.equals("notificacion")){
-            agen_id = id;
-            notificacionActual = notiser.encontrarNotificacion(id);
-            
-        }
-        else{
-            List<Notificacion> noti = notiser.encontrarPorTutoria(id);
-            List<AgendamientoTutoria> ag = agentutoser.listar();
-            
-            for(Notificacion n : noti){
-                
-                for(AgendamientoTutoria a : ag){
-                    if(a.getIdAgendamiento() == n.getIdNotificacion()){
-                        notificacionActual = n;
-                    }
+        
+       
+        List<Notificacion> noti = notiser.encontrarPorTutoria(id);
+        List<AgendamientoTutoria> ag = agentutoser.listar();
+
+        for(Notificacion n : noti){
+
+            for(AgendamientoTutoria a : ag){
+                if(a.getIdAgendamiento() == n.getIdNotificacion()){
+                    notificacionActual = n;
                 }
-                
             }
-            agen_id = notificacionActual.getIdNotificacion();
+
+        }
+        agen_id = notificacionActual.getIdNotificacion();
            
             
             
-        }
+      
         
       
         
@@ -713,7 +737,6 @@ public class ControladorRest {
         
         String carrera = carreraTutor(tutor);
         modelo.addAttribute("agentuto", agentuto);
-        tutoriaser.cambiarEstado(2, tutoriaSeleccionada.getIdTutoria());
         modelo.addAttribute("ususesion", ususesion);
         modelo.addAttribute("tutoriaSeleccionada", tutoriaSeleccionada);
         modelo.addAttribute("tutor", tutor);
@@ -722,6 +745,207 @@ public class ControladorRest {
         modelo.addAttribute("parametros",parametros );
         return "agendamientoTutoria";
     }
+    
+    @PostMapping("/agendar_tutoria")
+    public String agendarTutoria(@RequestParam int id,Model modelo){
+        
+        AgendamientoTutoria agentuto = new AgendamientoTutoria();
+        
+        Notificacion noti = notiser.encontrarNotificacion(id);
+        
+        agentuto.setIdAgendamiento(id);
+        agentutoser.insertar(agentuto);
+        tutoriaser.cambiarEstado(2, noti.getId_Tutoria());
+        
+        notiser.desactivarNotificacion(id);
+        
+        return "redirect:/notificaciones";
+    }
+    
+    @GetMapping("/consultarFechaLimite")
+    public @ResponseBody String consultarFechaLimite(@RequestParam(value="id") int id) throws ParseException{
+        
+        Notificacion noti = notiser.encontrarNotificacion(id);
+        
+        Tutoria tutoria = tutoriaser.encontrarTutoria(noti.getId_Tutoria());
+        
+        SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat formatoAntes = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date fechaAntes = formatoAntes.parse(tutoria.getFechaLimite());
+        
+        
+        
+         
+        String fecha = formato.format(fechaAntes);
+       
+
+        
+       
+        
+        return fecha;
+        
+
+    }
+    
+    @GetMapping("/obtenerFechas")
+    public @ResponseBody String obtenerFechas(@RequestParam(value="id") int id) throws ParseException{
+        List<Notificacion> noti = notiser.encontrarPorTutoria(id);
+        List<AgendamientoTutoria> agentuto = agentutoser.listar();
+        AgendamientoTutoria agen = new AgendamientoTutoria();
+      
+                
+        for(Notificacion n : noti){
+            for(AgendamientoTutoria ag : agentuto){
+                if(ag.getIdAgendamiento() == n.getIdNotificacion()){
+                    agen = ag;
+                }
+            }
+        }
+        
+        SimpleDateFormat formato = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat formatoAntes = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date fechaAntes = formatoAntes.parse(agen.getFecha_inicio());
+        
+        
+        
+        String fecha_inicio = formato.format(fechaAntes);
+        
+        fechaAntes = formatoAntes.parse(agen.getFecha_fin());
+        
+        String fecha_fin = formato.format(fechaAntes);
+        
+        
+        
+        return agen.getHora_inicio() + "," + agen.getHora_fin() + "," + fecha_inicio + "," + fecha_fin;
+    }
+    
+    
+    @GetMapping("/agendamientoHorario")
+    public String agendamientoHorario(@RequestParam int id,Model modelo){
+        modelo.addAttribute("tutorsesion", tutorsesion);
+        modelo.addAttribute("parametros",parametros );
+        modelo.addAttribute("ususesion",ususesion );
+        return "horarioTutor";
+    }
+    
+    
+    @PostMapping("/agregarAgendamientoHorario")
+    public @ResponseBody ResponseEntity agregarAgendamientoHorario(@RequestParam(value="fechaInicio") String fechaInicio,
+            @RequestParam(value="fechaFin") String fechaFin,
+            @RequestParam(value="horaInicio") String horaInicio,
+            @RequestParam(value="horaFin") String horaFin,
+            @RequestParam(value="id") int id){
+        
+        
+        
+        
+    
+        
+        String[] partes = horaInicio.split(":");
+        Calendar hora1 = Calendar.getInstance();
+        hora1.set(Calendar.HOUR_OF_DAY, Integer.parseInt(partes[0]));
+        hora1.set(Calendar.MINUTE, Integer.parseInt(partes[1]));
+        
+        partes = horaFin.split(":");
+        Calendar hora2 = Calendar.getInstance();
+        hora2.set(Calendar.HOUR_OF_DAY, Integer.parseInt(partes[0]));
+        hora2.set(Calendar.MINUTE, Integer.parseInt(partes[1]));
+        
+        
+        if(hora2.before(hora1)){
+            
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error antes");
+            
+        }
+
+        else{
+            Notificacion noti = notiser.encontrarNotificacion(id);
+            
+            tutoriaser.cambiarEstado(3, noti.getId_Tutoria());
+            agentutoser.insertarHorario(id, horaInicio, horaFin, fechaInicio, fechaFin);
+            
+             return  new ResponseEntity(HttpStatus.OK);
+        }
+
+        
+        
+   
+        
+        
+        
+    }
+    
+    @PostMapping("/agregarAgendamiento")
+    public @ResponseBody ResponseEntity agregarAgendamiento(@RequestParam(value="fechaAgen") String fechaAgen,
+            @RequestParam(value="horaFin") String horaDef,
+            @RequestParam(value="id") int id,
+            @RequestParam(value="datosAdicionales") String datosAdicionales){
+        
+
+        
+        
+        AgendamientoTutoria agentuto = new AgendamientoTutoria();
+        
+       
+        List<Notificacion> noti = notiser.encontrarPorTutoria(id);
+        List<AgendamientoTutoria> ag = agentutoser.listar();
+
+        for(Notificacion n : noti){
+
+            for(AgendamientoTutoria a : ag){
+                if(a.getIdAgendamiento() == n.getIdNotificacion()){
+                    agentuto = a;
+                }
+            }
+        }
+        
+        
+        
+        String[] partes = horaDef.split(":");
+        Calendar horaAgen = Calendar.getInstance();
+        horaAgen.set(Calendar.HOUR_OF_DAY, Integer.parseInt(partes[0]));
+        horaAgen.set(Calendar.MINUTE, Integer.parseInt(partes[1]));
+        
+        
+        partes = agentuto.getHora_inicio().split(":");
+        Calendar horaInicio = Calendar.getInstance();
+        horaInicio.set(Calendar.HOUR_OF_DAY, Integer.parseInt(partes[0]));
+        horaInicio.set(Calendar.MINUTE, Integer.parseInt(partes[1]));
+        
+        
+        partes = agentuto.getHora_fin().split(":");
+        Calendar horaFin = Calendar.getInstance();
+        horaFin.set(Calendar.HOUR_OF_DAY, Integer.parseInt(partes[0]));
+        horaFin.set(Calendar.MINUTE, Integer.parseInt(partes[1]));
+        
+        if(horaAgen.after(horaFin) || horaAgen.before(horaInicio)){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ajuste la hora en el rango permitido");
+        }
+        else{
+        
+            agentuto.setDatos_adicionales(datosAdicionales);
+            agentuto.setHora_def(horaDef);
+            agentuto.setFechaAgendamiento(fechaAgen);
+           
+            
+            tutoriaser.cambiarEstado(4, id);
+
+            agentutoser.insertarFecha(agentuto);
+            
+            return new ResponseEntity(HttpStatus.OK);
+        
+        
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
     
     
     public Tutor infoTutor(int id){
@@ -749,19 +973,7 @@ public class ControladorRest {
         
     }
     
-    @PostMapping("agregarAgendamiento")
-    public String agregarAgendamiento(AgendamientoTutoria agentuto){
-        if(!(agentuto.getFechaAgendamiento().equals("")) && !(agentuto.getDatos_adicionales().equals(""))){
-            agentuto.setIdAgendamiento(agen_id);
-            agentutoser.insertarFecha(agentuto);
-            notiser.desactivarNotificacion(notificacionActual.getIdNotificacion());
-            notiser.insertarNotificacion(agregarNotificacionInformacion(notificacionActual));
-            tutoriaser.cambiarEstado(3, notificacionActual.getId_Tutoria());
-            return "redirect:/notificaciones";
-        }
-        return "redirect:/agendar_tutoria?id=" + notificacionActual.getIdNotificacion() + "&tipo=notificacion";
-        
-    }
+    
     
     public Notificacion agregarNotificacionInformacion(Notificacion notiactual){
         Tutoria tutoria = tutoriaser.encontrarTutoria(notiactual.getId_Tutoria());
@@ -963,12 +1175,201 @@ public class ControladorRest {
         
     }
     
+    @GetMapping("/edicionUsuario")
+    public String edicionUsuario(@RequestParam(value="id") int id, Model modelo){
+        
+        Usuario usu = ususer.encontrarUsuario(id);
+        
+        Tutor tutor = tutoser.encontrarTutor(id);
+        
+
+        
+        carreras = carreser.listarCarreras();
+        
+        
+        
+         List<AgendamientoTutoria> agendamiento = agentutoser.listar();
+        notificaciones = notiser.listarNotificaciones();
+        List<Calificacion> calificaciones = caliser.listarCalificaciones();
+        List<Notificacion> notiTutor = new ArrayList<>();
+        List<Calificacion> caliTutor = new ArrayList<>();
+        
+        List<Tutoria> tutorias = tutoriaser.listarTutorias();
+        List<Tutoria> tutoriaTutor = new ArrayList<>();
+        areas = areaser.listarAreas();
+        carreras = carreser.listarCarreras();
+        List<Rango> rangos = ranser.listarRangos();
+        
+        if(tutor != null){
+             for(Notificacion n: notificaciones){
+            for(AgendamientoTutoria ag : agendamiento){
+                if(ag.getIdAgendamiento() == n.getIdNotificacion() && n.getId_Tutor() == tutor.getIdTutor()){
+                    notiTutor.add(n);
+                
+                    for(Calificacion c: calificaciones){
+                        if(c.getIdCalificacion() == ag.getIdAgendamiento()){
+                            caliTutor.add(c);
+                        }
+                    }
+                }
+            }
+        }
+        
+        for(Notificacion n: notiTutor){
+            for(Tutoria t : tutorias){
+                if(t.getIdTutoria() == n.getId_Tutoria()){
+                    tutoriaTutor.add(t);
+                }
+            }
+        }
+        
+            
+            
+            
+        }
+        
+       
+        
+        
+        
+        modelo.addAttribute("ususesion", ususesion);
+        modelo.addAttribute("usuario", usu);
+        modelo.addAttribute("tutor", tutor);
+        modelo.addAttribute("tutorsesion", tutorsesion);
+        modelo.addAttribute("carreras", carreras);
+        modelo.addAttribute("parametros",parametros );
+        modelo.addAttribute("rangos",rangos );
+        
+
+        modelo.addAttribute("notificaciones", notiTutor);
+        modelo.addAttribute("calificaciones", caliTutor);
+        modelo.addAttribute("areas", areas);
+        modelo.addAttribute("tutorias", tutoriaTutor);
+
+
+        
+        return "edicionUsuario";
+    }
+    
     @PostMapping("tutor_edicion")
     public String edicionTutor(@RequestParam int id,AgendamientoTutoria agentuto){
         agentuto.setIdAgendamiento(id);
         agentutoser.insertarDatosReunion(agentuto);
+        Notificacion noti = notiser.encontrarNotificacion(id);
+        tutoriaser.cambiarEstado(5, noti.getId_Tutoria());
         
         return "redirect:/tutorias_asignadas";
+    }
+    
+    
+    @GetMapping("/navbar")
+    public String navbar(Model modelo){
+        
+        modelo.addAttribute("ususesion", ususesion);
+        
+        List<Notificacion> notificacionesIterar = notiser.listarNotificaciones();
+        notificaciones = new ArrayList<>();
+        
+        if(notificacionesIterar != null){
+            for(Tutoria tutoria : tutorias){
+                for(Notificacion notificacion : notificacionesIterar){
+                    if(tutoria.getIdTutoria() == notificacion.getId_Tutoria() && notificacion.getActivo() == 1){
+                        if(tutorsesion != null){
+                            if(ususesion.getId_usuario() == notificacion.getId_Tutor() && notificacion.getId_destinatario() == destinatario_tutor){
+                                notificaciones.add(notificacion);
+                            } 
+                        }
+                        
+                        if(ususesion.getId_usuario() == tutoria.getIdEstudiante() && notificacion.getId_destinatario() == destinatario_estudiante){
+                            notificaciones.add(notificacion);
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        
+        modelo.addAttribute("numNoti", notificaciones.size());
+        modelo.addAttribute("tutorsesion", tutorsesion);
+        modelo.addAttribute("parametros",parametros );
+        
+        
+        
+        
+        
+        
+        return "navbar :: navbar";
+    }
+    
+    @PostMapping("/modUsuario")
+    public @ResponseBody ResponseEntity modificarUsuario( @RequestParam(value="semestre") int semestre, 
+            @RequestParam(value="rango", required=false) Integer rango,
+           @RequestParam(value="carrera") int carrera,
+            @RequestParam(value="id") int id){
+        
+        if(rango != null){
+            Tutor tutor = tutoser.encontrarTutor(id);
+            tutor.setIdRango(rango);
+            tutoser.modificarTutor(tutor);
+
+        }
+        
+        Usuario usuario = ususer.encontrarUsuario(id);
+        usuario.setSemestre(semestre);
+        usuario.setId_carrera(carrera);
+        
+        ususer.modificarUsuario(usuario);
+        
+        
+        return new ResponseEntity(HttpStatus.OK);
+        
+        
+    }
+    
+    @GetMapping("/edicion_tutoria")
+    public String edicion_tutoria(@RequestParam(value="id") int id){
+        
+        
+        return "edicion_tutoria";
+    }
+    
+    @PostMapping("/desactivarTutoria")
+    public @ResponseBody ResponseEntity desactivarTutoria(@RequestParam(value="id") int id){
+        
+        tutoriaser.desactivarTutoria(id);
+        
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    
+    @PostMapping("/agregarTutor")
+    public @ResponseBody ResponseEntity agregarTutor( @RequestParam(value="id") int id){
+        
+        Tutor tutor = tutoser.encontrarTutor(id);
+        
+        if(tutor != null){
+            tutor = new Tutor();
+            tutor.setIdTutor(id);
+            tutor.setActivo(1);
+        
+            tutoser.insertarTutor(tutor);
+        }
+        else{
+            tutoser.activarTutor(id);
+        }
+
+        
+        
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    
+    
+    @PostMapping("/desactivarTutor")
+    public @ResponseBody ResponseEntity desactivarTutor(@RequestParam(value="id") int id){
+        
+        tutoser.desactivarTutor(id);
+        
+        return new ResponseEntity(HttpStatus.OK);
     }
     
     

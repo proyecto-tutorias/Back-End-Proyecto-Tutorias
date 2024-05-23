@@ -35,6 +35,17 @@ public class TutorServices {
         tutorep.insertarPromedio(prom, id);
     }
     
+    public void modificarTutor(Tutor tutor){
+        tutorep.modificarTutor(tutor);
+    }
+    
+    public void activarTutor(int id){
+        tutorep.activarTutor(id);
+    }
+    public void desactivarTutor(int id){
+        tutorep.desactivarTutor(id);
+    }
+    
     
     
 }

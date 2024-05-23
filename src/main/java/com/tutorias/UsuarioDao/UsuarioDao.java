@@ -20,6 +20,7 @@ public interface UsuarioDao {
     List<Usuario> listarUsuarios();
     void desactivarUsuario(int id);
     void activarUsuario(int id);
+    void modificarUsuario(Usuario usuario);
     
     
     

@@ -18,14 +18,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="script.js"></script>
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="./js/fechaAgendamiento.js"></script>
+
+    <script src="./js/cargarNavbar.js"></script>
 </head>
 
 <body class="bg-dark-subtle">
     <div>
-        <div th:replace="navbar :: navbar"></div>
+        <div id='navbar'></div>
         <div class="contenedor-vista-agendamiento">
-            <form th:action="@{/agregarAgendamiento}" th:object="${agentuto}" method="post" id="agendamientoform">
+
                 <div class="bg-white contenedor-agendamiento">
                     <h1 class="titulo-vista">Agendar tutoria</h1>
                     <div class="row">
@@ -33,20 +39,29 @@
                             <div class="mb-4">
                                 <label for="input-FechaLimite" class="form-label">Fecha de tutoria</label>
                                 <div>
-                                    <input type="date" th:field="*{fechaAgendamiento}" class="input-fecha-agendamiento">
+                                    <input type="text" id="fecha-dispo">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="input-datos" class="form-label">Hora de agendamiento</label>
+                                <div id="hora-agen">
+                                    <input type="time" id="hora-def"/>
                                 </div>
                             </div>
 
                             <div class="mb-4">
                                 <label for="input-datos" class="form-label">Datos adicionales</label>
                                 <div>
-                                    <textarea placeholder="Digite descripción" th:field="*{datos_adicionales}" class="input-datos-agendamiento"></textarea>
+                                    <textarea placeholder="Digite descripción" class="input-datos-agendamiento" id="datos-adicionales"></textarea>
                                 </div>
                             </div>
+                            
 
-                            <a class="boton-finalizar-citacion" onclick="document.getElementById('agendamientoform').submit()">
+                            <a class="boton-finalizar-citacion" id="mandarAgen">
                                 Finalizar citación
                             </a>
+                            <div id="errores" class="mt-4"></div>
                         </div>
 
                         <div class="col-1">
@@ -72,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+       
         </div>
     </div>
 </body>

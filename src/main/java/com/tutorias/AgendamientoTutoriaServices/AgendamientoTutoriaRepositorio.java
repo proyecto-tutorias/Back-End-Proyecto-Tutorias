@@ -68,9 +68,17 @@ public class AgendamientoTutoriaRepositorio implements AgendamientoTutoriaDao{
     
     @Override
     public void insertarFecha(AgendamientoTutoria agentuto){
-        String sentencia ="update agendamientotutoria set datos_adicionales='"+ agentuto.getDatos_adicionales()+ "', fecha_agendamiento='"+agentuto.getFechaAgendamiento()+"' where id_agendamiento="+ agentuto.getIdAgendamiento();
+        String sentencia ="update agendamientotutoria set datos_adicionales='"+ agentuto.getDatos_adicionales()+ "', fecha_agendamiento='"+agentuto.getFechaAgendamiento()+"', hora_def='"+agentuto.getHora_def()+"' where id_agendamiento="+ agentuto.getIdAgendamiento();
         
         jdbcTemplate.update(sentencia);
+    }
+    
+    @Override
+    public void insertarHorario(int id, String horaInicio, String horaFin, String fechaInicio, String fechaFin){
+        String sentencia ="update agendamientotutoria set hora_inicio='"+ horaInicio+ "', hora_fin='"+horaFin+"', fecha_inicio='"+ fechaInicio+"', fecha_fin='"+fechaFin+"' where id_agendamiento="+ id;
+        
+        jdbcTemplate.update(sentencia);
+        
     }
     
 

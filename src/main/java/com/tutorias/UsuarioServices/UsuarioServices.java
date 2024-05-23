@@ -44,6 +44,9 @@ public class UsuarioServices {
         
     }
     
+    public void modificarUsuario(Usuario usuario){
+        usurepo.modificarUsuario(usuario);
+    }
     
     
     

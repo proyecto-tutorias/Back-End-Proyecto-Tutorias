@@ -38,7 +38,7 @@ public class TutorRepositorio implements TutorDao{
     @Override
     public Tutor encontarTutor(int id) {
         try{
-            return jdbcTemplate.queryForObject("SELECT * FROM tutor WHERE id_tutor=?", new TutorLoad(), id);   
+            return jdbcTemplate.queryForObject("SELECT * FROM tutor WHERE id_tutor=? and activo = 1", new TutorLoad(), id);   
         }catch(EmptyResultDataAccessException e){
             return null;
         }
@@ -66,6 +66,16 @@ public class TutorRepositorio implements TutorDao{
         jdbcTemplate.update(sentencia);
         
     }
+    
+    @Override
+    public void modificarTutor(Tutor tutor){
+        String sentencia = "update tutor set id_rango ="+ tutor.getIdRango() +" where id_tutor = "+ tutor.getIdTutor();
+        
+        jdbcTemplate.update(sentencia);
+        
+    }
+    
+    
     
     
     

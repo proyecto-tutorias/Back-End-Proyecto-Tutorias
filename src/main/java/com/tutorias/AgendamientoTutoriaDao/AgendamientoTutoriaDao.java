@@ -20,6 +20,6 @@ public interface AgendamientoTutoriaDao {
     List<AgendamientoTutoria> listar();
     void insertarDatosReunion(AgendamientoTutoria agentuto);
     void insertarFecha(AgendamientoTutoria agentuto);
-    
+    void insertarHorario(int id, String horaInicio, String horaFin, String fechaInicio, String fechaFin);
     
 }

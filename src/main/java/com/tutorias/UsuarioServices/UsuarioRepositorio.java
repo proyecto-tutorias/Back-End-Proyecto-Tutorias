@@ -74,6 +74,14 @@ public class UsuarioRepositorio implements UsuarioDao{
         jdbcTemplate.update("UPDATE usuario SET activo = 1 WHERE id_usuario=?",id);
     }
     
+    @Override
+    public void modificarUsuario(Usuario usuario){
+         String sentencia ="update usuario set id_carrera="+ usuario.getId_carrera()+ ", semestre="+usuario.getSemestre()+" where id_usuario="+ usuario.getId_usuario();
+        
+        jdbcTemplate.update(sentencia);
+    }
+    
+    
     
     
     

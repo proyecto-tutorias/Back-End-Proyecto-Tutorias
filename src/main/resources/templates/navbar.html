@@ -27,7 +27,7 @@
             <a class="nav-link" th:href="@{/solicitud_tutoria}" th:if="${ususesion.tipo_usuario != 'admin'}">Solicitud de tutoria</a>
             <a class="nav-link" th:href="@{/mis_tutorias}" th:if="${ususesion.tipo_usuario != 'admin'}">Mis Tutorias</a>
             <a class="nav-link" th:href="@{/tutorias_asignadas}" th:if="${tutorsesion != null}">Tutorias Asignadas</a>
-            <a class="nav-link" th:href="@{/notificaciones}" th:if="${ususesion.tipo_usuario != 'admin'}">Notificaciones (#)</a>
+            <a class="nav-link" th:href="@{/notificaciones}" th:if="${ususesion.tipo_usuario != 'admin'}" th:text="'Notificaciones ('+ ${numNoti} + ')'"></a>
             <a class="nav-link" th:href="@{/requisitos_tutor}" th:if="${ususesion.tipo_usuario != 'admin'}">¿Quieres ser tutor?</a>
             <a class="nav-link" th:href="@{/lista_usuarios}" th:if="${ususesion.tipo_usuario == 'admin'}">Lista de Usuarios</a>
         </div>

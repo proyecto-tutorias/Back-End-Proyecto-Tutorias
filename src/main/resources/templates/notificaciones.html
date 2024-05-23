@@ -17,13 +17,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="script.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script src="./js/cargarNavbar.js"></script>
 </head>
 
 <body>
     <div>
-        <div th:replace="navbar :: navbar"></div>
+        <div id='navbar'></div>
         <div class="contenedor-listado-notificaciones">
             <h1 class="titutlo-listado-notifiaciones">Notificaciones</h1>
             <div class="listado-notificaciones" th:if='${notificaciones != null and !notificaciones.empty}'>
@@ -34,7 +34,10 @@
                             <p class="card-text mb-0" th:text='${notificacion.descripcion}'></p>
                         </div>
                         <div class="d-flex align-items-center gap-3" th:if='${notificacion.id_tipo_notificacion == 1}'>
-                            <a th:href="@{/agendar_tutoria?id={id}&tipo={tipo}(id=${notificacion.idNotificacion}, tipo='notificacion_insertar')}" class="boton-notificaciones">Aceptar</a>
+                            <form th:action="@{/agendar_tutoria?id={id}(id=${notificacion.idNotificacion})}" th:id="${notificacion.idNotificacion}" method="post">
+                                <a class="boton-notificaciones" th:onclick="|document.getElementById('${notificacion.idNotificacion}').submit()|">Aceptar</a>
+                            </form>
+                            
                             <form method="post" th:action="@{/rechazar?id={id}(id=${notificacion.idNotificacion})}" id="rechazar">
                                 <a class="boton-notificaciones" onclick="document.getElementById('rechazar').submit();">Rechazar</a>
                             </form>

@@ -48,6 +48,9 @@ public class AgendamientoTutoriaServices {
     public void insertarFecha(AgendamientoTutoria agentuto){
         agenturep.insertarFecha(agentuto);
     }
+    public void insertarHorario(int id, String horaInicio, String horaFin, String fechaInicio, String fechaFin){
+        agenturep.insertarHorario(id, horaInicio, horaFin, fechaInicio, fechaFin);
+    }
 
     
     

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamiento Horario</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <link href="./css/style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script src="./js/selectorFecha.js"></script>
+    <script src="./js/cargarNavbar.js"></script>
+</head>
+
+<body class="bg-dark-subtle">
+    <div>
+        <div id='navbar'></div>
+        <div class="contenedor-vista-agendamiento">
+            <form th:action="@{/agregarAgendamiento}" th:object="${agentuto}" method="post" id="agendamientoform">
+                <div class="bg-white contenedor-agendamiento">
+                    <h1 class="titulo-vista">Agendar Horario</h1>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-4">
+                                <label for="input-FechaLimite" class="form-label">Fecha de disponibilidad</label>
+                                <div>
+                                    <input type="text" id="fecha-dispo">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                
+                                
+                            </div>
+
+                           
+                    </div>
+                    <label for="input-FechaLimite" class="form-label">Horario Disponible</label>
+                    <div class="d-flex">
+                        <div class="mr-2">
+                            <input type="time" id="hora-inicio"/>
+                        </div>
+                        <div class="mr-1">
+                            <p>a</p>
+                        </div>
+                        <div class="">
+                          <input type="time" id="hora-fin"/>
+                        </div>
+                        <div id="errores"></div>
+
+                    </div>
+                    
+                    <a class="boton-finalizar-citacion" id="mandarAgen">
+                        Finalizar agendamiento
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

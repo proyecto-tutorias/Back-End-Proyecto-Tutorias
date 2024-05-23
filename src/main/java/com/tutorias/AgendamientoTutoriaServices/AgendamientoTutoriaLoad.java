@@ -27,6 +27,11 @@ public class AgendamientoTutoriaLoad implements RowMapper<AgendamientoTutoria>{
         agetuto.setIdPlataformaReunion(rs.getInt("id_plataforma_reunion"));
         agetuto.setActivo(rs.getInt("activo"));
         agetuto.setDatos_adicionales(rs.getString("datos_adicionales"));
+        agetuto.setHora_inicio(rs.getString("hora_inicio"));
+        agetuto.setHora_fin(rs.getString("hora_fin"));
+        agetuto.setFecha_inicio(rs.getString("fecha_inicio"));
+        agetuto.setFecha_fin(rs.getString("fecha_fin"));
+        agetuto.setHora_def(rs.getString("hora_def"));
          
 
         return agetuto;
