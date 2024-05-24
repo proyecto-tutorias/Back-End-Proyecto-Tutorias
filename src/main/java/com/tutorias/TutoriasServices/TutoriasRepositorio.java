@@ -49,7 +49,7 @@ public class TutoriasRepositorio implements TutoriasDao{
 
     @Override
     public List<Tutoria> listarTutorias() {
-        return jdbcTemplate.query("SELECT * FROM tutorias", new TutoriasLoad());
+        return jdbcTemplate.query("SELECT * FROM tutorias where activo = 1", new TutoriasLoad());
     }
     
     @Override
@@ -60,7 +60,7 @@ public class TutoriasRepositorio implements TutoriasDao{
     @Override
     public List<Tutoria> listarMisTutorias(int id){
         try{
-            return jdbcTemplate.query("SELECT * FROM tutorias WHERE id_estudiante=?", new TutoriasLoad(), id);
+            return jdbcTemplate.query("SELECT * FROM tutorias WHERE id_estudiante=? and activo = 1", new TutoriasLoad(), id);
         }catch(EmptyResultDataAccessException e){
             return null;
         }
@@ -69,7 +69,7 @@ public class TutoriasRepositorio implements TutoriasDao{
     @Override
     public List<Tutoria> listarTutoriasAsignadas(int id){
         try{
-            return jdbcTemplate.query("SELECT * FROM tutorias WHERE id_tutor=?", new TutoriasLoad(), id);
+            return jdbcTemplate.query("SELECT * FROM tutorias WHERE id_tutor=? and activo = 1", new TutoriasLoad(), id);
         }catch(EmptyResultDataAccessException e){
             return null;
         }
@@ -80,6 +80,13 @@ public class TutoriasRepositorio implements TutoriasDao{
         jdbcTemplate.update("UPDATE tutorias SET id_estado=? WHERE id_tutoria=?", estado, id);
     }
    
+    @Override
+    public void modificarTutoria(Tutoria tutoria){
+        String sentencia ="update tutorias set descripcion='"+ tutoria.getDescripcion()+ "', titulo='"+tutoria.getTitulo()+"', precio ="+ tutoria.getPrecio()+", id_area ="+ tutoria.getIdArea()+ ", id_carrera="+ tutoria.getIdCarrera()+" where id_tutoria="+ tutoria.getIdTutoria();
+        
+        jdbcTemplate.update(sentencia);
+        
+    }
    
     
 

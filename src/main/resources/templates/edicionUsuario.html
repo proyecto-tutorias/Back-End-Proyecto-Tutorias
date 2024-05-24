@@ -27,7 +27,6 @@
 <body>
     <div>
         <div id="navbar"></div>
-
             <div class="contenedor-miperfil">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="d-flex gap-2 align-items-center">
@@ -35,7 +34,6 @@
                         <p class="mb-0 texto-nombre-perfil" th:text="${usuario.nombre} + ' ' + ${usuario.apellido}"></p>
                     </div>
                 </div>
-                <form>
                 <div class="informacion-usuario mb-4">
                     <p><b>Codigo estudiante: </b> <span th:text='${usuario.codigo_estudiante}'></span></p>
                     <div class="mb-3">
@@ -82,7 +80,7 @@
                     </table>
                 </div>
 
-                <div class="d-flex justify-content-center gap-4">
+                <div class="d-flex justify-content-center gap-4 contenedor-btn-edicion-usuario">
                     <a onclick="mandarModif()" class="boton-volver">
                         Guardar
                     </a>

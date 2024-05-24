@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,56 +24,54 @@
     <div>
         <div id="navbar"></div>
         <div class="contenedor-formulario-solicitud">
+        <form th:action="@{/modificarTutoria}" method="post" th:object="${tutoria}" id="modi">
             <div class="formulario">
                 <h2>Edicion de tutoria</h2>
                 <div>
-                    <label for="input-NombreTutoria" class="form-label">Nombre de Tutoria</label>
-                    <input type="text" placeholder="Digite título de tutoría" required>
-                </div>
-                <div>
-                    <label for="input-Descripcion" class="form-label">Descripcion</label>
-                    <textarea placeholder="Digite descripción" required></textarea>
-                </div>
-                <div>
-                    <label for="input-Carrera" class="form-label">Carrera</label>
-                    <select required>
-                        <option value="">Seleccione carrera</option>
-                        <option value="Administracion de empresa">Administracion de Empresas</option>
-                        <option value="TDSOFT">Tecnologia en desarrollo de software</option>
-                        <option value="Ingenieria de Sistemas">Ingenieria de Sistemas</option>
-                        <option value="Ingenieria ambiental">Ingenieria ambiental</option>
-                        <option value="Administracion de empresa">Tecnologia en Gestión de Redes de Computadores y
-                            Seguridad Informática </option>
-                    </select>
-                </div>
-                <div>
-                    <label for="input-Area" class="form-label">Area</label>
-                    <select required>
-                        <option value="">Seleccione el área</option>
-                        <option value="Matematicas">Matematicas</option>
-                        <option value="Ingles">Ingles</option>
-                        <option value="Castellano">Castellano</option>
-                        <option value="Quimica">Quimica</option>
-                        <option value="Ingles">Fisica</option>
-                        <option value="Filosofia">Filosofia</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="input-Precio" class="form-label">Precio</label>
-                    <input type="text" placeholder="Digite su precio" required>
-                </div>
-                <div>
-                    <label for="input-FechaLimite" class="form-label">Fecha Limite</label>
-                    <div>
-                        <input type="date" class="input-fecha">
+                        <label for="input-NombreTutoria" class="form-label">Nombre de Tutoria</label>
+                        <input type="text" placeholder="Digite título de tutoría" th:field="*{titulo}">
+                        <p th:if="${#fields.hasErrors('titulo')}" th:errorclass="error" th:errors="*{titulo}" />
                     </div>
-                </div>
-                <div class="d-flex justify-content-center mt-4">
-                    <a href="misTutorias.html" class="boton-volver text-black">Guardar</a>
-                </div>
+                    <div>
+                        <label for="input-Descripcion" class="form-label">Descripcion</label>
+                        <textarea placeholder="Digite descripción" th:field="*{descripcion}"></textarea>
+                        <p th:if="${#fields.hasErrors('descripcion')}" th:errorclass="error" th:errors="*{descripcion}" />
+                    </div>
+                    <div>
+                        <label for="input-Carrera" class="form-label">Carrera</label>
+                        <select th:field="*{idCarrera}">
+                            <option th:each="carrera : ${carreras}" th:value="${carrera.idCarrera}" th:text="${carrera.descripcion}"></option>
+                          
+                        </select>
+                    </div>
+                    <div>
+                        <label for="input-Area" class="form-label">Area</label>
+                        <select th:field="*{idArea}">
+                            <option th:each="area : ${areas}" th:value="${area.idArea}" th:text="${area.descripcion}"></option>
+                          
+                        </select>
+                    </div>
+                    <div>
+                        <label for="input-Precio" class="form-label">Precio</label>
+                        <input type="text" placeholder="Digite su precio" th:field="*{precio}">
+                        <p th:if="${#fields.hasErrors('precio')}" th:errorclass="error" th:errors="*{precio}" />
+                    </div>
+                    <div>
+                        <label for="input-FechaLimite" class="form-label">Fecha Limite</label>
+                        <div>
+                            <input type="date" class="input-fecha" th:field="*{fechaLimite}">
+                        </div>
+                        <p th:if="${errorFecha}" class="error"/>
+                    </div>
+                    <div class="d-flex justify-content-center contenedor-botones-edicion gap-3">
+                        <a onclick="document.getElementById('modi').submit();" class="boton-volver">Modificar</a>
+                        <a class="boton-volver" th:href="@{/tutorias}">Volver</a>
+                    </div>
             </div>
-
+        </form>
         </div>
+        
     </div>
+   
 </body>
 </html>

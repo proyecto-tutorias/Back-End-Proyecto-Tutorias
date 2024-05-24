@@ -126,6 +126,7 @@ public class ControladorRest {
     List<Tutoria> tutoriasCopia;
     
     int agen_id;
+    int id_mod;
     
     Parametros parametros = new Parametros();
     boolean filtroBusqueda = false;
@@ -219,6 +220,7 @@ public class ControladorRest {
         List<Notificacion> noti = notiser.encontrarPorTutoria(id);
         List<AgendamientoTutoria> agen = agentutoser.listar();
         
+        int id_tutoria = 0;
         int id_tutor = 0;
         
         for(Notificacion n : noti){
@@ -233,14 +235,14 @@ public class ControladorRest {
         
         
         caliser.insertarCalificacion(calificacion);
-        tutoriaser.cambiarEstado(4, id);
+        tutoriaser.cambiarEstado(6, id);
         
         hacerPromPuntaje(id_tutor);
         
         return "redirect:/mis_tutorias";
     }
     
-    public void hacerPromPuntaje(int id_tutor){
+    public void hacerPromPuntaje( int id_tutor){
         double prom = 0;
         List<Notificacion> noti = notiser.listarNotificaciones();
         List<AgendamientoTutoria> agen = agentutoser.listar();
@@ -249,7 +251,11 @@ public class ControladorRest {
         for(Notificacion n: noti){
             for(AgendamientoTutoria ag: agen){
                 if(n.getIdNotificacion() == ag.getIdAgendamiento() && n.getId_Tutor() == id_tutor){
-                    cali.add(caliser.encontrarCalificacion(ag.getIdAgendamiento()));
+                    Calificacion c = caliser.encontrarCalificacion(ag.getIdAgendamiento());
+                    if(c != null){
+                         cali.add(c);
+                    }
+                   
                 }
             }
         }
@@ -443,8 +449,32 @@ public class ControladorRest {
     
     @GetMapping("refrescarTutorias")
     public String refrescarTutorias(Model modelo){
+        carreras = carreser.listarCarreras();
+        areas = areaser.listarAreas();
         
         
+        
+      
+
+        
+        usuariosConTutorias = new ArrayList<>();
+        
+        getUsuariosConTutorias();
+        
+        List<Notificacion> notificacionesIterar = notiser.listarNotificaciones();
+        
+        if(tutorsesion != null){
+            for(Tutoria tutoria : tutorias){
+                for(Notificacion notificacion: notificacionesIterar){
+                    if(notificacion.getId_Tutoria() == tutoria.getIdTutoria() && notificacion.getId_tipo_notificacion() == aprobacion && notificacion.getId_Tutor() == tutorsesion.getIdTutor()){
+                        tutoria.setPostulacion_disponible(0);
+                    }
+                }
+            }
+        }
+        
+        
+
         modelo.addAttribute("usututorias", usuariosConTutorias);
         modelo.addAttribute("ususesion",ususesion );
         modelo.addAttribute("tutorsesion",tutorsesion );
@@ -1328,8 +1358,18 @@ public class ControladorRest {
     }
     
     @GetMapping("/edicion_tutoria")
-    public String edicion_tutoria(@RequestParam(value="id") int id){
+    public String edicion_tutoria(@RequestParam(value="id") int id, Model modelo){
+        Tutoria tutoria = tutoriaser.encontrarTutoria(id);
+        id_mod = id;
         
+        carreras = carreser.listarCarreras();
+        areas = areaser.listarAreas();
+        modelo.addAttribute("areas",areas);
+        modelo.addAttribute("tutoria",tutoria);
+        modelo.addAttribute("carreras",carreras);
+        modelo.addAttribute("ususesion", ususesion);
+        modelo.addAttribute("parametros",parametros );
+        modelo.addAttribute("tutorsesion", tutorsesion);
         
         return "edicion_tutoria";
     }
@@ -1346,6 +1386,8 @@ public class ControladorRest {
     public @ResponseBody ResponseEntity agregarTutor( @RequestParam(value="id") int id){
         
         Tutor tutor = tutoser.encontrarTutor(id);
+        
+        
         
         if(tutor != null){
             tutor = new Tutor();
@@ -1370,6 +1412,46 @@ public class ControladorRest {
         tutoser.desactivarTutor(id);
         
         return new ResponseEntity(HttpStatus.OK);
+    }
+    
+    @PostMapping("/modificarTutoria")
+    public String modificarTutoria(@Valid Tutoria tutoria, BindingResult resultado, Model modelo) throws ParseException{
+        tutoria.setIdTutoria(id_mod);
+         carreras = carreser.listarCarreras();
+        areas = areaser.listarAreas();
+        modelo.addAttribute("areas",areas);
+        modelo.addAttribute("carreras",carreras);
+        modelo.addAttribute("ususesion", ususesion);
+        modelo.addAttribute("parametros",parametros );
+        modelo.addAttribute("tutorsesion", tutorsesion);
+        
+        
+        if(resultado.hasErrors()){
+            return "edicion_tutoria";
+        }
+        
+        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Date date = formato.parse(tutoria.getFechaLimite());
+        
+        Instant da = date.toInstant();
+        Instant fechaActual = ZonedDateTime.now().toInstant();
+        
+
+             
+        
+        if(da.isBefore(fechaActual)){
+            modelo.addAttribute("errorFecha", "Fecha no puede ser antes de la fecha actual");
+            return "edicion_tutoria";
+        }
+        
+        
+        
+        tutoriaser.modificarTutoria(tutoria);
+        return "redirect:/tutorias";
+        
+        
+        
     }
     
     

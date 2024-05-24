@@ -48,6 +48,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </form>
                     </div>
                     <script>
@@ -78,31 +79,41 @@
                                 }
                                 //processData: false,
                                 //contentType: false,
+
                             });
+
+
                         }
+
                     </script>
+
                     <div class="col-lg-10" id="tutorias-lista">
                         <!-- Listado tutorias -->
                         <h1 class="titulo-listado-tutoria">Solicitudes de tutorias</h1>
-                        <div th:if="${tutorias != null and !tutorias.empty}" > 
+                        <div th:if="${tutorias != null and !tutorias.empty}" class="listado-tutorias"> 
                             <div
                                 class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5" th:each="tutoria, iterador: ${tutorias}">
                                 <div class="card-body" >    
                                     <div>
                                         <h5 class="card-title" th:text="${tutoria.titulo}"></h5>
                                         <p class="card-text mb-0" th:text="${tutoria.descripcion}"></p>
-                                        <p class="card-text">Fecha: <span th:text="${tutoria.fechaLimite}"></span></p>
+                                        <p class="card-text">Fecha <span th:text="${tutoria.fechaLimite}"></span></p>
                                     </div>
 
                                     <div class="d-flex align-items-center gap-3 esp-card">
+                                        <a th:if="${ususesion.tipo_usuario == 'admin'}" th:data-id="${tutoria.idTutoria}" onclick="desactivarTutoria(this.getAttribute('data-id'))"><i class="bi bi-trash-fill icono-perfil-card"></i></a>
+                                        <a th:href='@{/edicion_tutoria?id={id}(id=${tutoria.idTutoria})}' th:if="${ususesion.tipo_usuario == 'admin'}" class="text-black"><i class="bi bi-pencil-square icono-perfil-card"></i></a>
+                                        
                                         <a th:if="${tutorsesion != null && tutoria.postulacion_disponible == 1 && tutorsesion.login != usututorias[iterador.index].login}" class="text-black" data-bs-toggle="modal" th:attr="data-bs-target='#' + ${tutoria.idTutoria}" ><i
                                                 class="bi bi-check-circle-fill icono-perfil-card"></i></a>
-                                        <i class="bi bi-person-circle icono-perfil-card"></i>
-                                        <div>
+                                        <i class="bi bi-person-circle icono-perfil-card" th:if="${ususesion.tipo_usuario != 'admin'}"></i>
+                                        
+                                        <div th:if="${ususesion.tipo_usuario != 'admin'}">
                                             <p class="card-text mb-0">Solicitado por: <span th:text="${usututorias[iterador.index].nombre}"></span></p>
-                                            <p class="card-text">Precio: $<span th:text="${tutoria.precio}"></span></p>
+                                            <p class="card-text">Precio: $ <span th:text="${tutoria.precio}"></span></p>
                                         </div>
                                     </div> 
+
                                 </div>
                                 <div class="modal fade" th:id="${tutoria.idTutoria}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <form method="post" th:action="@{agregar_notificacion?id={id}(id=${tutoria.idTutoria})}" th:id="${tutoria.idTutoria} + 'form'">
@@ -115,9 +126,9 @@
                                                     <div>
                                                         <div>
                                                             <p class="card-text mb-0">Solicitado por: <span th:text="${usututorias[iterador.index].nombre}"></span></p>
-                                                            <p class="card-text">Precio: <span th:text="${tutoria.precio}"></span></p>
+                                                            <p class="card-text">Precio: $ <span th:text="${tutoria.precio}"></span></p>
                                                         </div> 
-                                                        <div class="d-flex justify-content-center">
+                                                        <div class="d-flex justify-content-center gap-3">
                                                             <a th:onclick="|document.getElementById('${tutoria.idTutoria}' + 'form').submit()|" class="boton-volver text-black">
                                                                 Aceptar
                                                             </a>
@@ -132,10 +143,14 @@
                                     </form>
                                 </div>   
                             </div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>  
     </body>
+
+
 </html>

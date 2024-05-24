@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head></head>
-<body>
+    <head></head>
+    <body>
 
-    <nav th:fragment="navbar">
-        <form method="post" th:action='@{/busqueda}' th:object='${parametros}'>
-            <div class="contenedor-busqueda d-flex justify-content-center">
-                <img src="images/logoPA.png"  alt="logo de la pagina" />
-                <div class="d-flex justify-content-center contenedor-barra">
-                    <input class="navbar-busqueda" placeholder="Buscar" th:field='*{busqueda}' />
-                    <button class="btn-buscar-navbar"><i class="bi bi-search"></i></button>
-                </div>
-                <div class="contenedor-perfil d-flex align-items-center">
-                    <div class="dropdown">
-                        <a class="opcion-verPerfil" th:href="@{/perfil}"><i class="bi bi-person-circle icono-perfil"></i> <span th:text="${ususesion.nombre}"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{/}">Cerrar sesion</a></li>
-                        </ul>
+        <nav th:fragment="navbar" class="navbar navbar-expand-lg pt-0">
 
+            <button class="navbar-toggler color-proyecto m-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse estilo-nav" id="navbarTogglerDemo03">
+                <form method="post" th:action='@{/busqueda}' th:object='${parametros}'>
+                    <div class="contenedor-busqueda">
+                        <img src="images/logoPA.png"  alt="logo de la pagina" />
+                        <div class="d-flex justify-content-center contenedor-barra">
+                            <input class="navbar-busqueda" placeholder="Buscar" th:field='*{busqueda}' />
+                            <button class="btn-buscar-navbar"><i class="bi bi-search"></i></button>
+                        </div>
+                        <div class="contenedor-perfil d-flex align-items-center">
+                            <div class="dropdown">
+                                <a class="opcion-verPerfil" th:href="@{/perfil}"><i class="bi bi-person-circle icono-perfil"></i> <span th:text="${ususesion.nombre}"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{/}">Cerrar sesion</a></li>
+                                </ul>
+
+                            </div>
+                        </div>      
                     </div>
-                </div>      
+                </form>
+                <div class="opciones-navbar d-flex justify-content-center">
+                    <a class="nav-link" th:href="@{/tutorias}">Tutorias</a>
+                    <a class="nav-link" th:href="@{/solicitud_tutoria}" th:if="${ususesion.tipo_usuario != 'admin'}">Solicitud de tutoria</a>
+                    <a class="nav-link" th:href="@{/mis_tutorias}" th:if="${ususesion.tipo_usuario != 'admin'}">Mis Tutorias</a>
+                    <a class="nav-link" th:href="@{/tutorias_asignadas}" th:if="${tutorsesion != null}">Tutorias Asignadas</a>
+                    <a class="nav-link" th:href="@{/notificaciones}" th:if="${ususesion.tipo_usuario != 'admin'}" th:text="'Notificaciones ('+ ${numNoti} + ')'"></a>
+                    <a class="nav-link" th:href="@{/requisitos_tutor}" th:if="${ususesion.tipo_usuario != 'admin'}">¿Quieres ser tutor?</a>
+                    <a class="nav-link" th:href="@{/lista_usuarios}" th:if="${ususesion.tipo_usuario == 'admin'}">Lista de Usuarios</a>
+                </div>
             </div>
-        </form>
-        <div class="opciones-navbar d-flex justify-content-center">
-            <a class="nav-link" th:href="@{/tutorias}">Tutorias</a>
-            <a class="nav-link" th:href="@{/solicitud_tutoria}" th:if="${ususesion.tipo_usuario != 'admin'}">Solicitud de tutoria</a>
-            <a class="nav-link" th:href="@{/mis_tutorias}" th:if="${ususesion.tipo_usuario != 'admin'}">Mis Tutorias</a>
-            <a class="nav-link" th:href="@{/tutorias_asignadas}" th:if="${tutorsesion != null}">Tutorias Asignadas</a>
-            <a class="nav-link" th:href="@{/notificaciones}" th:if="${ususesion.tipo_usuario != 'admin'}" th:text="'Notificaciones ('+ ${numNoti} + ')'"></a>
-            <a class="nav-link" th:href="@{/requisitos_tutor}" th:if="${ususesion.tipo_usuario != 'admin'}">¿Quieres ser tutor?</a>
-            <a class="nav-link" th:href="@{/lista_usuarios}" th:if="${ususesion.tipo_usuario == 'admin'}">Lista de Usuarios</a>
-        </div>
-    </nav>
-    
-</body>
+        </nav>
+
+    </body>
 </html>

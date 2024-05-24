@@ -9,7 +9,7 @@
         <div th:fragment="tutorias">
             <!-- Listado tutorias -->
             <h1 class="titulo-listado-tutoria">Solicitudes de tutorias</h1>
-            <div th:if="${tutorias != null and !tutorias.empty}" > 
+            <div th:if="${tutorias != null and !tutorias.empty}" class="listado-tutorias"> 
                 <div
                     class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5" th:each="tutoria, iterador: ${tutorias}">
                     <div class="card-body" >    

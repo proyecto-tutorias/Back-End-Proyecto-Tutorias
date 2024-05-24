@@ -21,16 +21,16 @@ public class Tutoria {
 
     private int idTutoria;
     
-    @NotEmpty
+    @NotEmpty(message="Campo titulo no puede estar vacio")
     @Size(min = 4, max=200, message="Debe ser de 4 a 200 caracteres")
     private String titulo;
-    @NotEmpty
+    @NotEmpty(message="Campo descripcion no puede estar vacio")
     @Size(min = 4, max=200, message="Debe ser de 4 a 200 caracteres")
     private String descripcion;
     @NotEmpty
     private String fechaLimite;
     
-    @NotNull
+    @NotNull(message="Campo precio no puede estar vacio")
     @Min(value = 100, message="El precio debe ser de al menos $100")
     private Double precio;
     private int idEstado;

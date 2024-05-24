@@ -691,4 +691,21 @@ form {
     .contenedor-formulario-solicitud{
         padding: 40px 16px;
     }
+    
+    .contenedor-botones-edicion{
+        flex-direction: column;
+    }
+    
+    .total-anchura{
+        width: 100%;
+    }
+    
+    .contenedor-btn-edicion-usuario{
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+    .contenedor-btn-edicion-usuario a{
+        width: 200px;
+    }
 }

@@ -22,6 +22,7 @@ public interface TutoriasDao {
     List<Tutoria> listarMisTutorias(int id);
     List<Tutoria> listarTutoriasAsignadas(int id);
     void cambiarEstado(int estado, int id);
+    void modificarTutoria(Tutoria tutoria);
 
     
 }

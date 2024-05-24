@@ -48,5 +48,9 @@ public class TutoriasServices {
         tutoriasrep.cambiarEstado(estado, id);
     }
     
+    public void modificarTutoria(Tutoria tutoria){
+        tutoriasrep.modificarTutoria(tutoria);
+    }
+    
     
 }

@@ -29,8 +29,8 @@
                         <!-- Listado tutorias -->
                         <h1 class="titulo-listado-tutoria">Tutorias asignadas</h1>
                         <div class="listado-tutorias" th:if="${tutoasignadas != null and !tutoasignadas.empty}">
-                            <div class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5">
-                                <div class="card-body" th:each="tutoasignada, iterador : ${tutoasignadas}">
+                            <div class="mb-3 card rounded-0 border-end-0 border-top-0 border-bottom-0 border-start border-5" th:each="tutoasignada, iterador : ${tutoasignadas}">
+                                <div class="card-body">
                                     <div>
                                         <h5 class="card-title" th:text="${tutorias[iterador.index].titulo}">Tema #1</h5>
                                         <p class="card-text mb-0">Fecha: <span th:text="${tutoasignada.fechaAgendamiento}"></span></p>

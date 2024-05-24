@@ -12,6 +12,7 @@ import com.tutorias.domain.Calificacion;
 import com.tutorias.domain.Estudiante;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,12 @@ public class CalificacionesRepositorio implements CalificacionesDao{
 
     @Override
     public Calificacion encontrarCalificacion(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM calificaciones WHERE id_calificacion=?", new CalificacionesLoad(), id);
+        try{
+            return jdbcTemplate.queryForObject("SELECT * FROM calificaciones WHERE id_calificacion=?", new CalificacionesLoad(), id);
+        }catch(EmptyResultDataAccessException e){
+            return null;
+        }
+        
     }
 
     @Override
