@@ -68,6 +68,11 @@ public class NotificacionesRepositorio implements NotificacionesDao{
     public void desactivar(int id) {
         jdbcTemplate.update("UPDATE notificaciones SET activo = 0 WHERE id_notificacion=?", id);
     }
+    
+    @Override
+    public void desactivarPostulaciones(int id){
+        jdbcTemplate.update("UPDATE notificaciones SET activo=0 WHERE id_tutoria=?",  id);
+    }
 
     @Override
     public List<Notificacion> listarNotificacionesTutor() {

@@ -20,7 +20,6 @@ public class TutorLoad implements RowMapper<Tutor>{
         final Tutor tutor = new Tutor();
         
         tutor.setIdTutor(rs.getInt("id_tutor"));
-        tutor.setIdEspecialidad(rs.getInt("id_especialidad"));
         tutor.setIdRango(rs.getInt("id_rango"));
         tutor.setPromedioPuntaje(rs.getDouble("prom_puntaje"));
         tutor.setActivo(rs.getInt("activo"));

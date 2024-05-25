@@ -22,6 +22,7 @@ public interface NotificacionesDao {
     List<Notificacion> listarNotificacionesTutor();
     List<Notificacion> listarNotificacionesEstudiante();
     List<Notificacion> encontrarPorTutoria(int id);
+    void desactivarPostulaciones(int id);
     
 
     

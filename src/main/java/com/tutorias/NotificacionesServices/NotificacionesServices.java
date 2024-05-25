@@ -46,6 +46,11 @@ public class NotificacionesServices {
     public List<Notificacion> encontrarPorTutoria(int id){
         return notirep.encontrarPorTutoria(id);
     }
+    
+    public void desactivarPostulaciones(int id){
+       notirep.desactivarPostulaciones(id);
+    }
+    
 
     
     

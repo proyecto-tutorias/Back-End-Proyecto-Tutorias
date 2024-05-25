@@ -79,6 +79,7 @@ public class TutoriasRepositorio implements TutoriasDao{
     public void cambiarEstado(int estado, int id){
         jdbcTemplate.update("UPDATE tutorias SET id_estado=? WHERE id_tutoria=?", estado, id);
     }
+  
    
     @Override
     public void modificarTutoria(Tutoria tutoria){

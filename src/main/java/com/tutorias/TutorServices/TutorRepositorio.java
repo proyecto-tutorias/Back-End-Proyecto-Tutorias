@@ -25,12 +25,11 @@ public class TutorRepositorio implements TutorDao{
 
     @Override
     public void insertarTutor(Tutor tutor) {
-        jdbcTemplate.update("INSERT INTO tutor(id_tutor, prom_puntaje, id_rango, id_especialidad, activo)" + 
-                       "VALUES (?,?,?,?,?,?,?,?)" ,
+        jdbcTemplate.update("INSERT INTO tutor(id_tutor, prom_puntaje, id_rango, activo)" + 
+                       "VALUES (?,?,?,?)" ,
                        tutor.getIdTutor() ,
                        tutor.getPromedioPuntaje(), 
-                       tutor.getIdRango() ,
-                       tutor.getIdEspecialidad(), 
+                       tutor.getIdRango(),
                        tutor.getActivo()); 
                       
     }

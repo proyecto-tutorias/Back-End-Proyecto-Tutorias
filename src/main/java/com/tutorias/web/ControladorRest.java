@@ -564,6 +564,7 @@ public class ControladorRest {
         
         Notificacion notificacion = new Notificacion();
         notificacion.setDescripcion("Has recibido una respuesta al " + tutoriaSeleccionada.getTitulo() + " de parte del tutor " + tutorsesion.getNombre());
+        
         notificacion.setId_Tutor(tutorsesion.getIdTutor());
         notificacion.setId_Tutoria(tutoriaSeleccionada.getIdTutoria());
         notificacion.setActivo(1);
@@ -786,9 +787,47 @@ public class ControladorRest {
         agentuto.setIdAgendamiento(id);
         agentutoser.insertar(agentuto);
         tutoriaser.cambiarEstado(2, noti.getId_Tutoria());
-        generarNotificacionPostulacion(noti.getId_Tutoria());
         
-        notiser.desactivarNotificacion(id);
+        Tutoria tutoria = tutoriaser.encontrarTutoria(noti.getId_Tutoria());
+        
+        notiser.desactivarPostulaciones(noti.getId_Tutoria());
+        
+        List<Notificacion> notificaciones = notiser.encontrarPorTutoria(noti.getId_Tutoria());
+        
+        for(Notificacion n : notificaciones){
+            if(n.getIdNotificacion() != noti.getIdNotificacion()){
+                
+                 
+                Notificacion notificacion = new Notificacion();
+
+                notificacion.setDescripcion("El usuario " + ususesion.getLogin() + " ha rechazado tu postulacion para la tutoria " + tutoria.getTitulo());
+                notificacion.setActivo(1);
+                notificacion.setId_Tutor(n.getId_Tutor());
+                notificacion.setId_destinatario(destinatario_tutor);
+                notificacion.setId_Tutoria(noti.getId_Tutoria());
+                notificacion.setId_tipo_notificacion(informacion);
+
+                notiser.insertarNotificacion(notificacion);
+                
+                
+                
+                
+                
+            }
+        }
+        
+       Notificacion notificacion = new Notificacion();
+       
+       notificacion.setDescripcion("El estudiante " + ususesion.getLogin() + " ha aceptado tu postulacion para la tutoria " + tutoria.getTitulo());
+       notificacion.setActivo(1);
+       notificacion.setId_Tutor(noti.getId_Tutor());
+       notificacion.setId_destinatario(destinatario_tutor);
+       notificacion.setId_Tutoria(noti.getId_Tutoria());
+       notificacion.setId_tipo_notificacion(informacion);
+       
+        notiser.insertarNotificacion(notificacion);
+
+   
         
         return "redirect:/notificaciones";
     }
@@ -1390,14 +1429,14 @@ public class ControladorRest {
         
         
         
-        if(tutor != null){
+        if(tutor == null){
             tutor = new Tutor();
             tutor.setIdTutor(id);
             tutor.setActivo(1);
-        
+            tutor.setIdRango(1);
             tutoser.insertarTutor(tutor);
         }
-        else{
+        if(tutor != null){
             tutoser.activarTutor(id);
         }
 
