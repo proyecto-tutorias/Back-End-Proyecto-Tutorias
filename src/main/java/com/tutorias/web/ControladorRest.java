@@ -786,6 +786,7 @@ public class ControladorRest {
         agentuto.setIdAgendamiento(id);
         agentutoser.insertar(agentuto);
         tutoriaser.cambiarEstado(2, noti.getId_Tutoria());
+        generarNotificacionPostulacion(noti.getId_Tutoria());
         
         notiser.desactivarNotificacion(id);
         
