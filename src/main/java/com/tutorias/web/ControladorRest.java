@@ -1164,9 +1164,9 @@ public class ControladorRest {
                 //tutoriasAsignadas = tutoriaser.listarTutoriasAsignadas(ususesion.getId_usuario());
             }
 
-
+            return "redirect:/tutorias";
         }
-        return "redirect:/tutorias";
+        return "redirect:/";
         
         
 

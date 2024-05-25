@@ -28,7 +28,6 @@ const obtenerCalendario = async () => {
     console.log(fecha);
 
     $('#fecha-dispo').daterangepicker({
-        "timePicker": true,
         "minDate": inicio,
         "maxDate": fecha
         
