@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `bd_tutorias` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `bd_tutorias`;
 -- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: bd_tutorias
@@ -49,7 +47,6 @@ CREATE TABLE `agendamientotutoria` (
 
 LOCK TABLES `agendamientotutoria` WRITE;
 /*!40000 ALTER TABLE `agendamientotutoria` DISABLE KEYS */;
-INSERT INTO `agendamientotutoria` VALUES (13,'www','2024-05-24',1,1,'lo mas pronto posible',NULL,NULL,NULL,NULL,NULL),(19,NULL,'2024-05-18',NULL,1,'dsds',NULL,NULL,NULL,NULL,NULL),(21,NULL,'2024-05-18',NULL,1,'fdfd',NULL,NULL,NULL,NULL,NULL),(30,'https://meet.google.com/qjf-ijtu-vqd','2024-05-31',2,0,'dsds',NULL,NULL,NULL,NULL,NULL),(32,'','2024-05-24',1,0,'fdf',NULL,NULL,NULL,NULL,NULL),(34,'https://meet.google.com/qjf-ijtu-vqd','2024-05-26',1,0,'pronto','05:06','21:06','2024-05-22','2024-05-27','07:16'),(35,'https://meet.google.com/qjf-ijtu-vqd','2024-05-28',3,0,'por meet porfa','09:59','22:59','2024-05-27','2024-05-29','11:59'),(36,'https://meet.google.com/qjf-ijtu-vqd','2024-05-31',1,0,'me gusta escuchar musica mientras','11:27','14:27','2024-05-30','2024-05-31','14:16');
 /*!40000 ALTER TABLE `agendamientotutoria` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,7 +96,6 @@ CREATE TABLE `calificaciones` (
 
 LOCK TABLES `calificaciones` WRITE;
 /*!40000 ALTER TABLE `calificaciones` DISABLE KEYS */;
-INSERT INTO `calificaciones` VALUES (13,3,'a'),(19,3,'dada'),(21,5,'holap'),(30,5,'bastante buena'),(35,2,'no tan mal'),(36,3,'muy mal la verdad');
 /*!40000 ALTER TABLE `calificaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +192,7 @@ CREATE TABLE `estudiante` (
 
 LOCK TABLES `estudiante` WRITE;
 /*!40000 ALTER TABLE `estudiante` DISABLE KEYS */;
-INSERT INTO `estudiante` VALUES (19),(22),(24),(25),(26);
+INSERT INTO `estudiante` VALUES (19),(22),(24),(25),(26),(27);
 /*!40000 ALTER TABLE `estudiante` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,7 +229,6 @@ CREATE TABLE `notificaciones` (
 
 LOCK TABLES `notificaciones` WRITE;
 /*!40000 ALTER TABLE `notificaciones` DISABLE KEYS */;
-INSERT INTO `notificaciones` VALUES (13,'Has recibido una respuesta al Biologia #1de parte del tutor Alejandro',19,10,0,1,2),(16,'El estudiante migue ha aceptado que seas su tutor en el la tutoria \'Biologia #1\'.',19,10,1,2,1),(17,'Has recibido una respuesta al Prueba 12 de parte del tutor Alejandro',19,11,0,1,2),(18,'Tu postulacion a la tutoria Prueba 12 ha sido rechazada',19,11,1,2,1),(19,'Has recibido una respuesta al Tutoria 1 de parte del tutor Alejandro',19,12,0,1,2),(20,'El estudiante jair ha aceptado que seas su tutor en el la tutoria \'Tutoria 1\'.',19,12,1,2,1),(21,'Has recibido una respuesta al Matematica51 de parte del tutor Alejandro',19,13,0,1,2),(22,'El estudiante migue ha aceptado que seas su tutor en el la tutoria \'Matematica51\'.',19,13,1,2,1),(23,'Has recibido una respuesta al Pala de parte del tutor Alejandro',19,14,1,1,2),(30,'Has recibido una respuesta al PRunbe de parte del tutor Alejandro',19,19,0,1,2),(31,'El estudiante camilo123 ha aceptado que seas su tutor en el la tutoria \'PRunbe\'.',19,19,1,2,1),(32,'Has recibido una respuesta al fdfdfdf de parte del tutor Alejandro',19,20,0,1,2),(33,'El estudiante camilo123 ha aceptado que seas su tutor en el la tutoria \'fdfdfdf\'.',19,20,1,2,1),(34,'Has recibido una respuesta al PRunbe de parte del tutor Alejandro',19,21,0,1,2),(35,'Has recibido una respuesta al Sentient de parte del tutor Alejandro',19,22,0,1,2),(36,'Has recibido una respuesta al fdsfd de parte del tutor Alejandro',19,23,0,1,2);
 /*!40000 ALTER TABLE `notificaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -364,7 +359,7 @@ CREATE TABLE `tutorias` (
   CONSTRAINT `tutorias_ibfk_2` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tutorias_ibfk_3` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id_area`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `tutorias_ibfk_4` FOREIGN KEY (`id_carrera`) REFERENCES `carreras` (`id_carrera`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -373,7 +368,7 @@ CREATE TABLE `tutorias` (
 
 LOCK TABLES `tutorias` WRITE;
 /*!40000 ALTER TABLE `tutorias` DISABLE KEYS */;
-INSERT INTO `tutorias` VALUES (5,'prueba','cosa prueba','2020-08-10',1000,2,19,1,0,1),(8,'Matematica','Matematica','2024-05-29',5000,1,19,1,0,1),(9,'Ingles','Ingles','2024-05-27',4000,1,19,3,3,4),(10,'Biologia #1','Biologia #1','2024-05-15',5000,4,22,4,0,4),(11,'Prueba 12','ha','2024-05-31',220,1,22,4,0,3),(12,'Tutoria 45','dfgdgf','2024-05-30',500,4,24,3,1,2),(13,'Matematica51','fsfdsf','2024-05-31',4000,4,22,1,1,2),(14,'Pala2','dsdsd','2024-05-31',313,1,22,4,1,4),(15,'DQDF','ewewe','2024-05-29',56666,1,22,6,1,3),(19,'PRunbe','dsdsd','2024-05-31',500,4,26,3,1,3),(20,'fdfdfdf','dfdf','2024-05-31',313,3,26,1,0,5),(21,'PRunbe','dsds','2024-05-31',56666,6,26,3,1,5),(22,'Sentient','ddsd1334','2024-05-30',666,6,26,3,1,3),(23,'fdsfd','fdfdf','2024-05-31',56666,6,26,1,1,1),(24,'chonguizzzzzzzzzzzzzz','zdsds','2024-05-25',22424,1,26,3,0,5);
+INSERT INTO `tutorias` VALUES (1,'pru1','pru1','01-07-21',NULL,NULL,19,1,NULL,NULL),(2,'pru2','pru1','01-07-21',NULL,NULL,19,2,NULL,NULL),(3,'pru3','pru1','01-07-21',NULL,NULL,22,3,NULL,NULL),(4,'pru4','pru1','01-07-21',NULL,NULL,22,3,NULL,NULL),(5,'pru5','pru1','01-07-21',NULL,NULL,22,3,NULL,NULL),(6,'pru6','pru1','01-07-21',NULL,NULL,22,1,NULL,NULL),(25,NULL,'',NULL,NULL,NULL,22,NULL,NULL,NULL),(26,'Matematicas Discreta','porfavor ayud','2024-09-21',4000,1,19,1,1,2);
 /*!40000 ALTER TABLE `tutorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -398,7 +393,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id_usuario`),
   KEY `usuario_ibfk_1` (`id_carrera`),
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_carrera`) REFERENCES `carreras` (`id_carrera`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,7 +402,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (19,'usuario','Alejandro','Gonzalez',12,'1234','alejo',3,1,1),(21,'admin','leonardo','vergara',5854,'leon','leon',1,1,1),(22,'usuario','Miguel','Fernandez',121515,'123','migue',4,1,1),(24,'usuario','Jair','Fernandez',565,'123','jair',1,0,3),(26,'usuario','camilo','suarez',52369,'hola','camilo123',4,1,4);
+INSERT INTO `usuario` VALUES (19,'usuario','Alejandro','Gonzalez',12,'1234','alejo',3,1,1),(21,'admin','leonardo','vergara',5854,'leon','leon',1,1,1),(27,'usuario','Jesus','Alfaro',5454212,'capo1234','jesus',1,1,5);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -420,4 +415,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-23 23:00:08
+-- Dump completed on 2024-09-08 16:01:14
